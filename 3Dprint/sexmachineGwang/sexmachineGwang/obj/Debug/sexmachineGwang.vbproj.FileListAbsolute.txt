@@ -1,0 +1,19 @@
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\bin\Debug\sexmachineGwang.exe.config
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\bin\Debug\sexmachineGwang.exe
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\bin\Debug\sexmachineGwang.pdb
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\bin\Debug\sexmachineGwang.xml
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.Resources.resources
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.vbproj.GenerateResource.Cache
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.exe
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.xml
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.pdb
+c:\users\dongwookyang\documents\visual studio 2015\Projects\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.vbprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\sexmachineGwang\sexmachineGwang\bin\Debug\sexmachineGwang.exe.config
+C:\Users\Administrator\Desktop\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.exe
+C:\Users\Administrator\Desktop\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.xml
+C:\Users\Administrator\Desktop\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.pdb
+D:\CodeDraw\3D프린팅\sexmachineGwang\sexmachineGwang\bin\Debug\sexmachineGwang.exe.config
+D:\CodeDraw\3D프린팅\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.exe
+D:\CodeDraw\3D프린팅\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.xml
+D:\CodeDraw\3D프린팅\sexmachineGwang\sexmachineGwang\obj\Debug\sexmachineGwang.pdb
+D:\CodeDraw\3D프린팅\sexmachineGwang\sexmachineGwang\bin\Debug\2.exe.config
