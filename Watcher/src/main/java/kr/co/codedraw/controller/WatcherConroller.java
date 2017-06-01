@@ -18,21 +18,19 @@ import kr.co.codedraw.dto.CrimeDto;
 import kr.co.codedraw.dto.CrimeMonthRateDto;
 import kr.co.codedraw.dto.RealwordDto;
 import kr.co.codedraw.dto.WordDto;
-import kr.co.codedraw.service.CrimeCountService;
+import kr.co.codedraw.service.CrimeService;
 import kr.co.codedraw.service.WordService;
 
 @Controller
 public class WatcherConroller {
-	;
+	
 	
 	@Autowired
 	private WordService wordService;
 
 	@Autowired
-	private CrimeCountService crimeService;
+	private CrimeService crimeService;
 	
-	
-
 	
 	@RequestMapping(value="/")
 	public String introPage(){
@@ -73,12 +71,12 @@ public class WatcherConroller {
 	@RequestMapping(value="/wordList")
 	@ResponseBody
 	public ModelMap wordList(HttpServletRequest request, ModelMap model){		// 워드 클라우드 데이터값 리턴함
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    Calendar c1 = Calendar.getInstance();
-	    c1.add(Calendar.DATE, -1);
-		String presentDate =sdf.format(c1.getTime());
+	   // SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    //Calendar c1 = Calendar.getInstance();
+	    //c1.add(Calendar.DATE, -1);
+		//String presentDate =sdf.format(c1.getTime());
 		
-		List<List<WordDto>>  list = wordService.listDao(presentDate);
+		List<List<WordDto>>  list = wordService.listDao("20170514");
 		model.addAttribute("wordList", list);
 		return model;
 	}
@@ -116,11 +114,11 @@ public class WatcherConroller {
 	@RequestMapping(value="/keyWordList")
 	@ResponseBody
 	public ModelMap keyWordList(HttpServletRequest request, ModelMap model){		
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    Calendar c1 = Calendar.getInstance();
-	    c1.add(Calendar.DATE, -1);
-		String presentDate =sdf.format(c1.getTime());
-		List<RealwordDto> list = wordService.keyWordList(presentDate);
+//	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//	    Calendar c1 = Calendar.getInstance();
+//	    c1.add(Calendar.DATE, -1);
+//		String presentDate =sdf.format(c1.getTime());
+		List<RealwordDto> list = wordService.keyWordList("20161031");
 		model.addAttribute("wordList", list);
 		return model;
 	}

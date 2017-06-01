@@ -32,9 +32,9 @@ public class CrimeXlsx {
 	
 	public int[][] CrimeXlsx(String region) {
 		try {
-			
-			File file = new File("C:/Users/Administrator/Desktop/CodeDraw/crime.xlsx");
-			//File file = new File("~"+ File.separator + "watcher" + File.separator + "apache-tomcat-7.0.72" + File.separator + "webapps" + File.separator + "xlsx" + File.separator +"crime.xlsx");
+			//File file = new File("D:/CodeDraw/crime.xlsx");
+			File file = new File("D:/JavaWorkspace/Watcher/src/main/webapp/xlsx/crime.xlsx");
+			//File file = new File("~"+ File.separator + "watcher" + File.separator +"crime.xlsx");
 			XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
 			
 			int sheetPage = compareRegionName(region);	// 엑셀에서 한글로된 시트이름을 숫자로 변환

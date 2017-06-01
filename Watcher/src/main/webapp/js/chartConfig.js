@@ -233,4 +233,3 @@ var trendCuvConfig = {
         }
     ]
 };
-

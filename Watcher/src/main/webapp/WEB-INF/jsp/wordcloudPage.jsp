@@ -48,8 +48,6 @@
                 <div class="container-fluid">
                     <ul class="nav navbar-nav">
                         <li><a href="#menu-toggle" id="menu-toggle">☰</a></li>
-                        <li><a href="#">Watcher 소개</a></li>
-                        <li><a href="#">사용가이드</a></li>
                         <li><a href="/developerInfo">개발진</a></li>
                     </ul>
                 </div>
@@ -77,16 +75,16 @@
                         </section>
                     </div>
                     <div class="col-lg-4">
-                    <section id="Germany">
-                            <h3 class="title keword alignLeft"><img src="img/country/germany.png" alt="germany" />독일</h3>
-                            <div class="col-lg-12 chart-cloud" id="germanyChart"></div>
-                        </section>
-                    </div>
-                    <div class="col-lg-4">
                      <section id="usa">
                             <h3 class="title keword alignLeft"><img src="img/country/usa.png" alt="usa" />미국</h3>
                             <div class="col-lg-12 chart-cloud" id="usaChart">
                             </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-4">
+                    <section id="Germany">
+                            <h3 class="title keword alignLeft"><img src="img/country/germany.png" alt="germany" />독일</h3>
+                            <div class="col-lg-12 chart-cloud" id="germanyChart"></div>
                         </section>
                     </div>
                 </div>
@@ -124,10 +122,11 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <!--Zingchart JavaScript-->
-    <script src="js/jqcloud.js" charset="euc-kr"></script>
+    <script src="js/jqcloud.js"></script>
+    <script src="js/zingchart.min.js"></script>
+    <script src="js/modules/zingchart-wordcloud.min.js"></script>
     <!--Watcher Javascript-->
     <script src="js/wordcloud.js" charset="euc-kr"></script>
-    <script src="js/keyword.js" charset="euc-kr"></script>
     <!-- Menu Toggle Script -->
     <script>
         $("#menu-toggle").click(function (e) {

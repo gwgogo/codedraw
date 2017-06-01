@@ -64,9 +64,9 @@ public class WeatherXlsx {
 	public double[][] weatherXlsx(String region) {
 		
 		try {
-			File file = new File("C:/Users/Administrator/Desktop/CodeDraw/weather.xlsx");
-			
-			//File file = new File("~"+ File.separator + "watcher" + File.separator + "apache-tomcat-7.0.72" + File.separator + "webapps" + File.separator + "xlsx" + File.separator +"weather.xlsx");
+			//File file = new File("D:/CodeDraw/weather.xlsx");
+			File file = new File("D:/JavaWorkspace/Watcher/src/main/webapp/xlsx/weather.xlsx");
+			//File file = new File("~"+ File.separator + "watcher" + File.separator  + File.separator +"weather.xlsx");
 			XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
 			
 			int sheetPage = compareRegionName(region);

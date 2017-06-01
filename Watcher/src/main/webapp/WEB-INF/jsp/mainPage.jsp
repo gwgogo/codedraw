@@ -52,8 +52,6 @@
                 <div class="container-fluid">
                     <ul class="nav navbar-nav">
                         <li><a href="#menu-toggle" id="menu-toggle">☰</a></li>
-                        <li><a href="#">Watcher 소개</a></li>
-                        <li><a href="#">사용가이드</a></li>
                         <li><a href="/developerInfo">개발진</a></li>
                     </ul>
                 </div>
@@ -227,12 +225,12 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
-    <script src="js/mainPage.js"></script>
     <!--Google Map Script--> 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATSt9Q1F0A8IxaJxA7qvqQyCS2zKHTIYI&callback=initMap" async defer></script>
     <!--Zing Chart Script-->
     <script src="js/zingchart.min.js"></script>
     <script src="js/modules/zingchart-pie.min.js"></script>
     <script src="js/chartConfig.js" charset='utf-8'></script>
+    <script src="js/mainPage.js"></script>
 </body>
 </html>

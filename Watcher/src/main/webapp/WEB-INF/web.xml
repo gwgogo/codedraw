@@ -16,7 +16,7 @@
 	<context-param>
     	<param-name>spring.profiles.active</param-name>
     	<!-- param-value의 값을 다른 profile명으로 하면 그것을 사용 -->
-    	<param-value>dev</param-value>	
+    	<param-value>local</param-value>	<!-- local or dev -->	
 	</context-param> 
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->

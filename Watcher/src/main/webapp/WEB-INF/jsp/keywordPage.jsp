@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿ 	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
@@ -78,67 +78,34 @@
                                 <ol class="kewordRank">
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">1</em><span class="koreaData"></span>
+                                            <em class="num">1</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">2</em><span class="koreaData"></span>
+                                            <em class="num">2</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">3</em><span class="koreaData"></span>
+                                            <em class="num">3</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">4</em><span class="koreaData"></span>
+                                            <em class="num">4</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">5</em><span class="koreaData"></span>
+                                            <em class="num">5</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                 </ol>
                             </div>
                         </section>
                     </div>
-                    <div class="col-lg-4">
-                        <section id="germany">
-                        <h3 class="title keword alignLeft"><img src="img/country/germany.png" alt="germany" />독일</h3>
-                            <div class="box keword">
-                                <ol class="kewordRank">
-                                    <li>
-                                        <div class="kewordRankData">
-                                            <em class="num">1</em><span class="germanyData"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="kewordRankData">
-                                            <em class="num">2</em><span class="germanyData"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="kewordRankData">
-                                            <em class="num">3</em><span class="germanyData"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="kewordRankData">
-                                            <em class="num">4</em><span class="germanyData"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="kewordRankData">
-                                            <em class="num">5</em><span class="germanyData"></span>
-                                        </div>
-                                    </li>
-                                </ol>
-                            </div>
-                        </section>
-                    </div>
+                    
                     <div class="col-lg-4">
                         <section id="usa">
                             <h3 class="title keword alignLeft"><img src="img/country/usa.png" alt="usa" />미국</h3>
@@ -146,33 +113,69 @@
                                 <ol class="kewordRank">
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">1</em><span class="usa"></span>
+                                            <em class="num">1</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">2</em><span class="usa"></span>
+                                            <em class="num">2</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">3</em><span class="usa"></span>
+                                            <em class="num">3</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">4</em><span class="usa"></span>
+                                            <em class="num">4</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">5</em><span class="usa"></span>
+                                            <em class="num">5</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                 </ol>
                             </div>
                         </section>
                     </div>
+                    
+                    <div class="col-lg-4">
+                        <section id="germany">
+                        <h3 class="title keword alignLeft"><img src="img/country/germany.png" alt="germany" />독일</h3>
+                            <div class="box keword">
+                                <ol class="kewordRank">
+                                    <li>
+                                        <div class="kewordRankData">
+                                            <em class="num">1</em><span class="keywordData"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="kewordRankData">
+                                            <em class="num">2</em><span class="keywordData"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="kewordRankData">
+                                            <em class="num">3</em><span class="keywordData"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="kewordRankData">
+                                            <em class="num">4</em><span class="keywordData"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="kewordRankData">
+                                            <em class="num">5</em><span class="keywordData"></span>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </section>
+                    </div>
+                    
                 </div>
 
                 <div class="row">
@@ -183,27 +186,27 @@
                                 <ol class="kewordRank">
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">1</em><span class="japan"></span>
+                                            <em class="num">1</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">2</em><span class="japan"></span>
+                                            <em class="num">2</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">3</em><span class="japan"></span>
+                                            <em class="num">3</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">4</em><span class="japan"></span>
+                                            <em class="num">4</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">5</em><span class="japan"></span>
+                                            <em class="num">5</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                 </ol>
@@ -217,27 +220,27 @@
                                 <ol class="kewordRank">
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">1</em><span class="france"></span>
+                                            <em class="num">1</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">2</em><span class="france"></span>
+                                            <em class="num">2</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">3</em><span class="france"></span>
+                                            <em class="num">3</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">4</em><span class="france"></span>
+                                            <em class="num">4</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">5</em><span class="france"></span>
+                                            <em class="num">5</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                 </ol>
@@ -251,27 +254,27 @@
                                 <ol class="kewordRank">
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">1</em><span class="russia"></span>
+                                            <em class="num">1</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">2</em><span class="russia"></span>
+                                            <em class="num">2</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">3</em><span class="russia"></span>
+                                            <em class="num">3</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">4</em><span class="russia"></span>
+                                            <em class="num">4</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="kewordRankData">
-                                            <em class="num">5</em><span class="russia"></span>
+                                            <em class="num">5</em><span class="keywordData"></span>
                                         </div>
                                     </li>
                                 </ol>

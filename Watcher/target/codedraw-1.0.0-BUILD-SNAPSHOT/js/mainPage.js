@@ -15,15 +15,15 @@ function initMap() {
         maxWidth: 150,    
 	});
    
- 	//kmlFileLoad
+ 	// kmlFileLoad
  	var kmlFileName = 'main_statistics_map_c2015'+getThisMonth()+'00';
- 	addStatisticsKmlLayer('http://14.63.217.11/kml/'+kmlFileName);
+ 	addStatisticsKmlLayer('http://61.77.248.178:8080/kml/'+kmlFileName);
 
 }
 
 function addStatisticsKmlLayer(url) {
-		//init 후
-		gMap = new google.maps.Map(document.getElementById('google-map'), {
+		// init 후
+		var gMap = new google.maps.Map(document.getElementById('google-map'), {
 	        center: { lat: 36.5, lng: 127 },
 	        zoom: 7
 	    });
@@ -78,7 +78,7 @@ function addStatisticsKmlLayer(url) {
 			
 			changeMainWeather2015(data.temperature, data.humidity);
 			makeCurCrime(data.cDate.substring(4,6), data.regionCode);
-			change2014Data(data.cDate, data.regionCode);
+			change2014Data('2014'+data.cDate.substring(4,8), data.regionCode);
 			changeRegionName(data.regionName);
 
 				});
@@ -106,21 +106,21 @@ function loadCrimeRateofArea(selMonth,init) {
         monthClass[i].innerHTML = selMonth + '월';
     }
 
-    //backGroundColor 변경
+    // backGroundColor 변경
 	var $mSelbtn = $('#mSelBtn'+selMonth);
-	//클릭 버튼 색 변경
+	// 클릭 버튼 색 변경
 		initMonthBtnCss();
 		changeMonthBtnCss(selMonth);
-	//kmlFileLoad
+	// kmlFileLoad
 	if(!init){
 		var kmlFileName = 'main_statistics_map_c2015'+selMonth+'00';
-		addStatisticsKmlLayer('http://14.63.217.11/kml/'+kmlFileName);
+		addStatisticsKmlLayer('http://61.77.248.178:8080/kml/'+kmlFileName);
 	}
 	
     createLineChart(selMonth);
 	initSeoul(selMonth);
     createPieChartThisYear(selMonth);
-    //changeSelMonthWeather()
+    // changeSelMonthWeather()
 }
 
 function thisMonthClick() {
@@ -134,7 +134,7 @@ function initMonthBtnCss(){
 	$mSelBtn.each(function(){
 		$(this).css("background-color","#337ab7");
 	})
-	//$thisMbtn.css("background-color","#337ab7");
+	// $thisMbtn.css("background-color","#337ab7");
 }
 
 function changeMonthBtnCss(selMonth){
@@ -155,7 +155,7 @@ function getThisMonth(){
 
 function createPieChartThisYear(selMonth) {
 
-    //ajax 호출후 데이터가져와서 커스터마이징
+    // ajax 호출후 데이터가져와서 커스터마이징
     zingchart.render({
         id: 'crimeChart',
         data: {
@@ -301,11 +301,11 @@ function createLineChart(selMonth) {
 
 function time() {
     var now = new Date();
-    var year = now.getFullYear(); //년
-    var month = now.getMonth() + 1; //월
-    var day = now.getDate(); //일
-    var hour = now.getHours(); //시
-    var minute = now.getMinutes(); //분
+    var year = now.getFullYear(); // 년
+    var month = now.getMonth() + 1; // 월
+    var day = now.getDate(); // 일
+    var hour = now.getHours(); // 시
+    var minute = now.getMinutes(); // 분
     var second = now.getSeconds();// 초
 
     document.getElementById('date').innerHTML = "<strong>" + year + "-" + month + "-" + day + "</strong>";
@@ -367,7 +367,7 @@ function change2014Data(cDate, regionCode) {
 			regionCode : regionCode
 		};  
 	
-	//init 2014 Data
+	// init 2014 Data
 	$.ajax({
 	    url : '/loadCrimeRate5AndAvg',
 	    contentType : 'application/json; charset=utf-8',
@@ -390,6 +390,9 @@ function makeCurCrime(selMonth, regionCode) {
 } 
 
 function createPieChartThisYear(selMonth, regionCode){
+		if(regionCode == undefined){
+			regionCode = '02';
+		}
 	   var param = {
 	            selMonth : selMonth,
 	            regionCode : regionCode
@@ -403,31 +406,34 @@ function createPieChartThisYear(selMonth, regionCode){
 	          data : param,
 	          dataType : 'json',
 	      }).done(function(json, status, jqXHR){
-	    	  var crimePIchartInfo = json.crimePIchart;
-	    	  
+	    	  var crimePIchartInfo = new Array();
+	    	  crimePIchartInfo = json.crimePIchart.slice();
+	    	  crimeConfig.series[0].values = [crimePIchartInfo[0].monthRate];
+	    	  crimeConfig.series[1].values = [100 - crimePIchartInfo[0].monthRate];
+	    	  /*
 	    	  crimeConfig.series = [
-	{
-	    text: "Docs",
-	    values: [crimePIchartInfo[0].monthRate],
-	    lineColor: "#11A8AB",
-	    backgroundColor: "#11A8AB",
-	    lineWidth: 1,
-	},
-	{
-	    "value-box": {
-	        "visible": false
-	    },
-	    text: "Docs",
-	    values: [100 - crimePIchartInfo[0].monthRate],
-	    lineColor: "#394264",
-	    backgroundColor: "#394264",
-	    lineWidth: 1,
-	    marker: {
-	        backgroundColor: '#394264'
-	    }
-	}
-	    	                        ];
-	    	  
+	    		  {
+	    			  text: "Docs",
+	    			  values: [crimePIchartInfo[0].monthRate],
+	    			  lineColor: "#11A8AB",
+	    			  backgroundColor: "#11A8AB",
+	    			  lineWidth: 1,
+	    		  },
+	    		  {
+	    			  "value-box": {
+	    				  "visible": false
+	    			  },
+	    			  text: "Docs",
+	    			  values: [100 - crimePIchartInfo[0].monthRate],
+	    			  lineColor: "#394264",
+	    			  backgroundColor: "#394264",
+	    			  lineWidth: 1,
+	    			  marker: {
+	    				  backgroundColor: '#394264'
+	    			  }
+	    		  }
+	    		  ];
+	    	  */
 	    	  zingchart.render({
 	              id: 'crimeChart',
 	              data: {

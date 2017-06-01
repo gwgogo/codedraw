@@ -25,7 +25,7 @@ function loadSimul() {
 		    data : param
 		}).done(function(json, status, jqXHR){
 		
-			var url = 'http://14.63.217.11/kml/'+json.kmlFileName;
+			var url = 'http://220.78.52.179:8080/kml/'+json.kmlFileName;
 			addStatisticsKmlLayer(url);
 			
 			var myConfig = trendCuvConfig;

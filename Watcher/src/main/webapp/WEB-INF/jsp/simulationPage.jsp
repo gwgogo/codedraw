@@ -54,8 +54,6 @@
                 <div class="container-fluid">
                     <ul class="nav navbar-nav">
                         <li><a href="#menu-toggle" id="menu-toggle">☰</a></li>
-                        <li><a href="#">Watcher 소개</a></li>
-                        <li><a href="#">사용가이드</a></li>
                         <li><a href="/developerInfo">개발진</a></li>
                     </ul>
                 </div>

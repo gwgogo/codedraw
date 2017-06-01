@@ -1,4 +1,4 @@
-﻿/*
+/*
     @intro page
     @developer: IM JUN HYEOK
     @date: 2016. 09.13
@@ -10,7 +10,19 @@
             margin: 0;
             padding: 0;
         }
-
+        
+#skipBtn {
+         float: right;
+         position: relative;
+         z-index: 10;
+         height: 20px;
+         width: 50px;   
+         color: #ffffff;
+         margin: 50px 20px;
+         text-decoration: none;
+         margin-left: 90%;
+      }
+      
         #logo {
             position: absolute;
             width: 500px;

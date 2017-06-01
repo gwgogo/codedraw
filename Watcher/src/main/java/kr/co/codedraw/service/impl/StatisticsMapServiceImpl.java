@@ -27,7 +27,7 @@ import net.sf.json.JSONObject;
 @Component
 public class StatisticsMapServiceImpl implements StatisticsMapService{
 
-	
+	static final String origKmlFilePath = "D:/downloads/tomcat8/webapps/ROOT/kml"; 
 	@Autowired
 	private StatisticsMapDao statisticsMapDao; 
 	
@@ -35,7 +35,8 @@ public class StatisticsMapServiceImpl implements StatisticsMapService{
 	@Override
 	public void makeStatisticsMap(String cDate) {
 		//KML File Load
-		String origKmlFilePath = "D:"+File.separator+"watcher"+File.separator+"kml"; //local
+		
+		//String origKmlFilePath = "D:"+File.separator+"watcher"+File.separator+"kml"; //local
 		//String origKmlFilePath =File.separator+"root"+File.separator+"watcher"+File.separator+"apache-tomcat-7.0.72"+File.separator+"webapps"+File.separator+"kml"; //server
 		List<CrimeViewDto> crimeInfoList = statisticsMapDao.getCrimeRateofArea(cDate);
 		File file = new File(origKmlFilePath+File.separator+"KOR_adm.kml");
@@ -177,8 +178,9 @@ public class StatisticsMapServiceImpl implements StatisticsMapService{
 		//resultList 이걸로 KML 파일 만들기
 		
 		//KML File Load
+		
 		//String origKmlFilePath = "D:"+File.separator+"watcher"+File.separator+"kml"; //local
-		String origKmlFilePath =File.separator+"root"+File.separator+"watcher"+File.separator+"apache-tomcat-7.0.72"+File.separator+"webapps"+File.separator+"kml"; //server
+		//String origKmlFilePath =File.separator+"root"+File.separator+"watcher"+File.separator+"apache-tomcat-7.0.72"+File.separator+"webapps"+File.separator+"kml"; //server
 		File file = new File(origKmlFilePath+File.separator+"KOR_adm.kml");
 		Kml kml = Kml.unmarshal(file);
 		

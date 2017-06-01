@@ -11,15 +11,15 @@
 		<beans:bean id = "dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 			<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 			<beans:property name="url" value="jdbc:mysql://localhost:3306/watcher"/>
-			<beans:property name="username" value="test"/>
-			<beans:property name="password" value="test"/>
+			<beans:property name="username" value="codedraw"/>
+			<beans:property name="password" value="codedraw"/>
 		</beans:bean>
 	</beans:beans>
 	
 	<beans:beans profile = "dev">
 		<beans:bean id = "dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 			<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-			<beans:property name="url" value="jdbc:mysql://14.63.217.11:3306/watcher"/>
+			<beans:property name="url" value="jdbc:mysql://121.137.54.104:3306/watcher"/>
 			<beans:property name="username" value="codedraw"/>
 			<beans:property name="password" value="codedraw"/>
 		</beans:bean>
