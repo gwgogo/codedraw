@@ -3,6 +3,12 @@ package com.tmon.platform.api.domain;
 public class ResponseItem {
 	private String code;
 	private String msg;
+	
+	public ResponseItem() {
+		this.code = "200";
+		this.msg = "success";
+	}
+	
 	public String getCode() {
 		return code;
 	}

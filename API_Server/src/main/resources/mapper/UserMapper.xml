@@ -4,8 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="UserMapper">
-	<select id="selectUserById" resultType="UserDto" parameterType="String">
-		SELECT user_pw, privileges FROM USER WHERE user_id=#{user_id}
+	<select id="selectUserById" resultType="com.tmon.platform.api.dto.UserDto" parameterType="String">
+		SELECT * FROM USER WHERE user_id=#{user_id}
 	</select>
 
 </mapper>

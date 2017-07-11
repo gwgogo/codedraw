@@ -16,10 +16,17 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping("/loginForm")
+	public String loginForm() {
+		return "loginForm";
+	}
+	
+	
 	@RequestMapping("/login")
 	@ResponseBody
 	public ResponseItem login(@RequestParam("user_id")String user_id, @RequestParam("user_pw") String user_pw) {
 		
-		return null;
+		return userService.login(user_id, user_pw);
+	
 	}
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.domain.ResponseItem;
+import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.service.UserService;
 
 @Service
@@ -13,9 +14,13 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	
 	public ResponseItem login(String user_id, String user_pw) {
-		//ResponseItem
-		//UserDto userDto = userDao.login(user_id);
+		ResponseItem item = new ResponseItem();
+		UserDto userDto = userDao.login(user_id);
+		if(!user_pw.equals(userDto.getUser_pw())) {
+			item.setCode("444");
+			item.setMsg("password error");
+		}
 		
-		return null;
+		return item;
 	}
 }
