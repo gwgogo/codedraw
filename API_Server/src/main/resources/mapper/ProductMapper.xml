@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+	
+	<select id="selectProductListAll" resultType="com.tmon.platform.api.dto.ProductDto">
+		SELECT * FROM PRODUCT;
+	</select>
+	
+	<select id="selectProductListByUserId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="String">
+		SELECT * FROM PRODUCT WHERE product_user_user_id=#{user_id}
+	</select> 
+
+	<select id="selectProductListByOrderId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
+		SELECT * FROM PRODUCT 
+		WHERE product_id 
+		IN (
+			SELECT order_information_product_product_id 
+			FROM ORDER_INFORMATION 
+			WHERE ORDER_INFORMATION.order_information_reservation_order_reservation_id = #{order_id}
+			)
+	</select>
+	
+	<select id="selectProductListByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
+		SELECT * FROM WHERE product_category_category_id=#{category_id}
+	</select>
+	
+</mapper>

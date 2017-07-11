@@ -1,0 +1,21 @@
+# Eclipse
+
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# Projects
+
+target/
+target/*.*
+/target
+*.jar
+*.war
+.DS_Store
+target
