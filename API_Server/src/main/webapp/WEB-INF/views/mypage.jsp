@@ -7,12 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/insertDto" method="post">
-아이디 : <input type="text" name="id"/><br/>
-이름 : <input type="text" name="name"/><br/>
-<input type="submit" value="전송"/>
-
-
-</form>
+<h3>주문 페이지</h3>
 </body>
 </html>
