@@ -15,18 +15,15 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductDao productDao;
 	
-	public List<ProductDto> selectProductListAll(){
-		return productDao.selectProductListAll();
+	public List<ProductDto> productAll(){
+		return productDao.productAll();
 	}
 	
-	public List<ProductDto> selectProductListByUserId(String user_id){
-		return productDao.selectProductListByUserId(user_id);
+	public List<ProductDto> productByOrderId(int order_id){
+		return productDao.productByOrderId(order_id);
 	}
 	
-	public List<ProductDto> selectProductListByOrderId(int order_id){
-		return productDao.selectProductListByOrderId(order_id);
-	}
-	public List<ProductDto> selectProductListByCategoryId(int category_id){
-		return productDao.selectProductListByCategoryId(category_id);
+	public List<ProductDto> productByCategoryId(int category_id){
+		return productDao.productByCategoryId(category_id);
 	}
 }

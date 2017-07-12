@@ -15,19 +15,15 @@ public class ProductDaoImpl implements ProductDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<ProductDto> selectProductListAll(){
-		return sqlSession.selectList("ProductMapper.selectProductListAll");
+	public List<ProductDto> productAll(){
+		return sqlSession.selectList("ProductMapper.productAll");
 	}
 	
-	public List<ProductDto> selectProductListByUserId(String user_id){
-		return sqlSession.selectList("ProductMapper.selectProductListByUserId", user_id);
+	public List<ProductDto> productByOrderId(int order_id){
+		return sqlSession.selectList("ProductMapper.productByOrderId", order_id);
 	}
 	
-	public List<ProductDto> selectProductListByOrderId(int order_id){
-		return sqlSession.selectList("ProductMapper.selectProductListByOrderId", order_id);
-	}
-	
-	public List<ProductDto> selectProductListByCategoryId(int category_id){
-		return sqlSession.selectList("ProductMapper.selectProductListByCategoryId", category_id);
+	public List<ProductDto> productByCategoryId(int category_id){
+		return sqlSession.selectList("ProductMapper.productByCategoryId", category_id);
 	}
 }

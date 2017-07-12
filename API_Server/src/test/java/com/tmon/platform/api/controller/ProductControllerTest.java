@@ -25,7 +25,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void selectProductListAll() {
-		List<ProductDto> list = productService.selectProductListAll();
+		List<ProductDto> list = productService.productAll();
 		assertThat(list, notNullValue());
 	}
 }

@@ -7,8 +7,10 @@ public class ProductDto {
 	private String image_url;
 	private int max_quantity;
 	private int sell_quantity;
-	private int product_category_category_id;
 	private String product_user_user_id;
+	private int category_id;
+	private String category_name; 
+	
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -45,17 +47,24 @@ public class ProductDto {
 	public void setSell_quantity(int sell_quantity) {
 		this.sell_quantity = sell_quantity;
 	}
-	public int getProduct_category_category_id() {
-		return product_category_category_id;
-	}
-	public void setProduct_category_category_id(int product_category_category_id) {
-		this.product_category_category_id = product_category_category_id;
-	}
 	public String getProduct_user_user_id() {
 		return product_user_user_id;
 	}
 	public void setProduct_user_user_id(String product_user_user_id) {
 		this.product_user_user_id = product_user_user_id;
 	}
+	public int getCategory_id() {
+		return category_id;
+	}
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
+	
 	
 }

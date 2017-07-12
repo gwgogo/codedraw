@@ -5,15 +5,16 @@
 
 <mapper namespace="ProductMapper">
 	
-	<select id="selectProductListAll" resultType="com.tmon.platform.api.dto.ProductDto">
-		SELECT * FROM PRODUCT;
+	<select id="productAll" resultType="com.tmon.platform.api.dto.ProductDto">
+		SELECT product_id, product_user_user_id, 
+				sell_quantity, max_quantity, image_url, price, product_name, 
+     			product_category_category_id AS category_id, 
+     			CATEGORY.category_name AS category_name 
+		FROM PRODUCT JOIN CATEGORY 
+		WHERE CATEGORY.category_id = PRODUCT.product_category_category_id;
 	</select>
-	
-	<select id="selectProductListByUserId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="String">
-		SELECT * FROM PRODUCT WHERE product_user_user_id=#{user_id}
-	</select> 
 
-	<select id="selectProductListByOrderId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
+	<select id="productByOrderId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
 		SELECT * FROM PRODUCT 
 		WHERE product_id 
 		IN (
@@ -23,8 +24,14 @@
 			)
 	</select>
 	
-	<select id="selectProductListByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
-		SELECT * FROM WHERE product_category_category_id=#{category_id}
+	<select id="productByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
+		SELECT product_id, product_user_user_id, sell_quantity, max_quantity, image_url, price, product_name, 
+    		  product_category_category_id AS category_id, CATEGORY.category_name AS category_name 
+		FROM PRODUCT JOIN CATEGORY 
+		WHERE CATEGORY.category_id = PRODUCT.product_category_category_id 
+			AND PRODUCT.product_category_category_id=#{category_id};
+
 	</select>
+	
 	
 </mapper>

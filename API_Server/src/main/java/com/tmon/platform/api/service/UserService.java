@@ -1,7 +1,10 @@
 package com.tmon.platform.api.service;
 
-import com.tmon.platform.api.domain.ResponseItem;
+import org.json.simple.JSONObject;
+
+import com.tmon.platform.api.dto.UserDto;
 
 public interface UserService {
-	public ResponseItem login(String user_id, String user_pw);
+	public JSONObject login(String user_id, String user_pw);
+	public JSONObject join(UserDto userDto);
 }

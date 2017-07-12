@@ -7,5 +7,16 @@
 	<select id="selectUserById" resultType="com.tmon.platform.api.dto.UserDto" parameterType="String">
 		SELECT * FROM USER WHERE user_id=#{user_id}
 	</select>
+	
+	<insert id="insertUser" parameterType="com.tmon.platform.api.dto.UserDto">
+		INSERT INTO USER (
+		   user_id
+		  ,user_pw
+		) VALUES (
+		   #{user_id} 
+		  ,#{user_pw}
+		)
+	</insert>
+
 
 </mapper>

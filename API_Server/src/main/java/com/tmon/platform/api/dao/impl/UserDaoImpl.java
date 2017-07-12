@@ -1,12 +1,13 @@
 package com.tmon.platform.api.dao.impl;
 
+import java.sql.SQLException;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
-
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -16,5 +17,9 @@ public class UserDaoImpl implements UserDao {
 	
 	public UserDto login(String user_id) {
 		return sqlSession.selectOne("UserMapper.selectUserById", user_id);
+	}
+	
+	public void join(UserDto userDto) {
+		sqlSession.insert("UserMapper.insertUser", userDto);
 	}
 }
