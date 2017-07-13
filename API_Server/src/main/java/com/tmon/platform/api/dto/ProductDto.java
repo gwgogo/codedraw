@@ -7,7 +7,6 @@ public class ProductDto {
 	private String image_url;
 	private int max_quantity;
 	private int sell_quantity;
-	private String product_user_user_id;
 	private int category_id;
 	private String category_name; 
 	
@@ -46,12 +45,6 @@ public class ProductDto {
 	}
 	public void setSell_quantity(int sell_quantity) {
 		this.sell_quantity = sell_quantity;
-	}
-	public String getProduct_user_user_id() {
-		return product_user_user_id;
-	}
-	public void setProduct_user_user_id(String product_user_user_id) {
-		this.product_user_user_id = product_user_user_id;
 	}
 	public int getCategory_id() {
 		return category_id;

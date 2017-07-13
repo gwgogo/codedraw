@@ -23,10 +23,10 @@
 				user_pw : $('#user_pw').val()
 			},
 			success : function(data) {
-				alert("success" + data.msg);
+				alert("success " + data);
 			},
 			error : function(data) {
-				 alert("fail" + data.responseText)
+				 alert("fail " + data.responseText)
 		    }
 		});
 	}

@@ -1,6 +1,9 @@
 package com.tmon.platform.api.dao.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,15 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public UserDto login(String user_id) {
-		return sqlSession.selectOne("UserMapper.selectUserById", user_id);
+	public List<UserDto> user(){
+		return sqlSession.selectList("UserMapper.userAll");
+	}
+	
+	public UserDto login(String user_id, String user_pw) {
+		Map<String, String> argument = new HashMap<>();
+		argument.put("user_id", user_id);
+		argument.put("user_pw", user_pw);
+		return sqlSession.selectOne("UserMapper.login", argument);
 	}
 	
 	public void join(UserDto userDto) {

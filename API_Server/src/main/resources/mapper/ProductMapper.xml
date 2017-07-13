@@ -6,12 +6,11 @@
 <mapper namespace="ProductMapper">
 	
 	<select id="productAll" resultType="com.tmon.platform.api.dto.ProductDto">
-		SELECT product_id, product_user_user_id, 
-				sell_quantity, max_quantity, image_url, price, product_name, 
-     			product_category_category_id AS category_id, 
-     			CATEGORY.category_name AS category_name 
+		SELECT product_id, product_name, price, 
+		image_url, max_quantity, sell_quantity, 
+		PRODUCT.category_id, CATEGORY.category_name 
 		FROM PRODUCT JOIN CATEGORY 
-		WHERE CATEGORY.category_id = PRODUCT.product_category_category_id;
+		USING (category_id)
 	</select>
 
 	<select id="productByOrderId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
@@ -25,13 +24,14 @@
 	</select>
 	
 	<select id="productByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
-		SELECT product_id, product_user_user_id, sell_quantity, max_quantity, image_url, price, product_name, 
-    		  product_category_category_id AS category_id, CATEGORY.category_name AS category_name 
+		SELECT product_id, product_name, price, 
+	        	image_url,  max_quantity, sell_quantity,
+	    		PRODUCT.category_id, CATEGORY.category_name 
 		FROM PRODUCT JOIN CATEGORY 
-		WHERE CATEGORY.category_id = PRODUCT.product_category_category_id 
-			AND PRODUCT.product_category_category_id=#{category_id};
+	    USING (category_id)
+	    WHERE PRODUCT.category_id=#{category_id}
 
-	</select>
+	</select> 
 	
 	
 </mapper>
