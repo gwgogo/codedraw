@@ -18,8 +18,8 @@
 		)
 	</insert>
 	
-	<select id="userAll" resultType="com.tmon.platform.api.dto.UserDto">
-		SELECT * FROM USER;
+	<select id="user" resultType="com.tmon.platform.api.dto.UserDto" parameterType="String">
+		SELECT * FROM USER WHERE user_id=#{user_id}
 	</select>
 	
 	<select id="login" resultType="com.tmon.platform.api.dto.UserDto" parameterType="Map">

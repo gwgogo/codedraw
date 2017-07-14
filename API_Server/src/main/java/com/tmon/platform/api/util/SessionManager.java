@@ -80,8 +80,19 @@ public class SessionManager {
 	}
 	
 	private UserDto getValidUserDto(String session) {
-		if(sessionPool.containsKey(session))
+		if(!sessionPool.containsKey(session))
 			return null;
-		else return sessionPool.get(session);
+		else 
+			return sessionPool.get(session);
+	}
+	
+	public void deleteSession(String session) {
+		if(sessionPool.containsKey(session)) {
+			sessionPool.remove(session);
+		}
+	}
+	
+	public Hashtable getSessionPool() {
+		return sessionPool;
 	}
 }

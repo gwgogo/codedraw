@@ -12,15 +12,22 @@
 		FROM PRODUCT JOIN CATEGORY 
 		USING (category_id)
 	</select>
+	
+	<select id="productByProductId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
+		SELECT product_id, product_name, price, 
+		image_url, max_quantity, sell_quantity, 
+		PRODUCT.category_id, CATEGORY.category_name 
+		FROM PRODUCT JOIN CATEGORY 
+		USING (category_id) WHERE PRODUCT.product_id = #{product_id}
+	</select>
 
-	<select id="productByOrderId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
-		SELECT * FROM PRODUCT 
-		WHERE product_id 
-		IN (
-			SELECT order_information_product_product_id 
-			FROM ORDER_INFORMATION 
-			WHERE ORDER_INFORMATION.order_information_reservation_order_reservation_id = #{order_id}
-			)
+	<select id="productByReservationId" resultType="com.tmon.platform.api.dto.ReservationProductDto" parameterType="int">
+		 SELECT 
+		 ORDER_INFORMATION.reservation_id, PRODUCT.product_id, 
+		 PRODUCT.product_name, PRODUCT.image_url, ORDER_INFORMATION.quantity,
+		 PRODUCT.price * ORDER_INFORMATION.quantity AS part_price
+		 FROM PRODUCT JOIN ORDER_INFORMATION 
+			ON PRODUCT.product_id = ORDER_INFORMATION.product_id AND ORDER_INFORMATION.reservation_id = #{reservation_id}
 	</select>
 	
 	<select id="productByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
@@ -32,6 +39,11 @@
 	    WHERE PRODUCT.category_id=#{category_id}
 
 	</select> 
+	
+	<delete id="productDelete" parameterType="int">
+		DELETE FROM PRODUCT
+		WHERE product_id=#{product_id}
+	</delete>
 	
 	
 </mapper>

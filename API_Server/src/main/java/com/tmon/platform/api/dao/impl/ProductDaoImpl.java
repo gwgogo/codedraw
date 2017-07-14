@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tmon.platform.api.dao.ProductDao;
+import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.dto.ProductDto;
 
 @Repository
@@ -19,11 +20,18 @@ public class ProductDaoImpl implements ProductDao {
 		return sqlSession.selectList("ProductMapper.productAll");
 	}
 	
-	public List<ProductDto> productByOrderId(int order_id){
-		return sqlSession.selectList("ProductMapper.productByOrderId", order_id);
+	public ProductDto productByProductId(int product_id) {
+		return sqlSession.selectOne("ProductMapper.productByProductId",product_id);
+	}
+	
+	public List<ReservationProductDto> productByReservationId(int reservation_id){
+		return sqlSession.selectList("ProductMapper.productByReservationId", reservation_id);
 	}
 	
 	public List<ProductDto> productByCategoryId(int category_id){
 		return sqlSession.selectList("ProductMapper.productByCategoryId", category_id);
+	}
+	public void productDelete(int product_id) {
+		sqlSession.delete("ProductMapper.productDelete", product_id);
 	}
 }

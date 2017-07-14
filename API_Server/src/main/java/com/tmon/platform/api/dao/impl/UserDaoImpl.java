@@ -18,8 +18,8 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<UserDto> user(){
-		return sqlSession.selectList("UserMapper.userAll");
+	public UserDto user(String user_id){
+		return sqlSession.selectOne("UserMapper.user", user_id);
 	}
 	
 	public UserDto login(String user_id, String user_pw) {

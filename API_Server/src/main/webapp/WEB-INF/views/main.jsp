@@ -9,10 +9,15 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#button').click(function(){
+	$('#mypage').click(function(){
 		$.ajax({
 			type : "GET",
-			url : "/mypage",
+			url : "/mypageData",
+            beforeSend: function (request)
+            {
+                request.setRequestHeader("session", "shinkwangwon");
+            },
+            crossDomain: true,
 			success : function(data){
 				location.href='http://localhost:8080/mypage';
 			},
@@ -21,14 +26,30 @@ $(document).ready(function(){
 			}
 		})
 	})
+	
+	$('#logout').click(function(){
+		$.ajax({
+			type : "GET",
+			url : "/logout",
+			success : function(data){
+				location.href='http://localhost:8080/main';
+			},
+			error : function(data){
+				location.href='http://localhost:8080/loginForm';
+			}
+		})
+	})
+	
 })
 
 </script>
 
 </head>
 <body>
-아이디 : <%= (String)session.getAttribute("user_id") %> <br/>
-<!-- <a href="/mypage">mypage</a> -->
-<input type="button" value="mypage" id="button"/>
+
+
+
+<input type="button" value="mypage" id="mypage"/><br/>
+<input type="button" value="logout" id="logout"/>
 </body>
 </html>

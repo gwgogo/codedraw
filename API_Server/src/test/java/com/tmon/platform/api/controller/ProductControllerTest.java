@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tmon.platform.api.dto.ProductDto;
+import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,13 +25,9 @@ import com.tmon.platform.api.service.ProductService;
 public class ProductControllerTest {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
+	
 	@Autowired
 	private ProductService productService;
-	
-	@Before
-	public void before() {
-		
-	}
 	
 	@Test
 	public void productAll() {
@@ -40,8 +37,20 @@ public class ProductControllerTest {
 	}
 	
 	@Test
+	public void productByProductId() {
+		ProductDto productDto = productService.productByProductId(1);
+		assertThat(productDto, notNullValue());
+	}
+	
+	@Test
 	public void productByCategoryId() {
 		List<ProductDto> list = productService.productByCategoryId(1);
+		assertThat(list,notNullValue());
+	}
+	
+	@Test
+	public void productByReservationId() {
+		List<ReservationProductDto> list = productService.productByReservationId(1);
 		assertThat(list,notNullValue());
 	}
 	

@@ -9,7 +9,8 @@ import com.tmon.platform.api.util.CustomException;
 
 public interface UserService {
 
-	public String join(UserDto userDto) throws Exception;
-	public List<UserDto> user();
+	public JSONObject join(UserDto userDto) throws Exception;
+	public UserDto user(String session);
 	public JSONObject login(String user_id, String user_pw) throws CustomException;
+	public JSONObject logout(String session) throws CustomException;
 }

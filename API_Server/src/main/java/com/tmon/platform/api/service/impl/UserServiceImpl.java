@@ -24,8 +24,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	SessionManager sessionManager;
 	
-	public List<UserDto> user(){
-		return userDao.user();
+	public UserDto user(String session){
+		String user_id = sessionManager.getUserId(session);
+		return userDao.user(user_id);
 	}
 	
 	/**
@@ -55,15 +56,28 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
+	public JSONObject logout(String session) throws CustomException{
+		
+		JSONObject obj = new JSONObject();
+		if(session == null) {
+			throw new CustomException("Invalid Session");
+		}
+		sessionManager.deleteSession(session);
+		obj.put("msg", "Success Delete Session");
+		return obj;
+	}
 	
-	public String join(UserDto userDto) throws Exception {
+	
+	public JSONObject join(UserDto userDto) throws Exception {
 		try {
 			userDao.join(userDto); 
-		}catch(DataAccessException e) {
+		}catch(Exception e) {
 			throw new SQLException("Join Error(duplication ID)");
 		}
-		
-		return "Join Success";
+		JSONObject obj = new JSONObject();
+		obj.put("msg","Join Success");
+		return obj;
 	}
+	
 	
 }

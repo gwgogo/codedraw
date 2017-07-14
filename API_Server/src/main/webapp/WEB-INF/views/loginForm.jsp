@@ -23,7 +23,10 @@
 				user_pw : $('#user_pw').val()
 			},
 			success : function(data) {
+				document.cookie="session=" + data.session;
+				
 				alert("success, session : " + data.session);
+				location.href='http://localhost:8080/main';
 			},
 			error : function(data) {
 				 alert("fail : " + data.responseText)

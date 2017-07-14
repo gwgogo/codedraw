@@ -23,7 +23,7 @@
 				user_pw : $('#user_pw').val()
 			},
 			success : function(data) {
-				alert("success " + data);
+				alert("success " + data.msg);
 			},
 			error : function(data) {
 				 alert("fail " + data.responseText)
