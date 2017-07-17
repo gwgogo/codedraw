@@ -11,13 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.dto.ProductDto;
+import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.service.ProductService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 
+/**
+ * 
+ * @author 신광원
+ * @description 상품 조회 API
+ *
+ */
+@Api("상품에 대한 API")
 @Controller
 public class ProductController {
 	
@@ -30,28 +40,31 @@ public class ProductController {
 		return "index";
 	}
 	
-	@ApiOperation(value="상품 목록 전체 조회")
+	@ApiOperation(value="상품 전체 조회", notes="모든 상품 목록 조회")
 	@RequestMapping(value="/products", method=RequestMethod.GET)
 	@ResponseBody
 	public List<ProductDto> productAll(){
 		return productService.productAll();
 	}
 	
-	@ApiOperation(value="상품 상세 조회")
+	@ApiOperation(value="상품 상세 조회", notes="상품ID에 대한 상품 상세 조회")
+	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "query")
 	@RequestMapping(value="/productDetail", method=RequestMethod.GET)
 	@ResponseBody
 	public ProductDto productByProductId(@RequestParam("product_id")int product_id) {
 		return productService.productByProductId(product_id);
 	}
 	
-	@ApiOperation(value="주문번호에 따른 상품 목록 조회")
+	@ApiOperation(value="주문번호에 따른 상품 목록 조회", notes="하나의 주문에 포함된 상품 목록 조회")
+	@ApiImplicitParam(name = "reservation_id", value = "주문 ID", dataType = "int", paramType = "query")
 	@RequestMapping(value="/reservation", method=RequestMethod.GET)
 	@ResponseBody
 	public List<ReservationProductDto> productByReservationId(@RequestParam("reservation_id") int reservation_id){
 		return productService.productByReservationId(reservation_id);
 	}
 	
-	@ApiOperation(value="카테고리에 따른 상품 목록 조회")
+	@ApiOperation(value="카테고리 번호에 따른 상품 목록 조회", notes="카테고리별 상품 조회를 위한 API")
+	@ApiImplicitParam(name = "category_id", value = "카테고리 ID", dataType = "int", paramType = "query")
 	@RequestMapping(value="/category", method=RequestMethod.GET)
 	@ResponseBody
 	public List<ProductDto> productByCategoryId(@RequestParam("category_id") int category_id){
@@ -59,7 +72,8 @@ public class ProductController {
 	}
 	
 	@ApiOperation(value="상품 삭제")
-	@RequestMapping(value="/productDelete")
+	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "query")
+	@RequestMapping(value="/productDelete", method=RequestMethod.DELETE)
 	@ResponseBody
 	public JSONObject productDelete(@RequestParam("product_id")int product_id) throws SQLException {
 		return productService.productDelete(product_id);

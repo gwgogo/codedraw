@@ -1,11 +1,7 @@
 package com.tmon.platform.api.service.impl;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.UserDao;
@@ -45,7 +41,7 @@ public class UserServiceImpl implements UserService {
 			
 		//계정정보 없음
 		if(userDto == null) 
-			throw new CustomException("Invalid User Information");
+			throw new CustomException(501, "Invalid User Information");
 		
 		JSONObject result = new JSONObject();
 		String sessionValue = sessionManager.createSession(userDto);
@@ -60,7 +56,7 @@ public class UserServiceImpl implements UserService {
 		
 		JSONObject obj = new JSONObject();
 		if(session == null) {
-			throw new CustomException("Invalid Session");
+			throw new CustomException(501, "Invalid Session");
 		}
 		sessionManager.deleteSession(session);
 		obj.put("msg", "Success Delete Session");
@@ -68,11 +64,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
-	public JSONObject join(UserDto userDto) throws Exception {
+	public JSONObject join(UserDto userDto) throws CustomException {
 		try {
 			userDao.join(userDto); 
 		}catch(Exception e) {
-			throw new SQLException("Join Error(duplication ID)");
+			throw new CustomException( 501, "Join Error(duplication ID)");
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg","Join Success");

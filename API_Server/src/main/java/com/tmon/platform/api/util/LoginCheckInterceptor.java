@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.tmon.platform.api.controller.UserController;
+
 
 @Component
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
@@ -22,18 +22,19 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
+		//logger.info("핸들러 인터셉터 시작");
 		Cookie[] cookies = request.getCookies();
 		
-		
-		logger.info(cookies[0].getName() + " 세션의  값 : " + cookies[0].getValue());
-
 		for (int i = 0; i < cookies.length; i++) {
-			if (cookies[i].getName().equals("session")) {
-				String session = URLDecoder.decode(cookies[i].getValue());
-				logger.info(cookies[i].getName() + " 세션의  값 : " + session);
+			
+			if (cookies[i].getName().equals("session")) {	
+				String session = cookies[i].getValue();
+				response.sendRedirect("/mypageData?session=" + session);
 				return true;
 			}
 		}
+		
+		response.sendRedirect("/loginForm");
 		return false;
 	}
 }

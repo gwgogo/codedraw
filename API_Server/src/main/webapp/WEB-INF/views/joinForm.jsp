@@ -25,8 +25,9 @@
 			success : function(data) {
 				alert("success " + data.msg);
 			},
-			error : function(data) {
-				 alert("fail " + data.responseText)
+			error : function(request,status,error) {
+				 alert(request.errCode);
+				 alert("fail " + request.responseText)
 		    }
 		});
 	}

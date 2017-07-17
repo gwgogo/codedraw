@@ -2,7 +2,9 @@ package com.tmon.platform.api.util;
 
 public class CustomException extends Exception{
 
-	public CustomException(String errMsg) {
+	private int errCode;
+	public CustomException(int errCode, String errMsg ) {
 		super(errMsg);
+		this.errCode = errCode;
 	}
 }

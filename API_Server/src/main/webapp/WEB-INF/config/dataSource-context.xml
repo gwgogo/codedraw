@@ -13,8 +13,8 @@
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name = "driverClassName" value="${db.driverClass}"/>
-		<property name = "url" value = "${db.devUrl}"/>
-		<property name = "username" value="${db.username}"/>
-		<property name = "password" value="${db.password}"/>
+		<property name = "url" value = "${db.localUrl}"/>
+		<property name = "username" value="${db.localUsername}"/>
+		<property name = "password" value="${db.localPassword}"/>
 	</bean>
 </beans>

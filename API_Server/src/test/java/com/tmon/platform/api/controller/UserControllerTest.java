@@ -1,10 +1,13 @@
 package com.tmon.platform.api.controller;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
+
+import javax.servlet.http.Cookie;
 
 import org.junit.After;
 import org.junit.Before;
@@ -74,16 +77,19 @@ public class UserControllerTest {
 		userService.join(dto);
 	}
 	
+
 	@Test
 	public void mypage() throws Exception {
 		logger.info("Mypage Test");
-		request.setRequestURI("/mypage");
-		request.setParameter("session", sessionKey);
+		request.setRequestURI("/mypageData");
+		Cookie cookie = new Cookie("session", sessionKey);
+		request.setCookies(cookie);
 		Object handler = null;
 		Boolean test = loginCheckInterceptor.preHandle(request, response, handler);
-		assertEquals(test, true);
 		
+		assertEquals(test, true);
 		UserDto dto = userService.user(sessionKey);
+		assertThat(dto.getUser_id(), is("admin0001"));
 		assertThat(dto, notNullValue());
 		sessionManager.deleteSession(sessionKey);
 	}

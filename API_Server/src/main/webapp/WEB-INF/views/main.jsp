@@ -8,16 +8,24 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	$('#mypage').click(function(){
+
+	$(document).ready(function(){
+		$('#mypageData').click(function(){
+			mypageData();
+		})
+		
+		$('#logout').click(function(){
+			logout();
+		})
+		
+		
+		
+	})
+	function mypageData(){
 		$.ajax({
 			type : "GET",
 			url : "/mypageData",
-            beforeSend: function (request)
-            {
-                request.setRequestHeader("session", "shinkwangwon");
-            },
-            crossDomain: true,
+			dataType : 'json',	// 상관없음
 			success : function(data){
 				location.href='http://localhost:8080/mypage';
 			},
@@ -25,9 +33,9 @@ $(document).ready(function(){
 				location.href='http://localhost:8080/loginForm';
 			}
 		})
-	})
+	}
 	
-	$('#logout').click(function(){
+	function logout(){
 		$.ajax({
 			type : "GET",
 			url : "/logout",
@@ -38,9 +46,15 @@ $(document).ready(function(){
 				location.href='http://localhost:8080/loginForm';
 			}
 		})
-	})
+	}
 	
-})
+	function logout(){
+		$.ajax({
+			type : "GET",
+			url : "/admin",
+		})
+	}
+	
 
 </script>
 
@@ -49,7 +63,9 @@ $(document).ready(function(){
 
 
 
-<input type="button" value="mypage" id="mypage"/><br/>
-<input type="button" value="logout" id="logout"/>
+<input type="button" value="mypageData" id="mypageData"/><br/>
+<input type="button" value="logout" id="logout"/><br/>
+<input type="button" value="admin" id="admin"/><br/>
+
 </body>
 </html>

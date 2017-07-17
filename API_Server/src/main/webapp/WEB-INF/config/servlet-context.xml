@@ -37,9 +37,10 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/mypageData"/>
-			
+			<mvc:mapping path="/admin"/>
 			<beans:bean class="com.tmon.platform.api.util.LoginCheckInterceptor"/>
 		</mvc:interceptor>
+		
 	</mvc:interceptors>
 	
 	
