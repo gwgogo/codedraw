@@ -1,6 +1,8 @@
 package com.tmon.platform.api.service.impl;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import com.tmon.platform.api.util.SessionManager;
 
 @Service
 public class UserServiceImpl implements UserService {
-	//private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired
 	private UserDao userDao;
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService {
 		result.put("session", sessionValue);
 		
 		//logger.info("user login.\n" + "user_id : " + user_id + ", sessionValue : " + sessionvalue);
+		
 		return result;
 	}
 	

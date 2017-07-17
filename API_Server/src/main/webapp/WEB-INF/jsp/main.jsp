@@ -27,6 +27,7 @@
 			url : "/mypageData",
 			dataType : 'json',	// 상관없음
 			success : function(data){
+				alert(data.user_id);
 				location.href='http://localhost:8080/mypage';
 			},
 			error : function(data){

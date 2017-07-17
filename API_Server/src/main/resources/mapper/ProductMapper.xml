@@ -40,7 +40,7 @@
 
 	</select> 
 	
-	<delete id="productDelete" parameterType="int">
+	<delete id="deleteProduct" parameterType="int">
 		DELETE FROM PRODUCT
 		WHERE product_id=#{product_id}
 	</delete>

@@ -9,11 +9,12 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
 
 	<annotation-driven />
+	<mvc:default-servlet-handler />
 
 	<context:property-placeholder location="/WEB-INF/property/database.properties"/>
 	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="prefix" value="/WEB-INF/jsp/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
@@ -29,7 +30,7 @@
 	</beans:bean>
 	
 	
-	<default-servlet-handler />
+	
 	<beans:bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"></beans:bean>
 	<resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></resources>
 	<resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"></resources>
