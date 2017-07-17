@@ -6,10 +6,11 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmon.platform.api.dao.ProductDao;
-import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.dto.ProductDto;
+import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.service.ProductService;
 
 @Service
@@ -35,15 +36,15 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.productByCategoryId(category_id);
 	}
 	
-	public JSONObject productDelete(int product_id) throws SQLException {
+	public JSONObject deleteProduct(int product_id) throws SQLException {
 		JSONObject obj = new JSONObject();
 		try {
-			productDao.productDelete(product_id);
+			productDao.deleteProduct(product_id);
 			obj.put("msg", "success delete");
 		}catch(Exception e) {
 			throw new SQLException("fail delete");
 		}
-		
 		return obj;
 	}
+	
 }

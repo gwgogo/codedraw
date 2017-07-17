@@ -1,7 +1,5 @@
 package com.tmon.platform.api.dao;
 
-import java.util.List;
-
 import com.tmon.platform.api.dto.UserDto;
 
 public interface UserDao {

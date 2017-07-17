@@ -1,7 +1,5 @@
 package com.tmon.platform.api.service;
 
-import java.util.List;
-
 import org.json.simple.JSONObject;
 
 import com.tmon.platform.api.dto.UserDto;

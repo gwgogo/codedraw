@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace = "BasketMapper" >
+
+	<insert id="addBasket" parameterType="com.tmon.platform.api.dto.BasketDto" >
+		INSERT INTO BASKET (
+		   user_id
+		  ,product_id
+		  ,quantity
+		) VALUES (
+		   #{user_id}
+		  ,#{product_id}
+		  ,#{quantity}
+		) 
+	</insert>
+	
+	<select id="basket" parameterType="String" resultType="com.tmon.platform.api.dto.BasketDto">
+		SELECT BASKET.user_id, BASKET.product_id, BASKET.quantity, PRODUCT.product_name, PRODUCT.price, PRODUCT.image_url
+		FROM BASKET JOIN PRODUCT 
+		USING (product_id) WHERE user_id=#{user_id}
+	</select>
+
+</mapper>

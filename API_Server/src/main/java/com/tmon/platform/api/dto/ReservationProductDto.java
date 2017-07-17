@@ -1,7 +1,5 @@
 package com.tmon.platform.api.dto;
 
-import java.util.List;
-
 public class ReservationProductDto {
 	
 	private int reservation_id;

@@ -2,15 +2,12 @@ package com.tmon.platform.api.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Hashtable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.tmon.platform.api.controller.UserController;
 import com.tmon.platform.api.dto.UserDto;
 
 /**

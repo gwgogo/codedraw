@@ -1,24 +1,27 @@
 package com.tmon.platform.api.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.CustomException;
-import com.tmon.platform.api.util.SessionManager;
 
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
+
+@CrossOrigin
 @Controller
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -37,12 +40,9 @@ public class UserController {
 		return "mypage";
 	}
 	
-	@ApiOperation(value="사용자 정보")
-	@RequestMapping(value="/mypageData", method = RequestMethod.GET)
-	@ResponseBody
-	public UserDto mypageData(@RequestParam("session")String session) {
-		logger.info("/mypageData");
-		return userService.user(session);
+	@RequestMapping(value="/admin", method = RequestMethod.GET)
+	public String admin() {
+		return "admin";
 	}
 	
 	@ApiOperation(value = "로그인 폼")
@@ -66,14 +66,16 @@ public class UserController {
 	 * @return success : {session : 세션키} / fail : CustomException
 	 * @throws CustomException {msg : Invalid User Information}
 	 */
-	@ApiOperation(value = "로그인")
+	@ApiOperation(value="로그인", notes="로그인 성공시 API서버에서 세션키 발급 후 UI서버에서 쿠키에 저장")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws CustomException {
 		return userService.login(user_id, user_pw);
 	}
 	
-	@ApiOperation(value = "로그아웃")
+	
+	@ApiOperation(value="로그아웃", notes="세션삭제를 위한 로그아웃")
+	@ApiImplicitParam(name = "session", value = "현재 사용자의 세션 값", dataType = "string", paramType = "query")
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
 	public JSONObject logout(@RequestParam("session") String session) throws CustomException {
@@ -81,7 +83,7 @@ public class UserController {
 	}
 
 	
-	@ApiOperation(value = "회원가입")
+	@ApiOperation(value="회원가입", notes="현재는 ID, PW 만으로 회원가입 가능")
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws Exception {
@@ -90,6 +92,24 @@ public class UserController {
 		userDto.setUser_pw(user_pw);
 		return userService.join(userDto);
 	}
+	
+	
+	@ApiOperation(value="사용자 정보 조회", notes="MyPage등에 사용할 사용자 정보 조회 - 핸들러 인터셉터에서 세션 검사")
+	@ApiImplicitParam(name = "session", value = "현재 사용자의 세션 값", dataType = "string", paramType = "query")
+	@RequestMapping(value="/mypageData", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDto mypageData(HttpServletRequest request) {
+		String header = request.getHeader("session");
+		logger.info("컨트롤러 헤더 : " + header);
+		String session = request.getParameter("session");
+		logger.info("인터셉터에서 /mypageData 컨트롤러로 넘어온 session : " + session);
+		UserDto userDto = userService.user(session);
+		logger.info("user_id : " + userDto.getUser_id());
+		return userDto;
+	}
+	
+	
+	
 	
 
 }
