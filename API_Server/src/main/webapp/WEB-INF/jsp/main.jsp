@@ -18,6 +18,10 @@
 			logout();
 		})
 		
+		$('#admin').click(function(){
+			admin();
+		})
+		
 		
 		
 	})
@@ -31,6 +35,7 @@
 				location.href='http://localhost:8080/mypage';
 			},
 			error : function(data){
+				alert(data.responseText);
 				location.href='http://localhost:8080/loginForm';
 			}
 		})
@@ -49,7 +54,7 @@
 		})
 	}
 	
-	function logout(){
+	function admin(){
 		$.ajax({
 			type : "GET",
 			url : "/admin",
