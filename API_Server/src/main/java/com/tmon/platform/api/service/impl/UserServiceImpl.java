@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
+import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.UserService;
-import com.tmon.platform.api.util.CustomException;
 import com.tmon.platform.api.util.SessionManager;
 
 @Service
@@ -30,12 +30,6 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * @author gwlee
 	 * @since 2017-07-13
-	 * @param user_id 사용자명
-	 * @param user_pw 사용자비밀번호
-	 * @return 사용자정보 or null
-	 * 
-	 * 성공한 경우는 UserDto 를 그대로 json으로 보내줍니다.
-	 * null인 경우(사용자 정보가 없는 경우)는 CustomException을 보냅니다.
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject login(String user_id, String user_pw) throws CustomException{

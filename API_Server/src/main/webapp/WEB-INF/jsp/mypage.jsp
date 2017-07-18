@@ -10,7 +10,6 @@
 <h3>주문 페이지</h3>
 로그인한 사용자만 접근가능한 페이지
 
-${userDto.user_id }
-${user_name }
+
 </body>
 </html>

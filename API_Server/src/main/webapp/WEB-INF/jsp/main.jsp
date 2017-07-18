@@ -57,7 +57,16 @@
 	function admin(){
 		$.ajax({
 			type : "GET",
-			url : "/admin",
+			url : "/adminData",
+			dataType : "json",
+			success : function(data){
+				alert(data.user_id);
+				location.href='http://localhost:8080/admin';
+			},
+			error : function(data){
+				alert(data.responseText);
+				location.href='http://localhost:8080/loginForm';
+			}
 		})
 	}
 	
@@ -72,6 +81,7 @@
 <input type="button" value="mypageData" id="mypageData"/><br/>
 <input type="button" value="logout" id="logout"/><br/>
 <input type="button" value="admin" id="admin"/><br/>
+
 
 </body>
 </html>

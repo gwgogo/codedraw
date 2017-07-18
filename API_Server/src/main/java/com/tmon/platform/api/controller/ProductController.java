@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmon.platform.api.dto.ProductDto;
 import com.tmon.platform.api.dto.ReservationProductDto;
+import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.ProductService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -26,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
  * @description 상품 조회 API
  *
  */
+@CrossOrigin
 @Controller
 public class ProductController {
 	
@@ -51,7 +54,7 @@ public class ProductController {
 	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "query")
 	@RequestMapping(value="/productDetail", method=RequestMethod.GET)
 	@ResponseBody
-	public ProductDto productByProductId(@RequestParam("product_id")int product_id) {
+	public ProductDto productByProductId(@RequestParam("product_id")int product_id) throws CustomException {
 		return productService.productByProductId(product_id);
 	}
 	
@@ -60,7 +63,7 @@ public class ProductController {
 	@ApiImplicitParam(name = "reservation_id", value = "주문 ID", dataType = "int", paramType = "query")
 	@RequestMapping(value="/reservation", method=RequestMethod.GET)
 	@ResponseBody
-	public List<ReservationProductDto> productByReservationId(@RequestParam("reservation_id") int reservation_id){
+	public List<ReservationProductDto> productByReservationId(@RequestParam("reservation_id") int reservation_id) throws CustomException{
 		return productService.productByReservationId(reservation_id);
 	}
 	
@@ -69,7 +72,7 @@ public class ProductController {
 	@ApiImplicitParam(name = "category_id", value = "카테고리 ID", dataType = "int", paramType = "query")
 	@RequestMapping(value="/category", method=RequestMethod.GET)
 	@ResponseBody
-	public List<ProductDto> productByCategoryId(@RequestParam("category_id") int category_id){
+	public List<ProductDto> productByCategoryId(@RequestParam("category_id") int category_id) throws CustomException{
 		return productService.productByCategoryId(category_id);
 	}
 	
@@ -81,8 +84,6 @@ public class ProductController {
 	public JSONObject deleteProduct(@RequestParam("product_id")int product_id) throws SQLException {
 		return productService.deleteProduct(product_id);
 	}
-	
-	
 	
 	
 }

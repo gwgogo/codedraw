@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class HolidayController {
 	@ApiOperation(value = "현재 세팅되어 있는 공휴일 목록\n" + "holiday_lunar ==> 1: 양력, 2: 음력")
 	@RequestMapping(value = "/select_holiday", method = RequestMethod.GET)
 	@ResponseBody
+	@CrossOrigin
 	public List<HolidayDto> select_holiday() {
 		logger.info("This is select_holiday");
 
@@ -58,6 +60,7 @@ public class HolidayController {
 	@ApiOperation(value = "입력된 년도의 공휴일을 양력으로 전환한 목록")
 	@RequestMapping(value = "/select_holidayThisYear", method = RequestMethod.GET)
 	@ResponseBody
+	@CrossOrigin
 	public List<HolidayDto> select_holidayThisYear(@RequestParam("year") int year) {
 		logger.info("This is select_holidayThisYear");
 

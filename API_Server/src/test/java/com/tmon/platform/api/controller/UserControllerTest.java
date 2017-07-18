@@ -22,15 +22,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tmon.platform.api.dto.UserDto;
+import com.tmon.platform.api.exception.CustomException;
+import com.tmon.platform.api.interceptor.LoginCheckInterceptor;
 import com.tmon.platform.api.service.UserService;
-import com.tmon.platform.api.util.CustomException;
-import com.tmon.platform.api.util.LoginCheckInterceptor;
 import com.tmon.platform.api.util.SessionManager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 "file:src/test/resources/testServlet-context.xml",
-"file:src/test/resources/testDataSource-context.xml" })
+"file:src/test/resources/testDataSource-context.xml"})
 public class UserControllerTest {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);

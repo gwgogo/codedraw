@@ -5,7 +5,7 @@
     
 <mapper namespace = "BasketMapper" >
 
-	<insert id="addBasket" parameterType="com.tmon.platform.api.dto.BasketDto" >
+	<insert id="addBasket" parameterType="Map" >
 		INSERT INTO BASKET (
 		   user_id
 		  ,product_id
@@ -22,5 +22,21 @@
 		FROM BASKET JOIN PRODUCT 
 		USING (product_id) WHERE user_id=#{user_id}
 	</select>
+	
+	<delete id="removeBasket" parameterType="Map">
+		DELETE FROM basket 
+		WHERE user_id = #{user_id} AND product_id = #{product_id}
+	</delete>
+	
+	<update id="incQuantity" parameterType="Map">
+		UPDATE basket SET quantity = quantity+1 
+	  	WHERE user_id = #{user_id}
+	    AND product_id = #{product_id};
+	</update>
 
+	<update id="decQuantity" parameterType="Map">
+		UPDATE basket SET quantity = quantity-1 
+	  	WHERE user_id = #{user_id}
+	    AND product_id = #{product_id};
+	</update>
 </mapper>
