@@ -28,10 +28,11 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
-		if(sessionManager.getValidUserDto(session) == null) {	// 그 value(세션키)가 현재 세션풀에 있는지 검사하여 있으면 return true
-			throw new CustomException(501, "Login HandlerInterceptor false");
+		if(sessionManager.getSessionPool().containsKey(session)) {	// 그 value(세션키)가 현재 세션풀에 있는지 검사하여 있으면 return true
+			return true;
 		}
-		return true;
-
+		
+		throw new CustomException(501, "Login HandlerInterceptor false");
+		//return false;
 	}
 }

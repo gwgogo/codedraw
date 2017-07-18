@@ -31,6 +31,14 @@
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
 	</beans:bean>
 	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/mypageData"/>
+			<mvc:mapping path="/admin"/>
+			<beans:bean class="com.tmon.platform.api.interceptor.LoginCheckInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	
 	<mvc:interceptors>
 		<mvc:interceptor>

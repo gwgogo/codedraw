@@ -71,6 +71,13 @@ public class BasketController {
 		return basketService.basket(user_id);
 	}
 	
+	@ApiOperation(value="장바구니 상품 제거")
+	@RequestMapping(value="/removeBasket", method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject removeBasket(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
+		String user_id = getUser_id(request.getHeader("Cookie"));
+		return basketService.removeBasket(user_id, product_id);
+	}
 	
 	@ApiOperation(value="장바구니 상품 제거")
 	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "query")

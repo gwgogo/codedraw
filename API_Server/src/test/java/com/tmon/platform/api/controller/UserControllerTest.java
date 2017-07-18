@@ -23,8 +23,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.exception.CustomException;
+<<<<<<< HEAD
 import com.tmon.platform.api.interceptor.AdminCheckInterceptorTest;
 import com.tmon.platform.api.interceptor.LoginCheckInterceptorTest;
+=======
+import com.tmon.platform.api.interceptor.LoginCheckInterceptor;
+>>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
 
