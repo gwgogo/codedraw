@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +41,8 @@ public class TimeSlotSettingController {
 	 * @return redirect:select_timeslotsetting
 	 */
 	@ApiOperation(value = "타임슬롯의 시간대를 새롭게 추가하는 API")
-	@RequestMapping(value = "insert_timeslotsetting", method = RequestMethod.GET)
+	@RequestMapping(value = "/insert_timeslotsetting", method = RequestMethod.POST)
+	@CrossOrigin
 	public String insert_timeslotsetting(@RequestParam("start_time") Time start_time,
 			@RequestParam("end_time") Time end_time) {
 		logger.info("This is insert_timeslotsetting");
@@ -68,7 +70,8 @@ public class TimeSlotSettingController {
 	 * @return redirect:select_timeslotsetting
 	 */
 	@ApiOperation(value = "기존의 타임슬롯 시간대를 조정(수정)하는 API")
-	@RequestMapping(value = "update_timeslotsetting", method = RequestMethod.GET)
+	@RequestMapping(value = "/update_timeslotsetting", method = RequestMethod.POST)
+	@CrossOrigin
 	public String update_timeslotsetting(@RequestParam("timeslot_setting_id") int timeslot_setting_id,
 			@RequestParam("start_time") Time start_time, @RequestParam("end_time") Time end_time) {
 		logger.info("This is update_timeslotsetting");
@@ -96,9 +99,9 @@ public class TimeSlotSettingController {
 	 * @param timeslot_setting_id
 	 * @return
 	 */
-
 	@ApiOperation(value = "기존의 타임슬롯 시간대를 삭제하는 API")
-	@RequestMapping(value = "delete_timeslotsetting", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete_timeslotsetting", method = RequestMethod.POST)
+	@CrossOrigin
 	public String delete_timeslotsetting(@RequestParam("timeslot_setting_id") int timeslot_setting_id) {
 		logger.info("This is delete_timeslotsetting");
 
@@ -124,6 +127,7 @@ public class TimeSlotSettingController {
 	@ApiOperation(value = "현재 세팅되어 있는 TimeSlot 시간대")
 	@RequestMapping(value = "/select_timeslotsetting", method = RequestMethod.GET)
 	@ResponseBody
+	@CrossOrigin
 	public List<TimeSlotSettingDto> select_timeslotsetting() {
 		logger.info("This is select_timeslotsetting");
 

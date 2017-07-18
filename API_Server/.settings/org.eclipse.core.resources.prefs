@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-encoding//src/main/java/com/tmon/platform/api/util/LoginCheckInterceptor.java=UTF-8
+encoding//src/main/java/com/tmon/platform/api/interceptor/LoginCheckInterceptor.java=UTF-8

@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tmon.platform.api.dto.ProductDto;
 import com.tmon.platform.api.dto.ReservationProductDto;
+import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -36,19 +37,19 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void productByProductId() {
+	public void productByProductId() throws CustomException {
 		ProductDto productDto = productService.productByProductId(1);
 		assertThat(productDto, notNullValue());
 	}
 	
 	@Test
-	public void productByCategoryId() {
+	public void productByCategoryId() throws CustomException {
 		List<ProductDto> list = productService.productByCategoryId(1);
 		assertThat(list,notNullValue());
 	}
 	
 	@Test
-	public void productByReservationId() {
+	public void productByReservationId() throws CustomException {
 		List<ReservationProductDto> list = productService.productByReservationId(1);
 		assertThat(list,notNullValue());
 	}

@@ -14,11 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmon.platform.api.dto.UserDto;
+import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.UserService;
-import com.tmon.platform.api.util.CustomException;
+import com.tmon.platform.api.util.SessionManager;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 
 
 @CrossOrigin
@@ -28,7 +34,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-
+	
+	@Autowired
+	private SessionManager sessionManager;
 	
 	@RequestMapping(value="/main", method = RequestMethod.GET)
 	public String main() {
@@ -37,7 +45,6 @@ public class UserController {
 	
 	@RequestMapping(value="/mypage", method = RequestMethod.GET)
 	public String mypage() {
-		logger.info("/mypage");
 		return "mypage";
 	}
 	
@@ -45,6 +52,16 @@ public class UserController {
 	public String admin() {
 		return "admin";
 	}
+	
+	@RequestMapping(value="/adminData", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDto adminData(HttpServletRequest request) {
+		String rawCookie = request.getHeader("Cookie");
+		String session = sessionManager.getSession(rawCookie);
+		return userService.user(session);
+		
+	}
+	
 	
 	@ApiOperation(value = "로그인 폼")
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
@@ -62,12 +79,16 @@ public class UserController {
 	/**
 	 * @author gwlee
 	 * @since 2017-07-13
-	 * @param user_id 유저아이디
-	 * @param user_pw 유저비밀번호
-	 * @return success : {session : 세션키} / fail : CustomException
-	 * @throws CustomException {msg : Invalid User Information}
 	 */
 	@ApiOperation(value="로그인", notes="로그인 성공시 API서버에서 세션키 발급 후 UI서버에서 쿠키에 저장")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "user_id", value = "사용자 ID", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "user_pw", value = "사용자 PW", dataType = "string", paramType = "query")
+	})
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "{session : 세션키}"),
+            @ApiResponse(code = 501, message = "{msg : Invalid User Information}")
+    })
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws CustomException {
@@ -76,26 +97,26 @@ public class UserController {
 	
 	
 	@ApiOperation(value="로그아웃", notes="세션삭제를 위한 로그아웃")
-	@ApiImplicitParam(name = "session", value = "현재 사용자의 세션 값", dataType = "string", paramType = "query")
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "{msg : Success Delete Session}"),
+            @ApiResponse(code = 501, message = "{msg : Invalid Session}")
+    })
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
 	public JSONObject logout(HttpServletRequest request) throws CustomException {
 		String rawCookie = request.getHeader("Cookie");
-		String[] rawCookieParams = rawCookie.split(";");
-		String session = null;
+		String session = sessionManager.getSession(rawCookie);
 		
-		for(int i = 0; i < rawCookieParams.length; i++) {	
-			String[] cookieParams = rawCookieParams[i].split("=");	
-			if(cookieParams[0].toString().trim().equals("session")) {		
-				session = cookieParams[1];
-			}
-		}
 		return userService.logout(session);
 	}
 
 	
 	@ApiOperation(value="회원가입", notes="현재는 ID, PW 만으로 회원가입 가능")
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "{msg : Join Success}"),
+            @ApiResponse(code = 501, message = "{msg : Join Error(duplication ID)}")
+    })
 	@ResponseBody
 	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws Exception {
 		UserDto userDto = new UserDto();
@@ -106,25 +127,13 @@ public class UserController {
 	
 
 	@ApiOperation(value="사용자 정보 조회", notes="MyPage등에 사용할 사용자 정보 조회 - 핸들러 인터셉터에서 세션 검사")
-	@ApiImplicitParam(name = "session", value = "현재 사용자의 세션 값", dataType = "string", paramType = "query")
 	@RequestMapping(value="/mypageData", method = RequestMethod.GET)
 	@ResponseBody
 	public UserDto mypageData(HttpServletRequest request) {
 		
 		String rawCookie = request.getHeader("Cookie");
-		
-		String[] rawCookieParams = rawCookie.split(";");
-		String session = null;
-		
-		for(int i = 0; i < rawCookieParams.length; i++) {	
-			String[] cookieParams = rawCookieParams[i].split("=");	
-			if(cookieParams[0].toString().trim().equals("session")) {		
-				session = cookieParams[1];
-			}
-		}
-
+		String session = sessionManager.getSession(rawCookie);
 		return userService.user(session);
-
 	}
-	
+
 }

@@ -1,5 +1,7 @@
 package com.tmon.platform.api.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Hashtable;
@@ -76,7 +78,7 @@ public class SessionManager {
 		}
 	}
 	
-	private UserDto getValidUserDto(String session) {
+	public UserDto getValidUserDto(String session) {
 		if(!sessionPool.containsKey(session))
 			return null;
 		else 
@@ -89,7 +91,23 @@ public class SessionManager {
 		}
 	}
 	
-	public Hashtable getSessionPool() {
-		return sessionPool;
+	public String getSession(String rawCookie) {
+		String session = null;
+		try {
+			rawCookie = URLDecoder.decode(rawCookie, "UTF-8");
+			String[] rawCookieParams = rawCookie.split(";");
+			
+			for(int i = 0; i < rawCookieParams.length; i++) {	
+				String[] cookieParams = rawCookieParams[i].split("=");	
+				if(cookieParams[0].toString().trim().equals("session")) {		
+					session = cookieParams[1];
+					session = session.replaceAll("^\"|\"$", "");
+				}
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return session;
 	}
 }
