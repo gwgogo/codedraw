@@ -18,19 +18,11 @@ public class BasketServiceImpl implements BasketService {
 	@Autowired
 	BasketDao basketDao;
 	
-<<<<<<< HEAD
-	
-=======
->>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
 	public JSONObject addBasket(String user_id, int product_id, int quantity) throws SQLException{
 		JSONObject obj = new JSONObject();
 		try{
 			basketDao.addBasket(user_id, product_id, quantity);
-<<<<<<< HEAD
-			obj.put("msg", "Success Insert Basket");
-=======
 			obj.put("msg", "Success : Insert Basket");
->>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
 		}catch(Exception e) {
 			throw new SQLException("Fail Insert Basket Error");
 		}
@@ -46,7 +38,6 @@ public class BasketServiceImpl implements BasketService {
 		try {
 			basketDao.removeBasket(user_id, product_id);
 		}catch(Exception e) {
-<<<<<<< HEAD
 			throw new CustomException(501, "Fail Remove Basket Error");
 		}
 		JSONObject obj = new JSONObject();
@@ -67,31 +58,17 @@ public class BasketServiceImpl implements BasketService {
 	}
 	
 	
-=======
-			throw new CustomException(501, "removeBasket Error");
-		}
-		JSONObject obj = new JSONObject();
-		obj.put("msg", "Success incQuantity");
-		return obj;
-	}
-	
->>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
+
+
 	public JSONObject incQuantity(String user_id, int product_id) throws CustomException {
 		
 		try {
 			basketDao.incQuantity(user_id, product_id);	
 		}catch(Exception e) {
-<<<<<<< HEAD
 			throw new CustomException(501, "Fail Inc Quantity Error");
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Inc Quantity");
-=======
-			throw new CustomException(501, "incQuantity Error");
-		}
-		JSONObject obj = new JSONObject();
-		obj.put("msg", "Success incQuantity");
->>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
 		return obj;
 	}
 	
@@ -99,19 +76,10 @@ public class BasketServiceImpl implements BasketService {
 		try {
 			basketDao.decQuantity(user_id, product_id);
 		}catch(Exception e) {
-<<<<<<< HEAD
 			throw new CustomException(501, "Fail Dec Quantity Error");
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Dec Quantity");
-=======
-			throw new CustomException(501, "decQuantity Error");
-		}
-		JSONObject obj = new JSONObject();
-		obj.put("msg", "Success incQuantity");
->>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
 		return obj;
 	}
-	
-	
 }

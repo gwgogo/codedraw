@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tmon.platform.api.dao.ProductDao;
 import com.tmon.platform.api.dto.ProductDto;
-import com.tmon.platform.api.dto.ReservationProductDto;
+import com.tmon.platform.api.dto.OrderProductDto;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -26,7 +26,7 @@ public class ProductDaoImpl implements ProductDao {
 	}
 	
 	
-	public List<ReservationProductDto> productByReservationId(int reservation_id){
+	public List<OrderProductDto> productByReservationId(int reservation_id){
 		return sqlSession.selectList("ProductMapper.productByReservationId", reservation_id);
 	}
 	

@@ -38,6 +38,9 @@
 		*
 		FROM
 		TIMESLOT_SETTING
+		ORDER BY
+		start_time ASC,
+		end_time ASC
 	</select>
 
 </mapper>

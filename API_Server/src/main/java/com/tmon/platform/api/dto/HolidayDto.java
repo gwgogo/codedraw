@@ -2,7 +2,14 @@ package com.tmon.platform.api.dto;
 
 import java.sql.Date;
 
+/**
+ * HolidayDto
+ * 
+ * @author 구도원
+ *
+ */
 public class HolidayDto {
+	
 	private int holiday_id;
 	private int holiday_lunar;
 	private Date holiday_date;

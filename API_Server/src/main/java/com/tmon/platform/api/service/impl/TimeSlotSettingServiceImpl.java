@@ -27,22 +27,16 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 
 	@Override
 	public int insert(TimeSlotSettingDto timeSlotSettingDto) {
-		logger.info("start_time: " + timeSlotSettingDto.getStart_time());
-		logger.info("end_time: " + timeSlotSettingDto.getEnd_time());
 		return timeSlotSettingDao.insert(timeSlotSettingDto);
 	}
 
 	@Override
 	public int update(TimeSlotSettingDto timeSlotSettingDto) {
-		logger.info("timeslotsetting_id: " + timeSlotSettingDto.getTimeslot_setting_id());
-		logger.info("start_time: " + timeSlotSettingDto.getStart_time());
-		logger.info("end_time: " + timeSlotSettingDto.getEnd_time());
 		return timeSlotSettingDao.update(timeSlotSettingDto);
 	}
 
 	@Override
 	public int delete(TimeSlotSettingDto timeSlotSettingDto) {
-		logger.info("timeslotsetting_id: " + timeSlotSettingDto.getTimeslot_setting_id());
 		return timeSlotSettingDao.delete(timeSlotSettingDto);
 	}
 

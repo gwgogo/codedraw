@@ -2,16 +2,18 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/config/dataSource-context.xml 
 			/WEB-INF/config/servlet-context.xml
+			/WEB-INF/config/dateFormat-context.xml
 		</param-value>
-		
+
 	</context-param>
-	
+
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -27,18 +29,14 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-		
+
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-<!-- 	<servlet-mapping>
-  		<servlet-name>default</servlet-name>
-		  <url-pattern>*.css</url-pattern>
-  		  <url-pattern>*.js</url-pattern>
-  		  <url-pattern>*.jpg</url-pattern>
-  		  <url-pattern>*.png</url-pattern>
-	 </servlet-mapping> -->
+	<!-- <servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>*.css</url-pattern> 
+		<url-pattern>*.js</url-pattern> <url-pattern>*.jpg</url-pattern> <url-pattern>*.png</url-pattern> 
+		</servlet-mapping> -->
 
 </web-app>

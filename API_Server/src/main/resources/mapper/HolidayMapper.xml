@@ -6,6 +6,31 @@
 
 <mapper namespace="HolidayMapper">
 
+	<insert id="insert" parameterType="com.tmon.platform.api.dto.HolidayDto">
+		INSERT INTO
+		HOLIDAY(holiday_lunar, holiday_date, holiday_title)
+		VALUES(#{holiday_lunar}, #{holiday_date}, #{holiday_title});
+	</insert>
+
+	<update id="update" parameterType="com.tmon.platform.api.dto.HolidayDto">
+		UPDATE
+		HOLIDAY
+		SET
+		holiday_lunar=#{holiday_lunar},
+		holiday_date=#{holiday_date},
+		holiday_title=#{holiday_title}
+		WHERE
+		holiday_id=#{holiday_id}
+	</update>
+
+	<delete id="delete" parameterType="com.tmon.platform.api.dto.HolidayDto">
+		DELETE
+		FROM
+		HOLIDAY
+		WHERE
+		holiday_id=#{holiday_id}
+	</delete>
+
 	<select id="select" resultType="com.tmon.platform.api.dto.HolidayDto">
 		SELECT
 		holiday_id,
@@ -13,7 +38,9 @@
 		holiday_date,
 		holiday_title
 		FROM
-		HOLIDAY;
+		HOLIDAY
+		ORDER BY
+		holiday_date ASC;
 	</select>
 
 </mapper>

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ProductDto;
-import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.ProductService;
 
@@ -72,7 +72,7 @@ public class ProductController {
 	})
 	@RequestMapping(value="/reservation", method=RequestMethod.GET)
 	@ResponseBody
-	public List<ReservationProductDto> productByReservationId(@RequestParam("reservation_id") int reservation_id) throws CustomException{
+	public List<OrderProductDto> productByReservationId(@RequestParam("reservation_id") int reservation_id) throws CustomException{
 		return productService.productByReservationId(reservation_id);
 	}
 	
