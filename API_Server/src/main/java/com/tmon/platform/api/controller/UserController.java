@@ -126,5 +126,3 @@ public class UserController {
 		
 		return userService.user(session);
 	}
-	
-}

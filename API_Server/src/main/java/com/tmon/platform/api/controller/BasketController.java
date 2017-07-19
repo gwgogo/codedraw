@@ -92,10 +92,7 @@ public class BasketController {
     })
 	@RequestMapping(value="/cleanBasket", method=RequestMethod.DELETE)
 	@ResponseBody
-	public JSONObject cleanBasket(HttpServletRequest request) throws Exception{
-		//String user_id = getUser_id(request.getHeader("Cookie"));
-		String user_id = "user0001";
-		return basketService.cleanBasket(user_id);
+	return basketService.cleanBasket(user_id);
 	}
 	
 	
@@ -108,6 +105,7 @@ public class BasketController {
 	@RequestMapping(value="/incQuantity", method=RequestMethod.PUT)
 	@ResponseBody
 	public JSONObject incQuantity(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
+
 		//String user_id = getUser_id(request.getHeader("Cookie"));
 		String user_id = "user0001";
 		return basketService.incQuantity(user_id, product_id);
@@ -123,6 +121,7 @@ public class BasketController {
 	@RequestMapping(value="/decQuantity", method=RequestMethod.PUT)
 	@ResponseBody
 	public JSONObject decQuantity(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
+		
 		//String user_id = getUser_id(request.getHeader("Cookie"));
 		String user_id = "user0001";
 		return basketService.decQuantity(user_id, product_id);
