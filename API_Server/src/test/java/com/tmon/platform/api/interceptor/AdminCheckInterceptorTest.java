@@ -14,22 +14,23 @@ import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.util.SessionManager;
 
 @Component
-public class AdminCheckInterceptorTest extends HandlerInterceptorAdapter{
+public class AdminCheckInterceptorTest extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(AdminCheckInterceptor.class);
-	
+
 	@Autowired
 	private SessionManager sessionManager;
-	
+
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+
 		Cookie[] cookies = request.getCookies();
 		String session = cookies[0].getValue();
-		
-		if(sessionManager.getPrivilege(session) == 1) {
+
+		if (sessionManager.getPrivilege(session) == 1) {
 			return true;
 		}
-		
+
 		throw new CustomException(501, "Unauthorized");
 	}
 }

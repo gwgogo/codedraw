@@ -34,15 +34,6 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/mypageData"/>
-			<mvc:mapping path="/admin"/>
-			<beans:bean class="com.tmon.platform.api.interceptor.LoginCheckInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
-	
-	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/mypageData"/>
 			<beans:bean class="com.tmon.platform.api.interceptor.LoginCheckInterceptorTest"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
@@ -50,5 +41,7 @@
 			<beans:bean class="com.tmon.platform.api.interceptor.AdminCheckInterceptorTest"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	
 	
 </beans:beans>

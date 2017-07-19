@@ -38,12 +38,11 @@ public class TimeSlotSettingController {
 	 * @author 구도원
 	 * @param start_time
 	 * @param end_time
-	 * @return redirect:select_timeslotsetting
 	 */
 	@ApiOperation(value = "타임슬롯의 시간대를 새롭게 추가하는 API")
 	@RequestMapping(value = "/insert_timeslotsetting", method = RequestMethod.POST)
 	@CrossOrigin
-	public String insert_timeslotsetting(@RequestParam("start_time") Time start_time,
+	public void insert_timeslotsetting(@RequestParam("start_time") Time start_time,
 			@RequestParam("end_time") Time end_time) {
 		logger.info("This is insert_timeslotsetting");
 
@@ -57,7 +56,6 @@ public class TimeSlotSettingController {
 
 		// INSERT Query 실행
 		timeSlotSettingService.insert(timeSlotSettingDto);
-		return "redirect:select_timeslotsetting";
 	}
 
 	/**
@@ -67,12 +65,11 @@ public class TimeSlotSettingController {
 	 * @param timeslot_setting_id
 	 * @param start_time
 	 * @param end_time
-	 * @return redirect:select_timeslotsetting
 	 */
 	@ApiOperation(value = "기존의 타임슬롯 시간대를 조정(수정)하는 API")
 	@RequestMapping(value = "/update_timeslotsetting", method = RequestMethod.POST)
 	@CrossOrigin
-	public String update_timeslotsetting(@RequestParam("timeslot_setting_id") int timeslot_setting_id,
+	public void update_timeslotsetting(@RequestParam("timeslot_setting_id") int timeslot_setting_id,
 			@RequestParam("start_time") Time start_time, @RequestParam("end_time") Time end_time) {
 		logger.info("This is update_timeslotsetting");
 
@@ -89,7 +86,6 @@ public class TimeSlotSettingController {
 
 		// UPDATE Query 실행
 		timeSlotSettingService.update(timeSlotSettingDto);
-		return "redirect:select_timeslotsetting";
 	}
 
 	/**
@@ -97,12 +93,11 @@ public class TimeSlotSettingController {
 	 * 
 	 * @author 구도원
 	 * @param timeslot_setting_id
-	 * @return
 	 */
 	@ApiOperation(value = "기존의 타임슬롯 시간대를 삭제하는 API")
 	@RequestMapping(value = "/delete_timeslotsetting", method = RequestMethod.POST)
 	@CrossOrigin
-	public String delete_timeslotsetting(@RequestParam("timeslot_setting_id") int timeslot_setting_id) {
+	public void delete_timeslotsetting(@RequestParam("timeslot_setting_id") int timeslot_setting_id) {
 		logger.info("This is delete_timeslotsetting");
 
 		TimeSlotSettingDto timeSlotSettingDto = new TimeSlotSettingDto();
@@ -112,7 +107,6 @@ public class TimeSlotSettingController {
 
 		// DELETE Query 실행
 		timeSlotSettingService.delete(timeSlotSettingDto);
-		return "redirect:select_timeslotsetting";
 	}
 
 	/**

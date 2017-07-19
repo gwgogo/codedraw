@@ -12,13 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ProductDto;
-import com.tmon.platform.api.dto.ReservationProductDto;
 import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {
 "file:src/test/resources/testServlet-context.xml",
 "file:src/test/resources/testDataSource-context.xml" })
@@ -50,7 +52,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void productByReservationId() throws CustomException {
-		List<ReservationProductDto> list = productService.productByReservationId(1);
+		List<OrderProductDto> list = productService.productByReservationId(1);
 		assertThat(list,notNullValue());
 	}
 	

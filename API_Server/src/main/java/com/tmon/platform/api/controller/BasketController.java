@@ -1,12 +1,8 @@
 package com.tmon.platform.api.controller;
 
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
@@ -56,8 +52,9 @@ public class BasketController {
 	@ResponseBody
 	public JSONObject addBasket(HttpServletRequest request, @RequestParam("product_id") int product_id, @RequestParam("quantity") int quantity) throws SQLException {
 		
-		String strCk = request.getHeader("Cookie");
-		String user_id = getUser_id(strCk);
+		//String strCk = request.getHeader("Cookie");
+		//String user_id = getUser_id(strCk);
+		String user_id = "user0001";
 		return basketService.addBasket(user_id, product_id, quantity);
 	}
 	
@@ -67,17 +64,11 @@ public class BasketController {
 	@ResponseBody
 	public List<BasketDto> basket(HttpServletRequest request){
 		
-		String user_id= getUser_id(request.getHeader("Cookie"));
+		//String user_id= getUser_id(request.getHeader("Cookie"));
+		String user_id = "user0001";
 		return basketService.basket(user_id);
 	}
 	
-	@ApiOperation(value="장바구니 상품 제거")
-	@RequestMapping(value="/removeBasket", method=RequestMethod.DELETE)
-	@ResponseBody
-	public JSONObject removeBasket(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
-		return basketService.removeBasket(user_id, product_id);
-	}
 	
 	@ApiOperation(value="장바구니 상품 제거")
 	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "query")
@@ -88,7 +79,8 @@ public class BasketController {
 	@RequestMapping(value="/removeBasket", method=RequestMethod.DELETE)
 	@ResponseBody
 	public JSONObject removeBasket(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
+		//String user_id = getUser_id(request.getHeader("Cookie"));
+		String user_id = "user0001";
 		return basketService.removeBasket(user_id, product_id);
 	}
 	
@@ -100,8 +92,9 @@ public class BasketController {
     })
 	@RequestMapping(value="/cleanBasket", method=RequestMethod.DELETE)
 	@ResponseBody
-	public JSONObject cleanBasket(HttpServletRequest request) throws CustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
+	public JSONObject cleanBasket(HttpServletRequest request) throws Exception{
+		//String user_id = getUser_id(request.getHeader("Cookie"));
+		String user_id = "user0001";
 		return basketService.cleanBasket(user_id);
 	}
 	
@@ -115,7 +108,8 @@ public class BasketController {
 	@RequestMapping(value="/incQuantity", method=RequestMethod.PUT)
 	@ResponseBody
 	public JSONObject incQuantity(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
+		//String user_id = getUser_id(request.getHeader("Cookie"));
+		String user_id = "user0001";
 		return basketService.incQuantity(user_id, product_id);
 	}
 	
@@ -129,7 +123,8 @@ public class BasketController {
 	@RequestMapping(value="/decQuantity", method=RequestMethod.PUT)
 	@ResponseBody
 	public JSONObject decQuantity(HttpServletRequest request, @RequestParam("product_id")int product_id) throws CustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
+		//String user_id = getUser_id(request.getHeader("Cookie"));
+		String user_id = "user0001";
 		return basketService.decQuantity(user_id, product_id);
 	}
 	
@@ -141,6 +136,5 @@ public class BasketController {
 		String user_id = sessionManger.getUserId(session);
 		logger.info(user_id);
 		return user_id;
-	}
-	
+	}	
 }

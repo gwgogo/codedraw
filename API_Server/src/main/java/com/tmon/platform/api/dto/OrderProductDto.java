@@ -1,6 +1,6 @@
 package com.tmon.platform.api.dto;
 
-public class ReservationProductDto {
+public class OrderProductDto {
 	
 	private int reservation_id;
 	private int product_id;

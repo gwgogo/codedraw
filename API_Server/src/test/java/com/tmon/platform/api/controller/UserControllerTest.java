@@ -23,15 +23,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.exception.CustomException;
-<<<<<<< HEAD
 import com.tmon.platform.api.interceptor.AdminCheckInterceptorTest;
 import com.tmon.platform.api.interceptor.LoginCheckInterceptorTest;
-=======
-import com.tmon.platform.api.interceptor.LoginCheckInterceptor;
->>>>>>> 7e6c49608d7479e52a96880631e981250beec56d
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -39,8 +34,7 @@ import com.tmon.platform.api.util.SessionManager;
 "file:src/test/resources/testServlet-context.xml",
 "file:src/test/resources/testDataSource-context.xml"})
 public class UserControllerTest {
-	
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;

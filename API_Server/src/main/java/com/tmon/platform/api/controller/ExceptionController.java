@@ -14,6 +14,7 @@ public class ExceptionController {
 	
 	@ExceptionHandler(Exception.class)
 	public String ExceptionHandler(Exception e) {
+		e.printStackTrace();
 		logger.error("Error Message : " + e.getMessage());			
 		return e.getMessage();
 	}

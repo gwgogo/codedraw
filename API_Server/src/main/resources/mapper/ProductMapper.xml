@@ -21,7 +21,7 @@
 		USING (category_id) WHERE PRODUCT.product_id = #{product_id}
 	</select>
 
-	<select id="productByReservationId" resultType="com.tmon.platform.api.dto.ReservationProductDto" parameterType="int">
+	<select id="productByReservationId" resultType="com.tmon.platform.api.dto.OrderProductDto" parameterType="int">
 		 SELECT 
 		 ORDER_INFORMATION.reservation_id, PRODUCT.product_id, 
 		 PRODUCT.product_name, PRODUCT.image_url, ORDER_INFORMATION.quantity,

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.ProductDao;
 import com.tmon.platform.api.dto.ProductDto;
-import com.tmon.platform.api.dto.ReservationProductDto;
+import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.service.ProductService;
 
@@ -31,8 +31,8 @@ public class ProductServiceImpl implements ProductService {
 		return dto;
 	}
 	
-	public List<ReservationProductDto> productByReservationId(int reservation_id) throws CustomException{
-		List<ReservationProductDto> list = productDao.productByReservationId(reservation_id);
+	public List<OrderProductDto> productByReservationId(int reservation_id) throws CustomException{
+		List<OrderProductDto> list = productDao.productByReservationId(reservation_id);
 		if(list == null) {
 			throw new CustomException(501, "Invalid ReservationID");
 		}
@@ -51,9 +51,9 @@ public class ProductServiceImpl implements ProductService {
 		JSONObject obj = new JSONObject();
 		try {
 			productDao.deleteProduct(product_id);
-			obj.put("msg", "Success DeleteProduct");
+			obj.put("msg", "success delete");
 		}catch(Exception e) {
-			throw new SQLException("Fail : Delete SQL Error");
+			throw new SQLException("fail delete");
 		}
 		return obj;
 	}

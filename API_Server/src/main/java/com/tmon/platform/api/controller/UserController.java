@@ -53,16 +53,6 @@ public class UserController {
 		return "admin";
 	}
 	
-	@RequestMapping(value="/adminData", method = RequestMethod.GET)
-	@ResponseBody
-	public UserDto adminData(HttpServletRequest request) {
-		String rawCookie = request.getHeader("Cookie");
-		String session = sessionManager.getSession(rawCookie);
-		return userService.user(session);
-		
-	}
-	
-	
 	@ApiOperation(value = "로그인 폼")
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginForm() {
@@ -133,7 +123,8 @@ public class UserController {
 		
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
+		
 		return userService.user(session);
 	}
-
+	
 }

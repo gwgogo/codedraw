@@ -6,14 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.util.SessionManager;
 
-@Component
 public class AdminCheckInterceptor extends HandlerInterceptorAdapter{
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminCheckInterceptor.class);
@@ -32,4 +29,6 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter{
 		
 		throw new CustomException(501, "Unauthorized");
 	}
+	
+
 }

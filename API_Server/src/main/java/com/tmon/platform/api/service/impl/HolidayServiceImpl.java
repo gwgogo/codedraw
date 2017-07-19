@@ -26,12 +26,27 @@ public class HolidayServiceImpl implements HolidayService {
 	HolidayDao holidayDao;
 
 	@Override
+	public int insert(HolidayDto holidayDto) {
+		return holidayDao.insert(holidayDto);
+	}
+
+	@Override
+	public int update(HolidayDto holidayDto) {
+		return holidayDao.update(holidayDto);
+	}
+
+	@Override
+	public int delete(HolidayDto holidayDto) {
+		return holidayDao.delete(holidayDto);
+	}
+
+	@Override
 	public List<HolidayDto> select() {
 		return holidayDao.select();
 	}
 
 	@Override
-	public List<HolidayDto> selectThisYear(int year) {
+	public List<HolidayDto> selectBythisYear(int year) {
 		// DB로부터 공휴일 목록을 가져온다.
 		List<HolidayDto> holidays = holidayDao.select();
 		List<HolidayDto> holidays_Year = new ArrayList<HolidayDto>();
@@ -60,5 +75,4 @@ public class HolidayServiceImpl implements HolidayService {
 		}
 		return holidays_Year;
 	}
-
 }

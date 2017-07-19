@@ -55,5 +55,4 @@ public class BasketDaoImpl implements BasketDao {
 		map.put("product_id", String.valueOf(product_id));
 		sqlSession.update("BasketMapper.decQuantity", map);
 	}
-	
 }

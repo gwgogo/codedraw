@@ -14,7 +14,7 @@ import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.util.SessionManager;
 
 @Component
-public class LoginCheckInterceptorTest extends HandlerInterceptorAdapter{
+public class LoginCheckInterceptorTest extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(LoginCheckInterceptor.class);
 
 	@Autowired
