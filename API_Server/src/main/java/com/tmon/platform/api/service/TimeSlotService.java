@@ -23,6 +23,6 @@ public interface TimeSlotService {
 
 	public Map<String, String> delete(int timeslot_id) throws TimeSlotException;
 
-	public List<TimeSlotDto> selectBydelivery_date(String init_date, String finish_date) throws TimeSlotException;
+	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date) throws TimeSlotException;
 
 }

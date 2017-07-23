@@ -29,6 +29,7 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin
 @Controller
+@RequestMapping(value="/user")
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -43,14 +44,14 @@ public class UserController {
 		return "main";
 	}
 	
-	@RequestMapping(value="/mypage", method = RequestMethod.GET)
+	@RequestMapping(value="/mypageForm", method = RequestMethod.GET)
 	public String mypage() {
-		return "mypage";
+		return "mypageForm";
 	}
 	
-	@RequestMapping(value="/admin", method = RequestMethod.GET)
-	public String admin() {
-		return "admin";
+	@RequestMapping(value="/adminForm", method = RequestMethod.GET)
+	public String adminForm() {
+		return "adminForm";
 	}
 	
 	@ApiOperation(value = "로그인 폼")
@@ -117,12 +118,15 @@ public class UserController {
 	
 
 	@ApiOperation(value="사용자 정보 조회", notes="MyPage등에 사용할 사용자 정보 조회 - 핸들러 인터셉터에서 세션 검사")
-	@RequestMapping(value="/mypageData", method = RequestMethod.GET)
+	@RequestMapping(value="/mypage", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDto mypageData(HttpServletRequest request) {
+	public UserDto mypage(HttpServletRequest request) {
 		
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
 		return userService.user(session);
 	}
+	
+	
+}

@@ -14,8 +14,17 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.SnapShotDao;
 import com.tmon.platform.api.dto.SnapShotDto;
+import com.tmon.platform.api.exception.TimeSlotException;
 import com.tmon.platform.api.service.SnapShotService;
 
+/**
+ * SnapShotServiceImple
+ * 
+ * @author 구도원
+ * 
+ *         관리자만 접근 가능한 SnapShot Service implement
+ *
+ */
 @Service
 public class SnapShotServiceImpl implements SnapShotService {
 
@@ -25,7 +34,8 @@ public class SnapShotServiceImpl implements SnapShotService {
 	SnapShotDao snapShotDao;
 
 	@Override
-	public List<SnapShotDto> selectBysnapshot_time(String search_init_time, String search_finish_time) throws Exception {
+	public List<SnapShotDto> selectBysnapshot_time(String search_init_time, String search_finish_time)
+			throws Exception {
 
 		SimpleDateFormat searchFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 
@@ -47,6 +57,15 @@ public class SnapShotServiceImpl implements SnapShotService {
 
 		// 스냅샷테이블에서 검색할 배치 시간 (검색 끝 조건)
 		betweenTime.put("search_finish_time", converted_search_finish_time);
+
+		// 검색 시작 날짜가 검색 끝 날짜 보다 작아야 한다.
+		long initDate = ((Date) betweenTime.get("search_init_time")).getTime();
+		long finishDate = ((Date) betweenTime.get("search_finish_time")).getTime();
+		if (initDate > finishDate) {
+			logger.info("search_start_time: " + betweenTime.get("search_init_time"));
+			logger.info("search_end_time: " + betweenTime.get("search_finish_time"));
+			throw new TimeSlotException(500, "search_init_time must be smaller than search_finish_time");
+		}
 
 		// Dao에서는 Map객체를 parameter로 받는다.
 		return snapShotDao.selectBysnapshot_time(betweenTime);

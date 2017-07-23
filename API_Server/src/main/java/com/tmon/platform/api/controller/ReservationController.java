@@ -8,13 +8,14 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ReservationDto;
@@ -29,8 +30,26 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+class ReservationRequestDto {
+	int timeslot_id;
+	List<OrderProductDto> orderProductDto;
+	public int getTimeslot_id() {
+		return timeslot_id;
+	}
+	public void setTimeslot_id(int timeslot_id) {
+		this.timeslot_id = timeslot_id;
+	}
+	public List<OrderProductDto> getOrderProductDto() {
+		return orderProductDto;
+	}
+	public void setOrderProductDto(List<OrderProductDto> orderProductDto) {
+		this.orderProductDto = orderProductDto;
+	}
+}
+
 @CrossOrigin
-@Controller
+@RestController
+@RequestMapping("/orders")
 public class ReservationController {
 	private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
 	
@@ -43,62 +62,45 @@ public class ReservationController {
 	
 	
 	@ApiOperation(value="주문 완료 ", notes="주문 완료 버튼 클릭시 주문 테이블에 데이터 삽입")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "timeslot_id", value = "타임슬롯 ID", dataType = "int", paramType = "query"),
-		@ApiImplicitParam(name = "list", value = "{상품ID , 수량}의 리스트 ", dataType = "JSONArray", paramType = "body")
-	})
+	@ApiImplicitParam(name = "requestBody", value = "{ timeslot : value } , [{상품ID : value, 수량 : value}] } ", dataType = "string", paramType = "body")
 	@ApiResponses(value = {
             @ApiResponse(code = 200, message = "{msg : Success Insert Reservation}"),
             @ApiResponse(code = 501, message = "{msg : Fail Insert Reservation}")
     })
-	@RequestMapping(value="/reservation", method=RequestMethod.POST)
+	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public JSONObject addReservation(HttpServletRequest request,
-			@RequestParam("timeslot_id") int timeslot_id, @RequestBody List<OrderProductDto> list) throws Exception {
+	public JSONObject addReservation(HttpServletRequest request,@RequestBody ReservationRequestDto requestBody) throws CustomException {
 		
-		/*String rawCookie = request.getHeader("Cookie");
+		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
-		String user_id = sessionManager.getUserId(session);*/
-		String user_id = "user0001";
+		String user_id = sessionManager.getUserId(session);
+		
+		int timeslot_id = requestBody.getTimeslot_id();
+		List<OrderProductDto> orderProductDtoList = requestBody.getOrderProductDto();
 		
 		ReservationDto reservationDto = new ReservationDto();
 		reservationDto.setUser_id(user_id);
 		reservationDto.setTimeslot_id(timeslot_id);
-		
-		// RESERVATION_ORDER 테이블에 주문 등록
-		int reservation_id = reservationService.addReservation(reservationDto);
-		
-		
-		// ORDER_INFORMATION 테이블에 상품 등록
-		for(int productIdx= 0; productIdx < list.size(); productIdx++) {
-			// RESERVATION_ORDER 와 ORDER_INFORMATION의 주문번호 일치시킴
-			list.get(productIdx).setReservation_id(reservation_id);			
-			reservationService.addOrderProduct(list.get(productIdx));
-		}
-		
-		JSONObject obj = new JSONObject();
-		obj.put("msg", "Success Insert Reservation");
-		
-		return obj;
+
+		return reservationService.addReservation(reservationDto, orderProductDtoList);
 	}
 	
 	
-	@RequestMapping(value="/updateStatusReservation", method=RequestMethod.PUT)
+	@ApiOperation(value="주문 상태 변경 ", notes="0: 주문완료, 1: 배송중, 2: 배송완료,  3: 주문취소")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "reservation_id", value = "주문 ID", dataType = "int", paramType = "path"),
+		@ApiImplicitParam(name = "status_id", value = "상태 번호", dataType = "int", paramType = "path")
+	})
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "{msg : Success Update Reservation}"),
+            @ApiResponse(code = 501, message = "{msg : Fail Update StatusReservation}")
+    })
+	@RequestMapping(value="/{reservation_id}/status/{status_id}", method= {RequestMethod.PUT, RequestMethod.DELETE})
 	@ResponseBody
-	public JSONObject updateStatusReservation(@RequestParam("reservation_id")int reservation_id, @RequestParam("status_id") int status_id) throws Exception{
+	public JSONObject updateStatusReservation(@PathVariable("reservation_id")int reservation_id, @PathVariable("status_id") int status_id) throws Exception{
+		
 		return reservationService.updateStatusReservation(reservation_id, status_id);
 	}
 	
-	
-	@ApiOperation(value="타임슬롯 조회", notes="예약배송 가능한 타임슬롯 조회")
-	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{data : Valid TimeSlot}"),
-            @ApiResponse(code = 501, message = "{msg : Not Exist Valid TimeSlot}")
-    })
-	@RequestMapping(value = "/validTimeSlot", method=RequestMethod.GET)
-	@ResponseBody
-	public List<TimeSlotDto> validTimeSlot() throws CustomException{
-		return reservationService.validTimeSlot();
-	}
 	
 }

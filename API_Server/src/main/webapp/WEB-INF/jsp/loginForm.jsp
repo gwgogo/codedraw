@@ -16,7 +16,7 @@
 	function callAjax() {
 		$.ajax({
 			type : "POST",
-			url : "/login",
+			url : "/user/login",
 			dataType : 'json',
 			data : {
 				user_id : $('#user_id').val(),
@@ -26,7 +26,7 @@
 			success : function(data) {
 				document.cookie = "session=" + data.session;
 				alert("success, session : " + data.session);
-				location.href='http://localhost:8080/main';
+				location.href='http://localhost:8080/user/main';
 				
 			},
 			error : function(data) {

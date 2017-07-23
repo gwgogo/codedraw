@@ -1,5 +1,3 @@
-
-
 package com.tmon.platform.api.dao.impl;
 
 import java.util.HashMap;
@@ -34,11 +32,6 @@ public class ReservationDaoImpl implements ReservationDao {
 	public void addOrderProduct(OrderProductDto orderProductDto) {
 		sqlSession.insert("ReservationMapper.addOrderProduct", orderProductDto);
 	}
-	
-	
-	public List<TimeSlotDto> validTimeSlot(){
-		return sqlSession.selectList("ReservationMapper.validTimeSlot");
-	}
 
 	public void incCountTimeSlot(int timeslot_id) {
 		sqlSession.update("ReservationMapper.incCountTimeSlot", timeslot_id);
@@ -52,9 +45,9 @@ public class ReservationDaoImpl implements ReservationDao {
 		Map<String, Integer> map = new HashMap();
 		map.put("reservation_id", reservation_id);
 		map.put("status_id", status_id);
+		
 		sqlSession.update("ReservationMapper.updateStatusReservation", map);
 	}
-	
 	public int getTimeSlotId(int reservation_id) {
 		return sqlSession.selectOne("ReservationMapper.getTimeSlotId", reservation_id);
 	}

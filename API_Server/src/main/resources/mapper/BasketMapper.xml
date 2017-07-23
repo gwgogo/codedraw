@@ -24,7 +24,7 @@
 	</select>
 	
 	<delete id="removeBasket" parameterType="Map">
-		DELETE FROM basket 
+		DELETE FROM BASKET 
 		WHERE user_id = #{user_id} AND product_id = #{product_id}
 	</delete>
 	
@@ -34,13 +34,13 @@
 	</delete>
 	
 	<update id="incQuantity" parameterType="Map">
-		UPDATE basket SET quantity = quantity+1 
+		UPDATE BASKET SET quantity = quantity+1 
 	  	WHERE user_id = #{user_id}
 	    AND product_id = #{product_id}
 	</update>
 
 	<update id="decQuantity" parameterType="Map">
-		UPDATE basket SET quantity = quantity-1 
+		UPDATE BASKET SET quantity = quantity-1 
 	  	WHERE user_id = #{user_id}
 	    AND product_id = #{product_id}
 	</update>

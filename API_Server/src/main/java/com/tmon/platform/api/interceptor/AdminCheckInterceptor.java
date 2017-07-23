@@ -28,7 +28,6 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		throw new CustomException(501, "Unauthorized");
-	}
-	
+	}	
 
 }

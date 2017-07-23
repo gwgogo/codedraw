@@ -149,7 +149,8 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 	}
 
 	@Override
-	public List<TimeSlotDto> selectBydelivery_date(String init_date, String finish_date) throws TimeSlotException {
+	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date)
+			throws TimeSlotException {
 
 		// WHERE절 변수 입력을 위해 parameterType을 Map구조로 한다.
 		Map<String, Date> betweenDate = new HashMap<String, Date>();
@@ -161,8 +162,8 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			 * 
 			 * 'betweenDate' Map 객체에 data를 저장한다.
 			 */
-			betweenDate.put("init_date", dateFormat.parse(init_date));
-			betweenDate.put("finish_date", dateFormat.parse(finish_date));
+			betweenDate.put("search_init_date", dateFormat.parse(search_init_date));
+			betweenDate.put("search_finish_date", dateFormat.parse(search_finish_date));
 
 		} catch (ParseException e) {
 			logger.info("Error at TimeSlot selectBydelivery_date");
@@ -170,17 +171,19 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 		}
 
 		// 검색 시작 날짜가 검색 끝 날짜 보다 작아야 한다.
-		if (betweenDate.get("init_date").getTime() > betweenDate.get("finish_date").getTime()) {
-			logger.info("start_time: " + betweenDate.get("init_date"));
-			logger.info("end_time: " + betweenDate.get("finish_date"));
-			throw new TimeSlotException(500, "start_date must be smaller than end_date");
+		long initDate = ((Date) betweenDate.get("search_init_date")).getTime();
+		long finishDate = ((Date) betweenDate.get("search_finish_date")).getTime();
+		if (initDate > finishDate) {
+			logger.info("search_start_time: " + betweenDate.get("search_init_date"));
+			logger.info("search_end_time: " + betweenDate.get("search_finish_date"));
+			throw new TimeSlotException(500, "search_init_date must be smaller than search_finish_date");
 		}
 
 		try {
 			// Dao에서는 Map객체를 parameter로 받는다.
 			return timeSlotDao.selectBydelivery_date(betweenDate);
 		} catch (Exception e) {
-			// TimeSlot Delete 실패
+			// TimeSlot Select 실패
 			throw new TimeSlotException(500, "TimeSlot selectBydelivery_date Error");
 		}
 	}

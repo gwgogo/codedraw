@@ -10,33 +10,33 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		$('#mypageData').click(function(){
-			mypageData();
+		$('#mypage').click(function(){
+			mypage();
 		})
 		
 		$('#logout').click(function(){
 			logout();
 		})
 		
-		$('#admin').click(function(){
-			admin();
+		$('#adminForm').click(function(){
+			adminForm();
 		})
 		
 		
 		
 	})
-	function mypageData(){
+	function mypage(){
 		$.ajax({
 			type : "GET",
-			url : "/mypageData",
+			url : "/user/mypage",
 			dataType : 'json',	// 상관없음
 			success : function(data){
 				alert(data.user_id);
-				location.href='http://localhost:8080/mypage';
+				location.href='http://localhost:8080/user/mypageForm';
 			},
 			error : function(data){
 				alert(data.responseText);
-				location.href='http://localhost:8080/loginForm';
+				location.href='http://localhost:8080/user/loginForm';
 			}
 		})
 	}
@@ -44,20 +44,20 @@
 	function logout(){
 		$.ajax({
 			type : "GET",
-			url : "/logout",
+			url : "/user/logout",
 			success : function(data){
-				location.href='http://localhost:8080/main';
+				location.href='http://localhost:8080/user/main';
 			},
 			error : function(data){
-				location.href='http://localhost:8080/loginForm';
+				location.href='http://localhost:8080/user/loginForm';
 			}
 		})
 	}
 	
-	function admin(){
+	function adminForm(){
 		$.ajax({
 			type : "GET",
-			url : "/admin",
+			url : "/user/adminForm",
 		})
 	}
 	
@@ -69,9 +69,9 @@
 
 
 
-<input type="button" value="mypageData" id="mypageData"/><br/>
+<input type="button" value="mypage" id="mypage"/><br/>
 <input type="button" value="logout" id="logout"/><br/>
-<input type="button" value="admin" id="admin"/><br/>
+<input type="button" value="adminForm" id="adminForm"/><br/>
 
 </body>
 </html>

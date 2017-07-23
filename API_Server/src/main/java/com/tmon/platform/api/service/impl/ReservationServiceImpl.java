@@ -1,4 +1,3 @@
-
 package com.tmon.platform.api.service.impl;
 
 import java.util.List;
@@ -21,7 +20,7 @@ import com.tmon.platform.api.service.ReservationService;
 public class ReservationServiceImpl implements ReservationService {
 private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 	
-	private static final int CANCLE_STATUS = 3;
+	private static final int CANCEL_STATUS = 3;
 	
 	@Autowired
 	private ReservationDao reservationDao;
@@ -29,62 +28,64 @@ private static final Logger logger = LoggerFactory.getLogger(ReservationServiceI
 	@Autowired
 	private BasketService basketService;
 	
-	public void incCountTimeSlot(int timeslot_id) {
-		reservationDao.incCountTimeSlot(timeslot_id);
-	}
-	
-	public void decCountTimeSlot(int timeslot_id) {
-		reservationDao.decCountTimeSlot(timeslot_id);
-	}
-	
-	public int addReservation(ReservationDto reservationDto) throws CustomException{
-		int reservation_id ;
+	public JSONObject addReservation(ReservationDto reservationDto, List<OrderProductDto> orderProductDtoList) throws CustomException{
+		int reservation_id;
 		try {
-			reservation_id = reservationDao.addReservation(reservationDto);		// 주문테이블에 적재하고 Auto Increment 된 reservation_id 값 리턴
-			incCountTimeSlot(reservationDto.getTimeslot_id());
-			basketService.cleanBasket(reservationDto.getUser_id());
-			//reservationDao.incCountTimeSlot(reservationDto.getTimeslot_id());	// 주문테이블에 적재 후에 timeslot count 증가
-			//basketDao.cleanBasket(reservationDto.getUser_id());					// 주문완료되면 장바구니 clean
+			reservation_id = reservationDao.addReservation(reservationDto);	 	//  INSERT in RESERVATION_ORDER 
+			addOrderProduct(reservation_id, orderProductDtoList);				//  INSERT in ORDER_INFORMATION
+			incCountTimeSlot(reservationDto.getTimeslot_id());					//  Increment TIMESLOT count
+			basketService.cleanBasket(reservationDto.getUser_id());				//  Clean BASKET 
+
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new CustomException(501, "Fail Add Reservation");
 		}
-		return reservation_id;
+		JSONObject obj = new JSONObject();
+		obj.put("msg", "Success Add Reservation");
+		return obj;
 	}
 	
-	public void addOrderProduct(OrderProductDto orderProductDto) throws CustomException{
-		//throw new RuntimeException();
+	public void addOrderProduct(int reservation_id, List<OrderProductDto> orderProductDtoList) throws CustomException {
+	
 		try {
-			reservationDao.addOrderProduct(orderProductDto);
+			for(int idx = 0; idx < orderProductDtoList.size(); idx++) {
+				OrderProductDto orderProductDto = orderProductDtoList.get(idx);
+				orderProductDto.setReservation_id(reservation_id);
+				reservationDao.addOrderProduct(orderProductDto);
+			}
 		}catch(Exception e) {
 			throw new CustomException(501, "Fail Insert OrderProduct");
 		}
 	}
 	
-	public List<TimeSlotDto> validTimeSlot() throws CustomException{
-		List<TimeSlotDto> list = reservationDao.validTimeSlot();
-		if(list == null) {
-			throw new CustomException(501, "Not Exist Valid TimeSlot");
+	public JSONObject updateStatusReservation(int reservation_id, int status_id) throws Exception {
+		reservationDao.updateStatusReservation(reservation_id, status_id);
+		int timeslot_id = getTimeSlotId(reservation_id);
+		if(status_id == CANCEL_STATUS) {
+			decCountTimeSlot(timeslot_id);
 		}
-		return list;
-	}
-	
-	public JSONObject updateStatusReservation(int reservation_id, int status_id) throws CustomException {
-		try {
+		/*try {
 			reservationDao.updateStatusReservation(reservation_id, status_id);
 			int timeslot_id = getTimeSlotId(reservation_id);
-			if(status_id == CANCLE_STATUS) {
+			if(status_id == CANCEL_STATUS) {
 				decCountTimeSlot(timeslot_id);
 			}
 		}catch(Exception e){
 			throw new CustomException(501, "Fail Update StatusReservation");
-		}
+		}*/
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Update Reservation");
 		return obj;
-		
-	}
 	
+	}
 	public int getTimeSlotId(int reservation_id) {
 		return reservationDao.getTimeSlotId(reservation_id);
+	}
+	public void incCountTimeSlot(int timeslot_id) throws Exception {
+		reservationDao.incCountTimeSlot(timeslot_id);
+	}
+	
+	public void decCountTimeSlot(int timeslot_id) {
+		reservationDao.decCountTimeSlot(timeslot_id);
 	}
 }

@@ -30,8 +30,7 @@
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
 	</beans:bean>
-	
-	
+
 	
 	<beans:bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"></beans:bean>
 	<resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></resources>
@@ -39,11 +38,17 @@
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/mypageData"/>
-			<mvc:mapping path="/admin"/>
+			<mvc:mapping path="/mypage"/>
 			<beans:bean class="com.tmon.platform.api.interceptor.LoginCheckInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/adminForm"/>
+			<beans:bean class="com.tmon.platform.api.interceptor.AdminCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
+	<!-- <mvc:cors>
+      <mvc:mapping path="/**" allowed-origins="*" allowed-methods="GET, PUT, POST, OPTION, DELETE" />
+  	</mvc:cors> -->
 	
 </beans:beans>

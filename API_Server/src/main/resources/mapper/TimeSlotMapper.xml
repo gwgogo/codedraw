@@ -51,9 +51,9 @@
 		WHERE
 		delivery_date
 		BETWEEN
-		#{init_date}
+		#{search_init_date}
 		AND
-		#{finish_date}
+		#{search_finish_date}
 		ORDER BY
 		delivery_date ASC,
 		start_time ASC,

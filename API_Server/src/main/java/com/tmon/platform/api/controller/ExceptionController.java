@@ -17,5 +17,8 @@ public class ExceptionController {
 		e.printStackTrace();
 		logger.error("Error Message : " + e.getMessage());			
 		return e.getMessage();
+
 	}
+	
+	
 }

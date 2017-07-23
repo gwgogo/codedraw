@@ -40,13 +40,14 @@ public class SnapShotController {
 	 * @param search_finish_time
 	 * @return List<SnapShotDto> [JSON]
 	 */
-	@ApiOperation(value = "스냅샷 검색(작업중)")
+	@ApiOperation(value = "스냅샷을 검색할 수 있는 API입니다. 입력양식은 [yyyy-MM-dd HH:mm:ss] 입니다.")
 	@RequestMapping(value = "/admin_select_snapshot_time", method = RequestMethod.GET)
 	@ResponseBody
 	@CrossOrigin
 	public List<SnapShotDto> admin_select_snapshot_time(@RequestParam("search_init_time") String search_init_time,
 			@RequestParam("search_finish_time") String search_finish_time) throws Exception {
 		logger.info("This is admin_select_snapshot_time");
+
 		return snapShotService.selectBysnapshot_time(search_init_time, search_finish_time);
 	}
 

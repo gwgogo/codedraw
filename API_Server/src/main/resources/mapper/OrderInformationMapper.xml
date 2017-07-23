@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OrderInformationMapper.xml @author 구도원 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderInformationMapper">
+
+	<select id="selectByDate" parameterType="Map"
+		resultType="com.tmon.platform.api.dto.OrderInformationDto">
+
+		SELECT
+		o.reservation_id reservation_id,
+		o.product_id product_id,
+		o.quantity quantity,
+		r.reservation_date reservation_date,
+		r.cancel_date
+		cancel_date,
+		r.user_id user_id,
+		r.status_id status_id,
+		r.timeslot_id
+		timeslot_id,
+		p.product_name product_name,
+		c.category_name category_name
+
+		FROM
+		ORDER_INFORMATION o
+
+		INNER JOIN
+		RESERVATION_ORDER r
+		ON
+		o.reservation_id = r.reservation_id
+
+		INNER JOIN
+		PRODUCT p
+		ON
+		o.product_id =
+		p.product_id
+
+		INNER JOIN
+		CATEGORY c
+		ON
+		p.category_id = c.category_id
+
+		WHERE
+		<![CDATA[r.reservation_date >= #{search_init_date} AND r.reservation_date < date_add(#{search_finish_date}, interval 1 day)]]>
+
+
+
+	</select>
+
+	<select id="selectByDateAndUser" parameterType="Map"
+		resultType="com.tmon.platform.api.dto.OrderInformationDto">
+
+		SELECT
+		o.reservation_id reservation_id,
+		o.product_id product_id,
+		o.quantity quantity,
+		r.reservation_date reservation_date,
+		r.cancel_date
+		cancel_date,
+		r.user_id user_id,
+		r.status_id status_id,
+		r.timeslot_id
+		timeslot_id,
+		p.product_name product_name,
+		c.category_name category_name
+
+		FROM
+		ORDER_INFORMATION o
+
+		INNER JOIN
+		RESERVATION_ORDER r
+		ON
+		o.reservation_id = r.reservation_id
+
+		INNER JOIN
+		PRODUCT p
+		ON
+		o.product_id =
+		p.product_id
+
+		INNER JOIN
+		CATEGORY c
+		ON
+		p.category_id = c.category_id
+
+		WHERE
+		<![CDATA[r.reservation_date >= #{search_init_date} AND r.reservation_date < date_add(#{search_finish_date}, interval 1 day) AND user_id = #{user_id}]]>
+
+	</select>
+
+</mapper>
