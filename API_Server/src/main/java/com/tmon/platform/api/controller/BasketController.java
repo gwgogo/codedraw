@@ -50,7 +50,7 @@ public class BasketController {
             @ApiResponse(code = 501, message = "{msg : Fail Insert Basket Error}")
     })
 	@RequestMapping(value="/{product_id}/{quantity}", method=RequestMethod.POST)
-	public JSONObject addBasket(HttpServletRequest request, @PathVariable("product_id") int product_id, @PathVariable("quantity") int quantity) throws SQLException {
+	public JSONObject addBasket(HttpServletRequest request, @PathVariable("product_id") int product_id, @PathVariable("quantity") int quantity) throws CustomException {
 		String strCk = request.getHeader("Cookie");
 		String user_id = getUser_id(strCk);
 		return basketService.addBasket(user_id, product_id, quantity);
@@ -98,7 +98,7 @@ public class BasketController {
             @ApiResponse(code = 501, message = "{msg : Fail Inc Quantity Error}")
     })
 	@RequestMapping(value="/{product_id}/plus", method=RequestMethod.PUT)
-	public JSONObject incQuantity(HttpServletRequest request, @PathVariable("product_id")int product_id) throws Exception{
+	public JSONObject incQuantity(HttpServletRequest request, @PathVariable("product_id")int product_id) throws CustomException{
 		String user_id = getUser_id(request.getHeader("Cookie"));
 		return basketService.incQuantity(user_id, product_id);
 	}
@@ -111,7 +111,7 @@ public class BasketController {
             @ApiResponse(code = 501, message = "{msg : Fail Dec Quantity Error}")
     })
 	@RequestMapping(value="/{product_id}/minus", method=RequestMethod.PUT)
-	public JSONObject decQuantity(HttpServletRequest request, @PathVariable("product_id") int product_id) throws Exception{
+	public JSONObject decQuantity(HttpServletRequest request, @PathVariable("product_id") int product_id) throws CustomException{
 		String user_id = getUser_id(request.getHeader("Cookie"));
 		return basketService.decQuantity(user_id, product_id);
 	}

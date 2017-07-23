@@ -18,16 +18,16 @@ public class BasketServiceImpl implements BasketService {
 	@Autowired
 	BasketDao basketDao;
 	
-	public JSONObject addBasket(String user_id, int product_id, int quantity) throws SQLException{
-		basketDao.addBasket(user_id, product_id, quantity);
-		JSONObject obj = new JSONObject();
-		obj.put("msg", "Success : Insert Basket");
-		/*try{
+	public JSONObject addBasket(String user_id, int product_id, int quantity) throws CustomException{
+		
+		try{
 			basketDao.addBasket(user_id, product_id, quantity);
 		
 		}catch(Exception e) {
-			throw new SQLException("Fail Insert Basket Error");
-		}*/
+			throw new CustomException(501, e.getMessage());
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("msg", "Success : Insert Basket");
 		return obj;
 	}
 	
@@ -40,7 +40,8 @@ public class BasketServiceImpl implements BasketService {
 		try {
 			basketDao.removeBasket(user_id, product_id);
 		}catch(Exception e) {
-			throw new CustomException(501, "Fail Remove Basket Error");
+			//throw new CustomException(501, "Fail Remove Basket Error");
+			throw new CustomException(501, e.getMessage());
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Remove Basket");
@@ -52,7 +53,8 @@ public class BasketServiceImpl implements BasketService {
 		try {
 			basketDao.cleanBasket(user_id);
 		}catch(Exception e) {
-			throw new CustomException(501, "Fail Clean Basket Error");
+			//throw new CustomException(501, "Fail Clean Basket Error");
+			throw new CustomException(501, e.getMessage());
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Clean Basket");
@@ -62,25 +64,27 @@ public class BasketServiceImpl implements BasketService {
 	
 
 
-	public JSONObject incQuantity(String user_id, int product_id) throws Exception {
-		basketDao.incQuantity(user_id, product_id);
-		/*try {
+	public JSONObject incQuantity(String user_id, int product_id) throws CustomException {
+		
+		try {
 			basketDao.incQuantity(user_id, product_id);	
 		}catch(Exception e) {
-			throw new CustomException(501, "Fail Inc Quantity Error");
-		}*/
+			//throw new CustomException(501, "Fail Inc Quantity Error");
+			throw new CustomException(501, e.getMessage());
+		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Inc Quantity");
 		return obj;
 	}
 	
-	public JSONObject decQuantity(String user_id, int product_id) throws Exception {
-		basketDao.decQuantity(user_id, product_id);
-		/*try {
+	public JSONObject decQuantity(String user_id, int product_id) throws CustomException {
+		
+		try {
 			basketDao.decQuantity(user_id, product_id);
 		}catch(Exception e) {
-			throw new CustomException(501, "Fail Dec Quantity Error");
-		}*/
+			//throw new CustomException(501, "Fail Dec Quantity Error");
+			throw new CustomException(501, e.getMessage());
+		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Dec Quantity");
 		return obj;

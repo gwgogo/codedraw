@@ -38,7 +38,8 @@ private static final Logger logger = LoggerFactory.getLogger(ReservationServiceI
 
 		}catch(Exception e) {
 			e.printStackTrace();
-			throw new CustomException(501, "Fail Add Reservation");
+			//throw new CustomException(501, "Fail Add Reservation");
+			throw new CustomException(501, e.getMessage());
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Add Reservation");
@@ -54,25 +55,22 @@ private static final Logger logger = LoggerFactory.getLogger(ReservationServiceI
 				reservationDao.addOrderProduct(orderProductDto);
 			}
 		}catch(Exception e) {
-			throw new CustomException(501, "Fail Insert OrderProduct");
+			//throw new CustomException(501, "Fail Insert OrderProduct");
+			throw new CustomException(501, e.getMessage());
 		}
 	}
 	
-	public JSONObject updateStatusReservation(int reservation_id, int status_id) throws Exception {
-		reservationDao.updateStatusReservation(reservation_id, status_id);
-		int timeslot_id = getTimeSlotId(reservation_id);
-		if(status_id == CANCEL_STATUS) {
-			decCountTimeSlot(timeslot_id);
-		}
-		/*try {
+	public JSONObject updateStatusReservation(int reservation_id, int status_id) throws CustomException {
+		
+		try {
 			reservationDao.updateStatusReservation(reservation_id, status_id);
 			int timeslot_id = getTimeSlotId(reservation_id);
 			if(status_id == CANCEL_STATUS) {
 				decCountTimeSlot(timeslot_id);
 			}
 		}catch(Exception e){
-			throw new CustomException(501, "Fail Update StatusReservation");
-		}*/
+			throw new CustomException(501, e.getMessage());
+		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Update Reservation");
 		return obj;

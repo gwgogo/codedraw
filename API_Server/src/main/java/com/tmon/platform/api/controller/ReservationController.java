@@ -62,7 +62,7 @@ public class ReservationController {
 	
 	
 	@ApiOperation(value="주문 완료 ", notes="주문 완료 버튼 클릭시 주문 테이블에 데이터 삽입")
-	@ApiImplicitParam(name = "requestBody", value = "{ timeslot : value } , [{상품ID : value, 수량 : value}] } ", dataType = "string", paramType = "body")
+	@ApiImplicitParam(name = "requestBody", value = "{ timeslot_id : value } , [{상품ID : value, 수량 : value}] } ", dataType = "string", paramType = "body")
 	@ApiResponses(value = {
             @ApiResponse(code = 200, message = "{msg : Success Insert Reservation}"),
             @ApiResponse(code = 501, message = "{msg : Fail Insert Reservation}")

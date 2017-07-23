@@ -12,7 +12,8 @@ public class ExceptionController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	@ExceptionHandler(Exception.class)
+	// 추후 Exception.class를 각 예외클래스마다로 변경 
+	@ExceptionHandler(Exception.class)	 
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();
 		logger.error("Error Message : " + e.getMessage());			
