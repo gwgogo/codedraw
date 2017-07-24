@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmon.platform.api.dto.UserDto;
-import com.tmon.platform.api.exception.CustomException;
-import com.tmon.platform.api.exception.UserException;
+import com.tmon.platform.api.exception.PreconditionException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
 
@@ -82,7 +82,7 @@ public class UserController {
     })
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws UserException {
+	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws PreconditionException {
 		return userService.login(user_id, user_pw);
 	}
 	
@@ -94,7 +94,7 @@ public class UserController {
     })
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject logout(HttpServletRequest request) throws UserException {
+	public JSONObject logout(HttpServletRequest request) throws PreconditionException {
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
@@ -109,7 +109,7 @@ public class UserController {
             @ApiResponse(code = 501, message = "{msg : Join Error(duplication ID)}")
     })
 	@ResponseBody
-	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws UserException {
+	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws SQLCustomException {
 		UserDto userDto = new UserDto();
 		userDto.setUser_id(user_id);
 		userDto.setUser_pw(user_pw);

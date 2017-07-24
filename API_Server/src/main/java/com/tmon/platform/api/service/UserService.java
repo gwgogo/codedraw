@@ -4,12 +4,13 @@ import org.json.simple.JSONObject;
 
 import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.exception.CustomException;
-import com.tmon.platform.api.exception.UserException;
+import com.tmon.platform.api.exception.PreconditionException;
+import com.tmon.platform.api.exception.SQLCustomException;
 
 public interface UserService {
 
-	public JSONObject join(UserDto userDto) throws UserException;
+	public JSONObject join(UserDto userDto) throws SQLCustomException;
 	public UserDto user(String session);
-	public JSONObject login(String user_id, String user_pw) throws UserException;
-	public JSONObject logout(String session) throws UserException;
+	public JSONObject login(String user_id, String user_pw) throws PreconditionException;
+	public JSONObject logout(String session);
 }

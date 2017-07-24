@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
-import com.tmon.platform.api.exception.CustomException;
-import com.tmon.platform.api.exception.UserException;
+import com.tmon.platform.api.exception.PreconditionException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
 
@@ -33,38 +33,31 @@ public class UserServiceImpl implements UserService {
 	 * @since 2017-07-13
 	 */
 	@SuppressWarnings("unchecked")
-	public JSONObject login(String user_id, String user_pw) throws UserException{
+	public JSONObject login(String user_id, String user_pw) throws PreconditionException{
 		UserDto userDto = userDao.login(user_id, user_pw);			
-			
 		//계정정보 없음
 		if(userDto == null) 
-			throw new UserException(601, "Invalid User Information");
+			throw new PreconditionException(602, "Invalid User Information");
 		
 		JSONObject result = new JSONObject();
 		String sessionValue = sessionManager.createSession(userDto);
-		
 		result.put("session", sessionValue);
-		
 		return result;
 	}
 	
-	public JSONObject logout(String session) throws UserException{
-		
+	public JSONObject logout(String session) {
 		JSONObject obj = new JSONObject();
-		if(session == null) {
-			throw new UserException(602, "Invalid Session");
-		}
 		sessionManager.deleteSession(session);
 		obj.put("msg", "Success Delete Session");
 		return obj;
 	}
 	
 	
-	public JSONObject join(UserDto userDto) throws UserException {
+	public JSONObject join(UserDto userDto) throws SQLCustomException {
 		try {
 			userDao.join(userDto); 
 		}catch(Exception e) {
-			throw new UserException( 603, "Join Error(duplication ID)");
+			throw new SQLCustomException(603, "Fail : User Join SQL Error");
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg","Join Success");

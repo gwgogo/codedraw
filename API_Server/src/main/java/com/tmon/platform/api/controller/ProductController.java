@@ -1,6 +1,5 @@
 package com.tmon.platform.api.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ProductDto;
-import com.tmon.platform.api.exception.CustomException;
-import com.tmon.platform.api.exception.ProductException;
+import com.tmon.platform.api.exception.NullCustomException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.ProductService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -52,7 +51,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Invalid ProductID}")
 	})
 	@RequestMapping(value="/{product_id}", method=RequestMethod.GET)
-	public ProductDto productByProductId(@PathVariable("product_id")int product_id) throws ProductException {
+	public ProductDto productByProductId(@PathVariable("product_id")int product_id) throws NullCustomException {
 		return productService.productByProductId(product_id);
 	}
 	
@@ -64,7 +63,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Invalid ReservationID}")
 	})
 	@RequestMapping(value="/reservation/{reservation_id}", method=RequestMethod.GET)
-	public List<OrderProductDto> productByReservationId(@PathVariable("reservation_id") int reservation_id) throws ProductException{
+	public List<OrderProductDto> productByReservationId(@PathVariable("reservation_id") int reservation_id) throws NullCustomException{
 		return productService.productByReservationId(reservation_id);
 	}
 	
@@ -76,7 +75,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Invalid CategoryID}")
 	})
 	@RequestMapping(value="/category/{category_id}", method=RequestMethod.GET)
-	public List<ProductDto> productByCategoryId(@PathVariable("category_id") int category_id) throws ProductException{
+	public List<ProductDto> productByCategoryId(@PathVariable("category_id") int category_id) throws NullCustomException{
 		return productService.productByCategoryId(category_id);
 	}
 	
@@ -88,7 +87,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Fail : Delete SQL Error}")
 	})
 	@RequestMapping(value="/{product_id}", method=RequestMethod.DELETE)
-	public JSONObject deleteProduct(@PathVariable("product_id")int product_id) throws ProductException {
+	public JSONObject deleteProduct(@PathVariable("product_id")int product_id) throws SQLCustomException {
 		return productService.deleteProduct(product_id);
 	}
 	

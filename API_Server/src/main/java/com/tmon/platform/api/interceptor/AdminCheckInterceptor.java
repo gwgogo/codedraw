@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.tmon.platform.api.exception.CustomException;
+import com.tmon.platform.api.exception.AuthException;
 import com.tmon.platform.api.util.SessionManager;
 
 public class AdminCheckInterceptor extends HandlerInterceptorAdapter {
@@ -20,7 +20,7 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+			throws AuthException {
 
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
@@ -28,7 +28,7 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 
-		throw new CustomException(501, "Unauthorized");
+		throw new AuthException(606, "Admin Unauthorized");
 	}
 
 }

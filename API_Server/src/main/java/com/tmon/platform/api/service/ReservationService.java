@@ -9,21 +9,23 @@ import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ReservationDto;
 import com.tmon.platform.api.dto.TimeSlotDto;
 import com.tmon.platform.api.exception.CustomException;
+import com.tmon.platform.api.exception.RangeNotSatisfyException;
+import com.tmon.platform.api.exception.SQLCustomException;
 
 public interface ReservationService {
 	
 
 	//@Transactional(rollbackFor=CustomException.class)
-	public JSONObject addReservation(ReservationDto reservationDto, List<OrderProductDto> orderProductDtoList) throws CustomException;
+	public JSONObject addReservation(ReservationDto reservationDto, List<OrderProductDto> orderProductDtoList) throws RangeNotSatisfyException, SQLCustomException;
 	//@Transactional(rollbackFor=CustomException.class)
-	public void addOrderProduct(int reservation_id, List<OrderProductDto> orderProductDtoList) throws CustomException;
+	public void addOrderProduct(int reservation_id, List<OrderProductDto> orderProductDtoList) throws SQLCustomException;
 	//@Transactional(rollbackFor=CustomException.class)
 	public void incCountTimeSlot(int timeslot_id);
 	
 	
 	
 	//@Transactional(rollbackFor=CustomException.class)
-	public JSONObject updateStatusReservation(int reservation_id, int status_id) throws CustomException;
+	public JSONObject updateStatusReservation(int reservation_id, int status_id) throws SQLCustomException;
 	//@Transactional(rollbackFor=CustomException.class)
 	public void decCountTimeSlot(int timeslot_id);
 	
