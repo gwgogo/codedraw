@@ -32,7 +32,8 @@ import com.tmon.platform.api.util.SessionManager;
 @WebAppConfiguration
 @ContextConfiguration(locations = {
 "file:src/test/resources/testServlet-context.xml",
-"file:src/test/resources/testDataSource-context.xml"})
+"file:src/test/resources/testDataSource-context.xml",
+"file:src/test/resources/testDateFormat-context.xml"})
 public class UserControllerTest {
 private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -83,7 +84,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	
 
 	@Test
-	public void mypageData() throws Exception {
+	public void mypage() throws Exception {
 		logger.info("Mypage Test");
 		
 		Cookie cookie = new Cookie("session", sessionKey);	// 테스트 할 때는 직접 쿠키에 넣어서 핸들러 인터셉터로 전송
@@ -100,7 +101,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	
 	
 	@Test
-	public void adminData() throws Exception {
+	public void admin() throws Exception {
 		Cookie cookie = new Cookie("session", sessionKey);	// 테스트 할 때는 직접 쿠키에 넣어서 핸들러 인터셉터로 전송
 		request.setCookies(cookie);
 		Object handler = null;

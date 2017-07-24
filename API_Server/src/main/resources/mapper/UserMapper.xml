@@ -19,7 +19,7 @@
 	</insert>
 	
 	<select id="user" resultType="com.tmon.platform.api.dto.UserDto" parameterType="String">
-		SELECT * FROM USER WHERE user_id=#{user_id}
+		SELECT user_id, privilege, address, phone, email FROM USER WHERE user_id=#{user_id}
 	</select>
 	
 	<select id="login" resultType="com.tmon.platform.api.dto.UserDto" parameterType="Map">

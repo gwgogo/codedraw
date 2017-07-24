@@ -11,24 +11,24 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.util.SessionManager;
 
-public class AdminCheckInterceptor extends HandlerInterceptorAdapter{
+public class AdminCheckInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminCheckInterceptor.class);
-	
+
 	@Autowired
 	private SessionManager sessionManager;
-	
+
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
-		if(sessionManager.getPrivilege(session) == 1) {
+		if (sessionManager.getPrivilege(session) == 1) {
 			return true;
 		}
-		
+
 		throw new CustomException(501, "Unauthorized");
 	}
-	
 
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- HolidayMapper.xml @author 구도원 -->
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -7,7 +6,7 @@
 <mapper namespace="ReservationMapper">
 	
 	<insert id="addReservation" parameterType="com.tmon.platform.api.dto.ReservationDto" >
-		INSERT INTO reservation_order (
+		INSERT INTO RESERVATION_ORDER (
 		   reservation_date
 		  ,user_id
 		  ,timeslot_id
@@ -16,13 +15,13 @@
 		  ,#{user_id} 
 		  ,#{timeslot_id} 
 		)
-		<selectKey resultType="int" keyProperty="reservation_id" order="AFTER">
+	   <selectKey resultType="int" keyProperty="reservation_id" order="AFTER">
         	SELECT LAST_INSERT_ID()
-    	</selectKey>  
+    	</selectKey> 
 	</insert>
 	
 	<insert id="addOrderProduct" parameterType="com.tmon.platform.api.dto.OrderProductDto">
-		INSERT INTO order_information (
+		INSERT INTO ORDER_INFORMATION (
 		   reservation_id
 		  ,product_id
 		  ,quantity
@@ -58,12 +57,24 @@
 	<update id="updateStatusReservation" parameterType="Map">
 		UPDATE RESERVATION_ORDER SET
 		   status_id = #{status_id} 
-		  ,cancle_date = NOW()
+		  ,cancel_date = NOW()
 		WHERE reservation_id = #{reservation_id}
 	</update>
 	
 	<select id="getTimeSlotId" resultType="int" parameterType="int">
 		SELECT timeslot_id FROM RESERVATION_ORDER WHERE reservation_id=#{reservation_id}
 	</select>
+	
+	<select id="getTimeSlotCount" resultType="int" parameterType="int">
+		SELECT count FROM TIMESLOT WHERE timeslot_id=#{timeslot_id}
+	</select>
+
+	<update id="setTimeSlotCutOff" parameterType="int">
+		UPDATE TIMESLOT SET cutoff = NOW() WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	<update id="resetTimeSlotCutOff" parameterType="int">
+		UPDATE TIMESLOT SET cutoff = null WHERE timeslot_id = #{timeslot_id}
+	</update>
 
 </mapper>    

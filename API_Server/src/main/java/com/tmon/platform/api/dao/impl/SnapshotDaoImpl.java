@@ -11,6 +11,14 @@ import org.springframework.stereotype.Repository;
 import com.tmon.platform.api.dao.SnapShotDao;
 import com.tmon.platform.api.dto.SnapShotDto;
 
+/**
+ * SnapShotDaoImpl
+ * 
+ * @author 구도원
+ *
+ *         관리자만 접근 가능한 Data Access Object Implement
+ *
+ */
 @Repository
 public class SnapshotDaoImpl implements SnapShotDao {
 

@@ -1,20 +1,18 @@
 package com.tmon.platform.api.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.json.simple.JSONObject;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmon.platform.api.dto.OrderProductDto;
-import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.dto.ProductDto;
+import com.tmon.platform.api.exception.ProductException;
 
 public interface ProductService {
 	public List<ProductDto> productAll();
-	public ProductDto productByProductId(int product_id) throws CustomException;
-	public List<OrderProductDto> productByReservationId(int reservation_id) throws CustomException;
-	public List<ProductDto> productByCategoryId(int category_id) throws CustomException;
-	public JSONObject deleteProduct(int product_id) throws SQLException;
+	public ProductDto productByProductId(int product_id) throws ProductException;
+	public List<OrderProductDto> productByReservationId(int reservation_id) throws ProductException;
+	public List<ProductDto> productByCategoryId(int category_id) throws ProductException;
+	public JSONObject deleteProduct(int product_id) throws ProductException;
 	
 }

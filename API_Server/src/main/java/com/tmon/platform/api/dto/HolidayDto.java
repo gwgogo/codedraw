@@ -1,7 +1,5 @@
 package com.tmon.platform.api.dto;
 
-import java.sql.Date;
-
 /**
  * HolidayDto
  * 
@@ -9,10 +7,10 @@ import java.sql.Date;
  *
  */
 public class HolidayDto {
-	
+
 	private int holiday_id;
 	private int holiday_lunar;
-	private Date holiday_date;
+	private String holiday_date;
 	private String holiday_title;
 
 	public int getHoliday_id() {
@@ -31,11 +29,11 @@ public class HolidayDto {
 		this.holiday_lunar = holiday_lunar;
 	}
 
-	public Date getHoliday_date() {
+	public String getHoliday_date() {
 		return holiday_date;
 	}
 
-	public void setHoliday_date(Date holiday_date) {
+	public void setHoliday_date(String holiday_date) {
 		this.holiday_date = holiday_date;
 	}
 

@@ -3,7 +3,7 @@ package com.tmon.platform.api.dto;
 public class ReservationDto {
 	private int reservation_id;
 	private String reservation_date;
-	private String cancle_date;
+	private String cancel_date;
 	private String user_id;
 	private int status_id;
 	private int timeslot_id;
@@ -22,11 +22,11 @@ public class ReservationDto {
 		this.reservation_date = reservation_date;
 	}
 	
-	public String getCancle_date() {
-		return cancle_date;
+	public String getCancel_date() {
+		return cancel_date;
 	}
-	public void setCancle_date(String cancle_date) {
-		this.cancle_date = cancle_date;
+	public void setCancel_date(String cancel_date) {
+		this.cancel_date = cancel_date;
 	}
 	public String getUser_id() {
 		return user_id;

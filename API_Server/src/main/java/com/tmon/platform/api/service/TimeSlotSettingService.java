@@ -1,8 +1,11 @@
 package com.tmon.platform.api.service;
 
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import com.tmon.platform.api.dto.TimeSlotSettingDto;
+import com.tmon.platform.api.exception.TimeSlotSettingException;
 
 /**
  * TimeSlotSettingService
@@ -12,11 +15,13 @@ import com.tmon.platform.api.dto.TimeSlotSettingDto;
  */
 public interface TimeSlotSettingService {
 
-	public int insert(TimeSlotSettingDto timeSlotSettingDto);
+	public Map<String, String> insert(String start_time, String end_time)
+			throws TimeSlotSettingException, ParseException;
 
-	public int update(TimeSlotSettingDto timeSlotSettingDto);
+	public Map<String, String> update(int timeslot_setting_id, String start_time, String end_time)
+			throws TimeSlotSettingException, ParseException;
 
-	public int delete(TimeSlotSettingDto timeSlotSettingDto);
+	public Map<String, String> delete(int timeslot_setting_id) throws TimeSlotSettingException;
 
 	public List<TimeSlotSettingDto> select();
 }

@@ -24,7 +24,7 @@
 	</select>
 	
 	<delete id="removeBasket" parameterType="Map">
-		DELETE FROM basket 
+		DELETE FROM BASKET 
 		WHERE user_id = #{user_id} AND product_id = #{product_id}
 	</delete>
 	
@@ -34,14 +34,23 @@
 	</delete>
 	
 	<update id="incQuantity" parameterType="Map">
-		UPDATE basket SET quantity = quantity+1 
+		UPDATE BASKET SET quantity = quantity+1 
 	  	WHERE user_id = #{user_id}
 	    AND product_id = #{product_id}
 	</update>
 
 	<update id="decQuantity" parameterType="Map">
-		UPDATE basket SET quantity = quantity-1 
+		UPDATE BASKET SET quantity = quantity-1 
 	  	WHERE user_id = #{user_id}
 	    AND product_id = #{product_id}
 	</update>
+	
+	<select id="getBasketQuantity" parameterType="Map" resultType="int">
+		SELECT quantity FROM BASKET WHERE product_id=#{product_id} AND user_id=#{user_id}
+	</select>
+	
+	<select id="getMaxQuantity" parameterType="int" resultType="int">
+		SELECT max_quantity - sell_quantity AS quantity FROM PRODUCT WHERE product_id=#{product_id}
+	</select>
+	
 </mapper>

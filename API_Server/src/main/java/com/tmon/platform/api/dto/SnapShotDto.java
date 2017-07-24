@@ -1,36 +1,43 @@
 package com.tmon.platform.api.dto;
 
-import java.util.Date;
-
+/**
+ * SnapShotDto
+ * 
+ * @author 구도원
+ * 
+ *         UI Server측의 요구에 따라 "yyyy-MM-dd HH:mm:ss" String 형식으로 결과 출력
+ *         (snapshot_time, snapshot_start_time, snapshot_end_time)
+ *
+ */
 public class SnapShotDto {
 
-	private Date snapshot_time;
-	private Date snapshot_start_time;
-	private Date snapshot_end_time;
+	private String snapshot_time;
+	private String snapshot_start_time;
+	private String snapshot_end_time;
 	private int snapshot_order_count;
 	private int snapshot_cancel_count;
 
-	public Date getSnapshot_time() {
+	public String getSnapshot_time() {
 		return snapshot_time;
 	}
 
-	public void setSnapshot_time(Date snapshot_time) {
+	public void setSnapshot_time(String snapshot_time) {
 		this.snapshot_time = snapshot_time;
 	}
 
-	public Date getSnapshot_start_time() {
+	public String getSnapshot_start_time() {
 		return snapshot_start_time;
 	}
 
-	public void setSnapshot_start_time(Date snapshot_start_time) {
+	public void setSnapshot_start_time(String snapshot_start_time) {
 		this.snapshot_start_time = snapshot_start_time;
 	}
 
-	public Date getSnapshot_end_time() {
+	public String getSnapshot_end_time() {
 		return snapshot_end_time;
 	}
 
-	public void setSnapshot_end_time(Date snapshot_end_time) {
+	public void setSnapshot_end_time(String snapshot_end_time) {
 		this.snapshot_end_time = snapshot_end_time;
 	}
 

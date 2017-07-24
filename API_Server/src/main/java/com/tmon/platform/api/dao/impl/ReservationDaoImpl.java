@@ -32,11 +32,6 @@ public class ReservationDaoImpl implements ReservationDao {
 	public void addOrderProduct(OrderProductDto orderProductDto) {
 		sqlSession.insert("ReservationMapper.addOrderProduct", orderProductDto);
 	}
-	
-	
-	public List<TimeSlotDto> validTimeSlot(){
-		return sqlSession.selectList("ReservationMapper.validTimeSlot");
-	}
 
 	public void incCountTimeSlot(int timeslot_id) {
 		sqlSession.update("ReservationMapper.incCountTimeSlot", timeslot_id);
@@ -46,13 +41,27 @@ public class ReservationDaoImpl implements ReservationDao {
 		sqlSession.update("ReservationMapper.decCountTimeSlot", timeslot_id);
 	}
 
-	public int updateStatusReservation(int reservation_id, int status_id) {
+	public void updateStatusReservation(int reservation_id, int status_id) {
 		Map<String, Integer> map = new HashMap();
 		map.put("reservation_id", reservation_id);
 		map.put("status_id", status_id);
 		
 		sqlSession.update("ReservationMapper.updateStatusReservation", map);
+	}
+	
+	public int getTimeSlotId(int reservation_id) {
 		return sqlSession.selectOne("ReservationMapper.getTimeSlotId", reservation_id);
-		
+	}
+	
+	public int getTimeSlotCount(int timeslot_id) {
+		return sqlSession.selectOne("ReservationMapper.getTimeSlotCount", timeslot_id);
+	}
+	
+	public void setTimeSlotCutOff(int timeslot_id) {
+		sqlSession.update("ReservationMapper.setTimeSlotCutOff", timeslot_id);
+	}
+	
+	public void resetTimeSlotCutOff(int timeslot_id) {
+		sqlSession.update("ReservationMapper.resetTimeSlotCutOff", timeslot_id);
 	}
 }

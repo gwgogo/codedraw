@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.exception.CustomException;
+import com.tmon.platform.api.exception.UserException;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +29,7 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin
 @Controller
+@RequestMapping(value="/user")
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -43,14 +44,14 @@ public class UserController {
 		return "main";
 	}
 	
-	@RequestMapping(value="/mypage", method = RequestMethod.GET)
+	@RequestMapping(value="/mypageForm", method = RequestMethod.GET)
 	public String mypage() {
-		return "mypage";
+		return "mypageForm";
 	}
 	
-	@RequestMapping(value="/admin", method = RequestMethod.GET)
-	public String admin() {
-		return "admin";
+	@RequestMapping(value="/adminForm", method = RequestMethod.GET)
+	public String adminForm() {
+		return "adminForm";
 	}
 	
 	@ApiOperation(value = "로그인 폼")
@@ -81,7 +82,7 @@ public class UserController {
     })
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws CustomException {
+	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws UserException {
 		return userService.login(user_id, user_pw);
 	}
 	
@@ -93,7 +94,7 @@ public class UserController {
     })
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject logout(HttpServletRequest request) throws CustomException {
+	public JSONObject logout(HttpServletRequest request) throws UserException {
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
@@ -108,7 +109,7 @@ public class UserController {
             @ApiResponse(code = 501, message = "{msg : Join Error(duplication ID)}")
     })
 	@ResponseBody
-	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws Exception {
+	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws UserException {
 		UserDto userDto = new UserDto();
 		userDto.setUser_id(user_id);
 		userDto.setUser_pw(user_pw);
@@ -117,9 +118,9 @@ public class UserController {
 	
 
 	@ApiOperation(value="사용자 정보 조회", notes="MyPage등에 사용할 사용자 정보 조회 - 핸들러 인터셉터에서 세션 검사")
-	@RequestMapping(value="/mypageData", method = RequestMethod.GET)
+	@RequestMapping(value="/mypage", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDto mypageData(HttpServletRequest request) {
+	public UserDto mypage(HttpServletRequest request) {
 		
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
@@ -127,19 +128,5 @@ public class UserController {
 		return userService.user(session);
 	}
 	
-	
-	
-	/*private String getSession(String rawCookie) {
-		String[] rawCookieParams = rawCookie.split(";");
-		String session = null;
-		
-		for(int i = 0; i < rawCookieParams.length; i++) {	
-			String[] cookieParams = rawCookieParams[i].split("=");	
-			if(cookieParams[0].toString().trim().equals("session")) {		
-				session = cookieParams[1];
-			}
-		}
-		return session;
-	}*/
 	
 }

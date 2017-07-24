@@ -23,7 +23,8 @@ import com.tmon.platform.api.service.ProductService;
 @WebAppConfiguration
 @ContextConfiguration(locations = {
 "file:src/test/resources/testServlet-context.xml",
-"file:src/test/resources/testDataSource-context.xml" })
+"file:src/test/resources/testDataSource-context.xml",
+"file:src/test/resources/testDateFormat-context.xml"})
 public class ProductControllerTest {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	

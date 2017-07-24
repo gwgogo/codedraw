@@ -13,4 +13,6 @@ public interface BasketDao {
 	public void cleanBasket(String user_id);
 	public void incQuantity(String user_id, int product_id);
 	public void decQuantity(String user_id, int product_id);
+	public int getBasketQuantity(String user_id, int product_id);
+	public int getMaxQuantity(int product_id);
 }

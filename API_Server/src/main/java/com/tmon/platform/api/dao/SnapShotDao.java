@@ -6,6 +6,13 @@ import java.util.Map;
 
 import com.tmon.platform.api.dto.SnapShotDto;
 
+/**
+ * SnapshotDao
+ * 
+ * @author 구도원
+ * 
+ *         관리자만 접근 가능한 Data Access Object interface
+ */
 public interface SnapShotDao {
 
 	public List<SnapShotDto> selectBysnapshot_time(Map<String, Date> betweenTime);

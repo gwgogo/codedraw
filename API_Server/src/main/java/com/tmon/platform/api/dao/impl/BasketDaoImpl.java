@@ -55,4 +55,15 @@ public class BasketDaoImpl implements BasketDao {
 		map.put("product_id", String.valueOf(product_id));
 		sqlSession.update("BasketMapper.decQuantity", map);
 	}
+	
+	public int getBasketQuantity(String user_id, int product_id) {
+		Map<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("product_id", String.valueOf(product_id));
+		return sqlSession.selectOne("BasketMapper.getBasketQuantity", map);
+	}
+	
+	public int getMaxQuantity(int product_id) {
+		return sqlSession.selectOne("BasketMapper.getMaxQuantity", product_id);
+	}
 }

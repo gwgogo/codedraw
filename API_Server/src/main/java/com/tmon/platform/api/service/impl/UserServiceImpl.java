@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
 import com.tmon.platform.api.exception.CustomException;
+import com.tmon.platform.api.exception.UserException;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
 
@@ -32,28 +33,26 @@ public class UserServiceImpl implements UserService {
 	 * @since 2017-07-13
 	 */
 	@SuppressWarnings("unchecked")
-	public JSONObject login(String user_id, String user_pw) throws CustomException{
+	public JSONObject login(String user_id, String user_pw) throws UserException{
 		UserDto userDto = userDao.login(user_id, user_pw);			
 			
 		//계정정보 없음
 		if(userDto == null) 
-			throw new CustomException(501, "Invalid User Information");
+			throw new UserException(601, "Invalid User Information");
 		
 		JSONObject result = new JSONObject();
 		String sessionValue = sessionManager.createSession(userDto);
 		
 		result.put("session", sessionValue);
 		
-		//logger.info("user login.\n" + "user_id : " + user_id + ", sessionValue : " + sessionvalue);
-		
 		return result;
 	}
 	
-	public JSONObject logout(String session) throws CustomException{
+	public JSONObject logout(String session) throws UserException{
 		
 		JSONObject obj = new JSONObject();
 		if(session == null) {
-			throw new CustomException(501, "Invalid Session");
+			throw new UserException(602, "Invalid Session");
 		}
 		sessionManager.deleteSession(session);
 		obj.put("msg", "Success Delete Session");
@@ -61,11 +60,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
-	public JSONObject join(UserDto userDto) throws CustomException {
+	public JSONObject join(UserDto userDto) throws UserException {
 		try {
 			userDao.join(userDto); 
 		}catch(Exception e) {
-			throw new CustomException( 501, "Join Error(duplication ID)");
+			throw new UserException( 603, "Join Error(duplication ID)");
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg","Join Success");

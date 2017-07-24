@@ -1,6 +1,5 @@
 package com.tmon.platform.api.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -107,12 +106,12 @@ public class TimeSlotController {
 	@RequestMapping(value = "/select_timeslot_delivery_date", method = RequestMethod.GET)
 	@ResponseBody
 	@CrossOrigin
-	public List<TimeSlotDto> select_timeslot_delivery_date(@RequestParam("init_date") String init_date,
-			@RequestParam("finish_date") String finish_date) throws TimeSlotException {
+	public List<TimeSlotDto> select_timeslot_delivery_date(@RequestParam("search_init_date") String search_init_date,
+			@RequestParam("search_finish_date") String search_finish_date) throws TimeSlotException {
 		logger.info("This is select_timeslot_delivery_date");
 
 		// 타임슬롯 검색 '시작 날짜', '끝 날짜'가 service parameter이다.
-		return timeSlotService.selectBydelivery_date(init_date, finish_date);
+		return timeSlotService.selectBydelivery_date(search_init_date, search_finish_date);
 	}
 
 }

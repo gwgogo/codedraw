@@ -9,8 +9,11 @@ import com.tmon.platform.api.dto.TimeSlotDto;
 public interface ReservationDao {
 	public int addReservation(ReservationDto reservationDto);
 	public void addOrderProduct(OrderProductDto OrderProductDto);
-	public List<TimeSlotDto> validTimeSlot();
-	public int updateStatusReservation(int reservation_id, int status_id);
+	public void updateStatusReservation(int reservation_id, int status_id);
 	public void incCountTimeSlot(int timeslot_id);
 	public void decCountTimeSlot(int timeslot_id);
+	public int getTimeSlotId(int reservation_id);
+	public int getTimeSlotCount(int timeslot_id);
+	public void setTimeSlotCutOff(int timeslot_id);
+	public void resetTimeSlotCutOff(int timeslot_id);
 }

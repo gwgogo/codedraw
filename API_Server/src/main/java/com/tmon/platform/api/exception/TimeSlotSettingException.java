@@ -1,17 +1,18 @@
 package com.tmon.platform.api.exception;
 
 /**
- * TimeSlotException
+ * TimeSlotSettingException
  * 
  * @author 구도원
  *
  */
-public class TimeSlotException extends Exception {
+public class TimeSlotSettingException extends Exception {
 
 	private int errCode;
 
-	public TimeSlotException(int errCode, String errMsg) {
+	public TimeSlotSettingException(int errCode, String errMsg) {
 		super(errMsg);
 		this.errCode = errCode;
 	}
+
 }
