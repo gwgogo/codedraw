@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReservationMapper">
+	
+	<insert id="addReservation" parameterType="com.tmon.platform.api.dto.ReservationDto" >
+		INSERT INTO RESERVATION_ORDER (
+		   reservation_date
+		  ,user_id
+		  ,timeslot_id
+		) VALUES (
+		   NOW()
+		  ,#{user_id} 
+		  ,#{timeslot_id} 
+		)
+	   <selectKey resultType="int" keyProperty="reservation_id" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey> 
+	</insert>
+	
+	<insert id="addOrderProduct" parameterType="com.tmon.platform.api.dto.OrderProductDto">
+		INSERT INTO ORDER_INFORMATION (
+		   reservation_id
+		  ,product_id
+		  ,quantity
+		) VALUES (
+		   #{reservation_id}
+		  ,#{product_id}
+		  ,#{quantity}
+		)
+	</insert>
+	
+	
+	<update id="incCountTimeSlot" parameterType="int" >
+		UPDATE TIMESLOT SET
+		   count = count + 1
+		WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	
+	<update id="decCountTimeSlot" parameterType="int">
+		UPDATE TIMESLOT SET
+		   count = count - 1
+		WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	
+	<select id="validTimeSlot" resultType="com.tmon.platform.api.dto.TimeSlotDto">
+		<![CDATA[
+			SELECT * FROM TIMESLOT WHERE count < 5
+		]]>
+	</select>	
+
+
+	<update id="updateStatusReservation" parameterType="Map">
+		UPDATE RESERVATION_ORDER SET
+		   status_id = #{status_id} 
+		  ,cancel_date = NOW()
+		WHERE reservation_id = #{reservation_id}
+	</update>
+	
+	<select id="getTimeSlotId" resultType="int" parameterType="int">
+		SELECT timeslot_id FROM RESERVATION_ORDER WHERE reservation_id=#{reservation_id}
+	</select>
+	
+	<select id="getTimeSlotCount" resultType="int" parameterType="int">
+		SELECT count FROM TIMESLOT WHERE timeslot_id=#{timeslot_id}
+	</select>
+
+	<update id="setTimeSlotCutOff" parameterType="int">
+		UPDATE TIMESLOT SET cutoff = NOW() WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	<update id="resetTimeSlotCutOff" parameterType="int">
+		UPDATE TIMESLOT SET cutoff = null WHERE timeslot_id = #{timeslot_id}
+	</update>
+
+</mapper>    
