@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.SnapShotDao;
 import com.tmon.platform.api.dto.SnapShotDto;
-import com.tmon.platform.api.exception.TimeSlotException;
+import com.tmon.platform.api.exception.DateFormatException;
 import com.tmon.platform.api.service.SnapShotService;
 
 /**
@@ -35,7 +35,7 @@ public class SnapShotServiceImpl implements SnapShotService {
 
 	@Override
 	public List<SnapShotDto> selectBysnapshot_time(String search_init_time, String search_finish_time)
-			throws Exception {
+			throws DateFormatException {
 
 		SimpleDateFormat searchFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
 
@@ -46,7 +46,7 @@ public class SnapShotServiceImpl implements SnapShotService {
 			converted_search_finish_time = searchFormat.parse(search_finish_time);
 		} catch (ParseException e) {
 			logger.info(e.toString());
-			throw new Exception();
+			throw new DateFormatException(500, "incorrect input Time or Date data");
 		}
 
 		// WHERE절 변수 입력을 위해 parameterType을 Map구조로 한다.
@@ -64,7 +64,7 @@ public class SnapShotServiceImpl implements SnapShotService {
 		if (initDate > finishDate) {
 			logger.info("search_start_time: " + betweenTime.get("search_init_time"));
 			logger.info("search_end_time: " + betweenTime.get("search_finish_time"));
-			throw new TimeSlotException(500, "search_init_time must be smaller than search_finish_time");
+			throw new DateFormatException(500, "search_init_time must be smaller than search_finish_time");
 		}
 
 		// Dao에서는 Map객체를 parameter로 받는다.

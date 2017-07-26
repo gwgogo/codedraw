@@ -91,8 +91,11 @@ public class SessionManager {
 		}
 	}
 	
-	public Hashtable getSessionPool() {
-		return sessionPool;
+	public boolean isValidSession(String session) {
+		if(sessionPool.containsKey(session)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public String getSession(String rawCookie) {

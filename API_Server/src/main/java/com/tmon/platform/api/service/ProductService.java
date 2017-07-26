@@ -14,6 +14,6 @@ public interface ProductService {
 	public ProductDto productByProductId(int product_id) throws NullCustomException;
 	public List<OrderProductDto> productByReservationId(int reservation_id) throws NullCustomException;
 	public List<ProductDto> productByCategoryId(int category_id) throws NullCustomException;
-	public JSONObject deleteProduct(int product_id) throws SQLCustomException;
+	public JSONObject deleteProduct(int product_id) throws NullCustomException;
 	
 }

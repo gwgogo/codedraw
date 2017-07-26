@@ -57,7 +57,13 @@
 	function adminForm(){
 		$.ajax({
 			type : "GET",
-			url : "/user/adminForm",
+			url : "/user/admin",
+			success : function(data){
+				location.href='http://localhost:8080/user/adminForm';
+			},
+			error : function(data){
+				location.href='http://localhost:8080/user/loginForm';
+			}
 		})
 	}
 	

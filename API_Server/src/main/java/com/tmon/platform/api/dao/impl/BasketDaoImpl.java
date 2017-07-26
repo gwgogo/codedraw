@@ -31,11 +31,12 @@ public class BasketDaoImpl implements BasketDao {
 		return sqlSession.selectList("BasketMapper.basket", user_id);
 	}
 	
-	public void removeBasket(String user_id, int product_id) {
+	
+	public int removeBasket(String user_id, int product_id) {
 		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
 		map.put("product_id", String.valueOf(product_id));
-		sqlSession.delete("BasketMapper.removeBasket", map);
+		return sqlSession.delete("BasketMapper.removeBasket", map);
 	}
 	
 	public void cleanBasket(String user_id) {
@@ -63,7 +64,7 @@ public class BasketDaoImpl implements BasketDao {
 		return sqlSession.selectOne("BasketMapper.getBasketQuantity", map);
 	}
 	
-	public int getMaxQuantity(int product_id) {
+	public Integer getMaxQuantity(int product_id) {
 		return sqlSession.selectOne("BasketMapper.getMaxQuantity", product_id);
 	}
 }

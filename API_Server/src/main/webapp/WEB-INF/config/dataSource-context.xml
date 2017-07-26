@@ -7,11 +7,12 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name = "driverClassName" value="${db.driverClass}"/>
-		<property name = "url" value = "${db.shinUrl}"/>
-		<property name = "username" value="${db.shinUsername}"/>
-		<property name = "password" value="${db.shinPassword}"/>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${db.driverClass}" />
+		<property name="url" value="${db.shinUrl}" />
+		<property name="username" value="${db.shinUsername}" />
+		<property name="password" value="${db.shinPassword}" />
 	</bean>
 
 
@@ -25,7 +26,7 @@
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="*" propagation="REQUIRED"
-				rollback-for="com.tmon.platform.api.exception.CustomException" />
+				rollback-for="com.tmon.platform.api.exception.AbstractCustomException" />
 		</tx:attributes>
 	</tx:advice>
 
@@ -33,6 +34,6 @@
 		<aop:pointcut id="transactionPointcut"
 			expression="execution(* com.tmon.platform.api.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
-	</aop:config> 
+	</aop:config>
 
 </beans>

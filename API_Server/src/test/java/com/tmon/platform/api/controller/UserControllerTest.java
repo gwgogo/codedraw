@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 
 import javax.servlet.http.Cookie;
 
+import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
-import com.tmon.platform.api.exception.CustomException;
+import com.tmon.platform.api.exception.AuthException;
+import com.tmon.platform.api.exception.PreConditionException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.interceptor.AdminCheckInterceptorTest;
 import com.tmon.platform.api.interceptor.LoginCheckInterceptorTest;
 import com.tmon.platform.api.service.UserService;
@@ -41,9 +44,6 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	private UserService userService;
 	
 	@Autowired
-	private UserDao userDao;
-	
-	@Autowired
 	private SessionManager sessionManager;
 	
 	@Autowired
@@ -53,29 +53,37 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	private AdminCheckInterceptorTest adminCheckInterceptorTest;
 	
 	
-	static MockHttpServletRequest request = new MockHttpServletRequest();
-	static MockHttpServletResponse response = new MockHttpServletResponse();
+	private static final MockHttpServletRequest request = new MockHttpServletRequest();
+	private static final MockHttpServletResponse response = new MockHttpServletResponse();
+	private static final String USER_ID = "user0001";
+	private static final String USER_PW = "user0001";
 	
-	private String sessionKey;
+	private String session;
 	
 	@Before
-	public void before() {
-		UserDto userDto = userDao.user("admin0001");
-		sessionKey = sessionManager.createSession(userDto);
+	public void before() throws PreConditionException {
+		/*UserDto userDto = userDao.user("admin0001");
+		sessionKey = sessionManager.createSession(userDto);*/
+		
+		JSONObject obj = userService.login(USER_ID, USER_PW);
+		session = obj.get("session").toString();
 	}
 	
 	@After
 	public void after() {
-		sessionManager.deleteSession(sessionKey);
+		userService.logout(session);
 	}
 	
-	@Test(expected=CustomException.class)
-	public void login() throws Exception{
-		userService.login("notExistID", "password");
+	@Test
+	public void login() throws PreConditionException{
+		//userService.login("notExistID", "password");
+		JSONObject obj = userService.login(USER_ID, USER_PW);
+		assertEquals(obj.get("session"), session);
+		
 	}
 	
-	@Test(expected=CustomException.class)
-	public void join() throws Exception{
+	@Test(expected=SQLCustomException.class)
+	public void join() throws SQLCustomException{
 		UserDto dto = new UserDto();
 		dto.setUser_id("user0001");
 		dto.setUser_pw("user0001");
@@ -84,39 +92,38 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	
 
 	@Test
-	public void mypage() throws Exception {
-		logger.info("Mypage Test");
-		
-		Cookie cookie = new Cookie("session", sessionKey);	// 테스트 할 때는 직접 쿠키에 넣어서 핸들러 인터셉터로 전송
+	public void mypage() throws AuthException {
+				
+		Cookie cookie = new Cookie("session", session);	// 테스트 할 때는 직접 쿠키에 넣어서 핸들러 인터셉터로 전송
 		request.setCookies(cookie);
 		Object handler = null;
 		Boolean test = loginCheckInterceptorTest.preHandle(request, response, handler);
 		
 		assertEquals(test, true);
-		UserDto dto = userService.user(sessionKey);
+		UserDto dto = userService.user(session);
 		assertThat(dto.getUser_id(), is("user0001"));
 		assertThat(dto, notNullValue());
-		sessionManager.deleteSession(sessionKey);
+		sessionManager.deleteSession(session);
 	}
 	
 	
 	@Test
-	public void admin() throws Exception {
-		Cookie cookie = new Cookie("session", sessionKey);	// 테스트 할 때는 직접 쿠키에 넣어서 핸들러 인터셉터로 전송
+	public void admin() throws AuthException {
+		Cookie cookie = new Cookie("session", session);	// 테스트 할 때는 직접 쿠키에 넣어서 핸들러 인터셉터로 전송
 		request.setCookies(cookie);
 		Object handler = null;
 		
 		Boolean test = adminCheckInterceptorTest.preHandle(request, response, handler);
 		assertEquals(test,true);
-		UserDto dto = userService.user(sessionKey);
+		UserDto dto = userService.user(session);
 		assertThat(dto.getUser_id(), is("admin0001"));
-		sessionManager.deleteSession(sessionKey);
+		sessionManager.deleteSession(session);
 	}
 	
 	@Test
-	public void logout() throws CustomException {
+	public void logout() {
 		logger.info("Logout Test");
-		userService.logout(sessionKey);
+		userService.logout(session);
 	}
 	
 }

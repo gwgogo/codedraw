@@ -28,7 +28,8 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 
-		throw new AuthException(606, "Admin Unauthorized");
+		//throw new AuthException(606, "Admin Unauthorized");
+		return false;
 	}
 
 }

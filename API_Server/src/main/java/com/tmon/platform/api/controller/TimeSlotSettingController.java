@@ -1,6 +1,5 @@
 package com.tmon.platform.api.controller;
 
-import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tmon.platform.api.dto.TimeSlotSettingDto;
-import com.tmon.platform.api.exception.TimeSlotSettingException;
+import com.tmon.platform.api.exception.DateFormatException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.TimeSlotSettingService;
 
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +24,6 @@ import io.swagger.annotations.ApiOperation;
  * TimeSlotSettingController
  * 
  * @author 구도원
- * 
- *         본 Controller는 관리자만을 위한 Controller입니다. 별도의 Interceptor를 구성하여 관리자가
- *         아닌경우에는 본 Controller에 접근하지 못하도록 막을 계획입니다.
  *
  */
 @RestController
@@ -40,20 +36,10 @@ public class TimeSlotSettingController {
 	@Autowired
 	TimeSlotSettingService timeSlotSettingService;
 
-	/**
-	 * TimeSlotSetting Insert 타임슬롯의 시간대를 새롭게 추가하는 API
-	 * 
-	 * @author 구도원
-	 * @param start_time
-	 * @param end_time
-	 * @return Map<String, String>
-	 * @throws TimeSlotSettingException
-	 * @throws ParseException
-	 */
 	@ApiOperation(value = "타임슬롯의 시간대를 새롭게 추가하는 API")
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String, String> insert_timeslotsetting(@RequestBody Map<String, String> requestParams)
-			throws TimeSlotSettingException, ParseException {
+			throws DateFormatException, SQLCustomException {
 		logger.info("This is insert_timeslotsetting");
 
 		String start_time = requestParams.get("start_time");
@@ -63,21 +49,10 @@ public class TimeSlotSettingController {
 		return timeSlotSettingService.insert(start_time, end_time);
 	}
 
-	/**
-	 * TimeSlotSetting Update 타임슬롯의 시간대를 수정하는 API
-	 * 
-	 * @author 구도원
-	 * @param timeslot_setting_id
-	 * @param start_time
-	 * @param end_time
-	 * @return Map<String, String>
-	 * @throws TimeSlotSettingException
-	 * @throws ParseException
-	 */
 	@ApiOperation(value = "기존의 타임슬롯 시간대를 조정(수정)하는 API")
 	@RequestMapping(value = "/{timeslot_setting_id}", method = RequestMethod.PUT)
 	public Map<String, String> update_timeslotsetting(@PathVariable("timeslot_setting_id") int timeslot_setting_id,
-			@RequestBody Map<String, String> requestParams) throws TimeSlotSettingException, ParseException {
+			@RequestBody Map<String, String> requestParams) throws DateFormatException, SQLCustomException {
 		logger.info("This is update_timeslotsetting");
 
 		String start_time = requestParams.get("start_time");
@@ -87,19 +62,10 @@ public class TimeSlotSettingController {
 		return timeSlotSettingService.update(timeslot_setting_id, start_time, end_time);
 	}
 
-	/**
-	 * TimeSlotSetting Delete 타임슬롯의 시간대를 삭제하는 API
-	 * 
-	 * @author 구도원
-	 * @param timeslot_setting_id
-	 * @return Map<String, String>
-	 * @throws TimeSlotSettingException
-	 * @throws ParseException
-	 */
 	@ApiOperation(value = "기존의 타임슬롯 시간대를 삭제하는 API")
 	@RequestMapping(value = "/{timeslot_setting_id}", method = RequestMethod.DELETE)
 	public Map<String, String> delete_timeslotsetting(@PathVariable("timeslot_setting_id") int timeslot_setting_id)
-			throws TimeSlotSettingException {
+			throws DateFormatException, SQLCustomException {
 		logger.info("This is delete_timeslotsetting");
 
 		// DELETE Query 실행
@@ -113,13 +79,12 @@ public class TimeSlotSettingController {
 	 * TIMESLOT TABLE에 새로운 날짜의 timeslot을 INSERT한다.
 	 * 
 	 * @author 구도원
-	 * @return List<TimeSlotSettingDto> [JSON]
-	 * @throws TimeSlotSettingException
-	 * @throws ParseException
+	 * @return
+	 * @throws SQLCustomException
 	 */
 	@ApiOperation(value = "현재 세팅되어 있는 TimeSlot 시간대")
 	@RequestMapping(method = RequestMethod.GET)
-	public List<TimeSlotSettingDto> select_timeslotsetting() {
+	public List<TimeSlotSettingDto> select_timeslotsetting() throws SQLCustomException {
 		logger.info("This is select_timeslotsetting");
 
 		return timeSlotSettingService.select();

@@ -1,9 +1,7 @@
 package com.tmon.platform.api.exception;
 
-public class PreconditionException extends CustomException{
-	
-	public PreconditionException(int errCode, String errMsg ) {
+public class PreConditionException extends AbstractCustomException{
+	public PreConditionException(int errCode, String errMsg) {
 		super(errCode, errMsg);
 	}
-
 }

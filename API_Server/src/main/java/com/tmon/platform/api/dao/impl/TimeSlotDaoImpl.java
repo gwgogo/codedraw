@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tmon.platform.api.dao.TimeSlotDao;
 import com.tmon.platform.api.dto.TimeSlotDto;
+import com.tmon.platform.api.dto.TimeSlotInformationDto;
 
 /**
  * TimeSlotDaoImpl
@@ -38,6 +39,11 @@ public class TimeSlotDaoImpl implements TimeSlotDao {
 	@Override
 	public int delete(TimeSlotDto timeSlotDto) {
 		return sqlSession.delete("TimeSlotMapper.delete", timeSlotDto);
+	}
+
+	@Override
+	public List<TimeSlotInformationDto> selectValid(Map<String, Object> validDate) {
+		return sqlSession.selectList("TimeSlotMapper.selectValid", validDate);
 	}
 
 	@Override

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- OrderInformationMapper.xml @author 구도원 -->
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -16,6 +15,11 @@
 		<collection property="productList" column="reservation_id"
 			javaType="ArrayList" ofType="com.tmon.platform.api.dto.OrderProductDto"
 			select="selectProducts" />
+	</resultMap>
+
+	<resultMap id="timeSlotAndStatus" type="java.util.HashMap">
+		<result property="status_id" column="status_id"/>
+		<result property="timeslot_id" column="timeslot_id"/>
 	</resultMap>
 
 	<select id="selectByDate" parameterType="Map" resultMap="orderList">
@@ -47,33 +51,6 @@
 
 		WHERE
 		<![CDATA[reservation_date >= #{search_init_date} AND reservation_date < date_add(#{search_finish_date}, interval 1 day)]]>
-	</select>
-
-	<select id="selectProducts" resultType="com.tmon.platform.api.dto.OrderProductDto">
-		SELECT
-		o.product_id
-		product_id,
-		p.product_name product_name,
-		o.quantity quantity,
-		c.category_name category_name
-
-		FROM
-		ORDER_INFORMATION o
-
-		INNER JOIN
-		PRODUCT
-		p
-		ON
-		o.product_id=p.product_id
-
-		INNER JOIN
-		CATEGORY c
-		ON
-		p.category_id=c.category_id
-
-		WHERE
-		reservation_id =
-		#{reservation_id}
 	</select>
 
 	<select id="selectByDateAndUser" parameterType="Map" resultMap="orderList">
@@ -109,4 +86,111 @@
 
 	</select>
 
+	<select id="selectProducts" resultType="com.tmon.platform.api.dto.OrderProductDto">
+		SELECT
+		o.product_id
+		product_id,
+		p.product_name product_name,
+		o.quantity quantity,
+		p.price price,
+		c.category_name category_name
+
+		FROM
+		ORDER_INFORMATION o
+
+		INNER JOIN
+		PRODUCT
+		p
+		ON
+		o.product_id=p.product_id
+
+		INNER JOIN
+		CATEGORY c
+		ON
+		p.category_id=c.category_id
+
+		WHERE
+		reservation_id =
+		#{reservation_id}
+	</select>
+
+	<insert id="addOrder" parameterType="Map" >
+		INSERT INTO RESERVATION_ORDER (
+		   reservation_date
+		  ,user_id
+		  ,timeslot_id
+		) VALUES (
+		   NOW()
+		  ,#{user_id} 
+		  ,#{timeslot_id} 
+		)
+	   <selectKey resultType="String" keyProperty="reservation_id" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey> 
+	</insert>
+	
+	<insert id="addOrderProduct" parameterType="Map">
+		INSERT INTO ORDER_INFORMATION (
+		   reservation_id
+		  ,product_id
+		  ,quantity
+		) VALUES (
+		   #{reservation_id}
+		  ,#{product_id}
+		  ,#{quantity}
+		)
+	</insert>
+	
+	
+	<update id="incCountTimeSlot" parameterType="int" >
+		UPDATE TIMESLOT SET
+		   count = count + 1
+		WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	
+	<update id="decCountTimeSlot" parameterType="int">
+		UPDATE TIMESLOT SET
+		   count = count - 1
+		WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	<update id="cancelOrder" parameterType="int">
+		UPDATE RESERVATION_ORDER SET
+		   status_id = 3 
+		  ,cancel_date = NOW()
+		WHERE reservation_id = #{reservation_id}
+	</update>
+
+	<select id="getTimeSlotCount" resultType="int" parameterType="int">
+		SELECT count FROM TIMESLOT WHERE timeslot_id=#{timeslot_id}
+	</select>
+
+	<update id="setTimeSlotCutOff" parameterType="int">
+		UPDATE TIMESLOT SET cutoff = NOW() WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	<update id="resetTimeSlotCutOff" parameterType="int">
+		UPDATE TIMESLOT SET cutoff = null WHERE timeslot_id = #{timeslot_id}
+	</update>
+	
+	<update id="incQuantity" parameterType="Map">
+		UPDATE PRODUCT SET sell_quantity = sell_quantity + #{quantity} WHERE product_id = #{product_id}
+	</update>
+	
+	<update id="decQuantity" parameterType="Map">
+		UPDATE PRODUCT SET sell_quantity = sell_quantity - #{quantity} WHERE product_id = #{product_id}
+	</update>
+
+	<select id="getStockQuantity" parameterType="int" resultType="int">
+		SELECT max_quantity - sell_quantity AS stockQuantity FROM PRODUCT WHERE product_id = #{product_id}
+	</select> 
+
+	<select id="getOrderProductList" parameterType="int" resultType="com.tmon.platform.api.dto.OrderProductDto">
+		SELECT product_id, quantity FROM ORDER_INFORMATION WHERE reservation_id = #{reservation_id}
+	</select>	
+	
+	<select id="getTimeSlotAndStatus" parameterType="int" resultMap="timeSlotAndStatus">
+		SELECT status_id, timeslot_id FROM RESERVATION_ORDER WHERE reservation_id=#{reservation_id}
+	</select>
 </mapper>

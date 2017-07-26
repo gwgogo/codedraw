@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.tmon.platform.api.exception.AuthException;
-import com.tmon.platform.api.exception.CustomException;
 import com.tmon.platform.api.util.SessionManager;
 
 @Component
@@ -27,11 +26,12 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 
-		if (sessionManager.getSessionPool().containsKey(session)) { // 그 value(세션키)가 현재 세션풀에 있는지 검사하여 있으면 return true
+		if (sessionManager.isValidSession(session)) { // 그 value(세션키)가 현재 세션풀에 있는지 검사하여 있으면 return true
 			return true;
 		}
 
-		throw new AuthException(606, "Login Unauthorized");
+		return false;
+		//throw new AuthException(606, "Login Unauthorized");
 		// return false;
 	}
 }

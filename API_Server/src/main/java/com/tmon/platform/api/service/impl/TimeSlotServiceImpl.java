@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.TimeSlotDao;
 import com.tmon.platform.api.dto.TimeSlotDto;
-import com.tmon.platform.api.exception.TimeSlotException;
+import com.tmon.platform.api.dto.TimeSlotInformationDto;
+import com.tmon.platform.api.exception.DateFormatException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.TimeSlotService;
 
 /**
@@ -42,33 +44,32 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
 	@Override
 	public Map<String, String> insert(String start_time, String end_time, String delivery_date, int count)
-			throws TimeSlotException {
+			throws DateFormatException, SQLCustomException {
 
 		TimeSlotDto timeSlotDto = new TimeSlotDto();
 
 		try {
-
 			/*
-			 * 생성할 타임슬롯의 시간대(시작시간, 끝시간)와 날짜의 입력이 올바르게 되었는지 확인한다. 문자열로 입력된 날짜와 시간을 Date 타입으로
-			 * 변환한다.
+			 * 생성할 타임슬롯의 시간대(시작시간, 끝시간)와 날짜의 입력이 올바르게 되었는지 확인한다. 문자열로 입력된 날짜와 시간을 Date, Time
+			 * 타입으로 변환한다.
 			 * 
 			 * 'timeSlotDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 			 */
-			timeSlotDto.setStart_time((Time) timeFormat.parse(start_time));
-			timeSlotDto.setEnd_time((Time) timeFormat.parse(end_time));
+			timeSlotDto.setStart_time(new Time(timeFormat.parse(start_time).getTime()));
+			timeSlotDto.setEnd_time(new Time(timeFormat.parse(end_time).getTime()));
 			timeSlotDto.setDelivery_date(dateFormat.parse(delivery_date));
 			timeSlotDto.setCount(count);
 
 		} catch (ParseException e) {
 			logger.info("Error at Timeslot insert");
-			throw new TimeSlotException(500, "incorrect input Time or Date data");
+			throw new DateFormatException(500, "incorrect input Time or Date data");
 		}
 
 		// 시작시간이 끝시간 보다 작아야 한다.
 		if (timeSlotDto.getStart_time().getTime() >= timeSlotDto.getEnd_time().getTime()) {
 			logger.info("start_time: " + timeSlotDto.getStart_time());
 			logger.info("end_time: " + timeSlotDto.getEnd_time());
-			throw new TimeSlotException(500, "start_time must be smaller than end_time");
+			throw new DateFormatException(500, "start_time must be smaller than end_time");
 		}
 
 		Map<String, String> out = new HashMap<String, String>();
@@ -78,37 +79,38 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			out.put("msg", "Success Insert TimeSlot");
 		} catch (Exception e) {
 			// TimeSlot Insert 실패
-			throw new TimeSlotException(500, "TimeSlot Insert Error");
+			throw new SQLCustomException(500, "TimeSlot Insert Error");
 		}
 
 		return out;
 	}
 
 	@Override
-	public Map<String, String> update(String start_time, String end_time, int timeslot_id) throws TimeSlotException {
+	public Map<String, String> update(String start_time, String end_time, int timeslot_id)
+			throws DateFormatException, SQLCustomException {
 
 		TimeSlotDto timeSlotDto = new TimeSlotDto();
 
 		try {
 			/*
-			 * 수정할 타임슬롯의 시간대(시작시간, 끝시간)의 입력이 올바르게 되었는지 확인한다. 문자열로 입력된 날짜와 시간을 Date 타입으로
-			 * 변환한다.
+			 * 수정할 타임슬롯의 시간대(시작시간, 끝시간)의 입력이 올바르게 되었는지 확인한다. 문자열로 입력된 날짜와 시간을 Date, Time
+			 * 타입으로 변환한다.
 			 * 
 			 * 'timeSlotDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 			 */
-			timeSlotDto.setStart_time((Time) timeFormat.parse(start_time));
-			timeSlotDto.setEnd_time((Time) timeFormat.parse(end_time));
+			timeSlotDto.setStart_time(new Time(timeFormat.parse(start_time).getTime()));
+			timeSlotDto.setEnd_time(new Time(timeFormat.parse(end_time).getTime()));
 			timeSlotDto.setTimeslot_id(timeslot_id);
 		} catch (ParseException e) {
 			logger.info("Error at Timeslot update");
-			throw new TimeSlotException(500, "incorrect input Time or Date data");
+			throw new DateFormatException(500, "incorrect input Time or Date data");
 		}
 
 		// 시작시간이 끝시간 보다 작아야 한다.
 		if (timeSlotDto.getStart_time().getTime() >= timeSlotDto.getEnd_time().getTime()) {
 			logger.info("start_time: " + timeSlotDto.getStart_time());
 			logger.info("end_time: " + timeSlotDto.getEnd_time());
-			throw new TimeSlotException(500, "start_time must be smaller than end_time");
+			throw new DateFormatException(500, "start_time must be smaller than end_time");
 		}
 
 		Map<String, String> out = new HashMap<String, String>();
@@ -121,13 +123,13 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 		} catch (Exception e) {
 
 			// TimeSlot Update 실패
-			throw new TimeSlotException(500, "TimeSlot Update Error");
+			throw new SQLCustomException(500, "TimeSlot Update Error");
 		}
 		return out;
 	}
 
 	@Override
-	public Map<String, String> delete(int timeslot_id) throws TimeSlotException {
+	public Map<String, String> delete(int timeslot_id) throws SQLCustomException {
 
 		TimeSlotDto timeSlotDto = new TimeSlotDto();
 
@@ -143,14 +145,45 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			out.put("msg", "Success Delete TimeSlot");
 		} catch (Exception e) {
 			// TimeSlot Delete 실패
-			throw new TimeSlotException(500, "TimeSlot Delete Error");
+			throw new SQLCustomException(500, "TimeSlot Delete Error");
 		}
 		return out;
 	}
 
 	@Override
+	public List<TimeSlotInformationDto> selectValid(String search_init_date, int validDays)
+			throws DateFormatException, SQLCustomException {
+
+		// WHERE절 변수 입력을 위해 parameteryType을 Map구조로 한다.
+		Map<String, Object> validDate = new HashMap<String, Object>();
+
+		try {
+
+			/*
+			 * 검색할 날짜의 입력이 바르게 입력되었는지 확인한 후 String을 Date타입으로 변환한다.
+			 * 
+			 * 'validDate' Map 객체에 Object를 저장한다.
+			 */
+			validDate.put("search_init_date", dateFormat.parse(search_init_date));
+			validDate.put("validDays", validDays);
+
+		} catch (ParseException e) {
+			logger.info("Error at TimeSlot selectValid");
+			throw new DateFormatException(500, "incorrect input Date data");
+		}
+
+		try {
+			// Dao에서는 Map객체를 parameter로 받는다.
+			return timeSlotDao.selectValid(validDate);
+		} catch (Exception e) {
+			// TimeSlot Select 실패
+			throw new SQLCustomException(500, "TimeSlot selectValid Error");
+		}
+	}
+
+	@Override
 	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date)
-			throws TimeSlotException {
+			throws DateFormatException, SQLCustomException {
 
 		// WHERE절 변수 입력을 위해 parameterType을 Map구조로 한다.
 		Map<String, Date> betweenDate = new HashMap<String, Date>();
@@ -167,7 +200,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
 		} catch (ParseException e) {
 			logger.info("Error at TimeSlot selectBydelivery_date");
-			throw new TimeSlotException(500, "incorrect input Date data");
+			throw new DateFormatException(500, "incorrect input Date data");
 		}
 
 		// 검색 시작 날짜가 검색 끝 날짜 보다 작아야 한다.
@@ -176,7 +209,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 		if (initDate > finishDate) {
 			logger.info("search_start_time: " + betweenDate.get("search_init_date"));
 			logger.info("search_end_time: " + betweenDate.get("search_finish_date"));
-			throw new TimeSlotException(500, "search_init_date must be smaller than search_finish_date");
+			throw new DateFormatException(500, "search_init_date must be smaller than search_finish_date");
 		}
 
 		try {
@@ -184,8 +217,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			return timeSlotDao.selectBydelivery_date(betweenDate);
 		} catch (Exception e) {
 			// TimeSlot Select 실패
-			throw new TimeSlotException(500, "TimeSlot selectBydelivery_date Error");
+			throw new SQLCustomException(500, "TimeSlot selectBydelivery_date Error");
 		}
 	}
-
 }

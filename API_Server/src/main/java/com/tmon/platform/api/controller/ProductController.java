@@ -63,7 +63,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Invalid ReservationID}")
 	})
 	@RequestMapping(value="/reservation/{reservation_id}", method=RequestMethod.GET)
-	public List<OrderProductDto> productByReservationId(@PathVariable("reservation_id") int reservation_id) throws NullCustomException{
+	public List<OrderProductDto> productByReservationId(@PathVariable("reservation_id") int reservation_id) throws NullCustomException {
 		return productService.productByReservationId(reservation_id);
 	}
 	
@@ -75,7 +75,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Invalid CategoryID}")
 	})
 	@RequestMapping(value="/category/{category_id}", method=RequestMethod.GET)
-	public List<ProductDto> productByCategoryId(@PathVariable("category_id") int category_id) throws NullCustomException{
+	public List<ProductDto> productByCategoryId(@PathVariable("category_id") int category_id) throws NullCustomException {
 		return productService.productByCategoryId(category_id);
 	}
 	
@@ -87,7 +87,7 @@ public class ProductController {
 			@ApiResponse(code = 501, message = "{msg : Fail : Delete SQL Error}")
 	})
 	@RequestMapping(value="/{product_id}", method=RequestMethod.DELETE)
-	public JSONObject deleteProduct(@PathVariable("product_id")int product_id) throws SQLCustomException {
+	public JSONObject deleteProduct(@PathVariable("product_id")int product_id) throws NullCustomException {
 		return productService.deleteProduct(product_id);
 	}
 	

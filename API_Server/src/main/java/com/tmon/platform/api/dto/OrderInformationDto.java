@@ -16,6 +16,7 @@ public class OrderInformationDto {
 	private String reservation_date;
 	private String cancel_date;
 	private String user_id;
+	private int status_id;
 	private String status_string;
 	private int timeslot_id;
 	private String delivery_date; // {join TIMESLOT}
@@ -53,6 +54,14 @@ public class OrderInformationDto {
 
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
+	}
+
+	public int getStatus_id() {
+		return status_id;
+	}
+
+	public void setStatus_id(int status_id) {
+		this.status_id = status_id;
 	}
 
 	public String getStatus_string() {

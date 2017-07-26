@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.tmon.platform.api.dto.TimeSlotDto;
-import com.tmon.platform.api.exception.TimeSlotException;
+import com.tmon.platform.api.dto.TimeSlotInformationDto;
+import com.tmon.platform.api.exception.DateFormatException;
+import com.tmon.platform.api.exception.SQLCustomException;
 
 /**
  * TimeSlotService
@@ -17,12 +19,17 @@ import com.tmon.platform.api.exception.TimeSlotException;
 public interface TimeSlotService {
 
 	public Map<String, String> insert(String start_time, String end_time, String delivery_date, int count)
-			throws TimeSlotException;
+			throws DateFormatException, SQLCustomException;
 
-	public Map<String, String> update(String start_time, String end_time, int timeslot_id) throws TimeSlotException;
+	public Map<String, String> update(String start_time, String end_time, int timeslot_id)
+			throws DateFormatException, SQLCustomException;
 
-	public Map<String, String> delete(int timeslot_id) throws TimeSlotException;
+	public Map<String, String> delete(int timeslot_id) throws SQLCustomException;
 
-	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date) throws TimeSlotException;
+	public List<TimeSlotInformationDto> selectValid(String search_init_date, int validDays)
+			throws DateFormatException, SQLCustomException;
+
+	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date)
+			throws DateFormatException, SQLCustomException;
 
 }

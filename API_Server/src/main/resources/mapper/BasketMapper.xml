@@ -45,7 +45,7 @@
 	    AND product_id = #{product_id}
 	</update>
 	
-	<select id="getBasketQuantity" parameterType="Map" resultType="int">
+	<select id="getBasketQuantity" parameterType="Map" resultType="Integer">
 		SELECT quantity FROM BASKET WHERE product_id=#{product_id} AND user_id=#{user_id}
 	</select>
 	

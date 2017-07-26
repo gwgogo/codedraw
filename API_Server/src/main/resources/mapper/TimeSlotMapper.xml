@@ -6,6 +6,14 @@
 
 <mapper namespace="TimeSlotMapper">
 
+	<resultMap id="timeslotList"
+		type="com.tmon.platform.api.dto.TimeSlotInformationDto">
+		<result property="delivery_date" column="delivery_date" />
+		<collection property="timeList" column="delivery_date"
+			javaType="ArrayList" ofType="com.tmon.platform.api.dto.TimeSlotDto"
+			select="selectTimeSlots" />
+	</resultMap>
+
 	<insert id="insert" parameterType="com.tmon.platform.api.dto.TimeSlotDto">
 		INSERT INTO
 		TIMESLOT(
@@ -41,6 +49,20 @@
 		WHERE
 		timeslot_id=#{timeslot_id}
 	</delete>
+
+	<select id="selectValid" parameterType="Map" resultMap="timeslotList">
+		SELECT
+		delivery_date
+		FROM TIMESLOT 
+		<![CDATA[WHERE delivery_date>#{search_init_date} GROUP BY delivery_date LIMIT #{validDays}]]>
+	</select>
+
+	<select id="selectTimeSlots" resultType="com.tmon.platform.api.dto.TimeSlotDto">
+		SELECT
+		*
+		FROM TIMESLOT
+		WHERE delivery_date=#{delivery_date}
+	</select>
 
 	<select id="selectBydelivery_date" parameterType="Map"
 		resultType="com.tmon.platform.api.dto.TimeSlotDto">

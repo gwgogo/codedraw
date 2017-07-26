@@ -33,28 +33,31 @@ public class ProductServiceImpl implements ProductService {
 	
 	public List<OrderProductDto> productByReservationId(int reservation_id) throws NullCustomException{
 		List<OrderProductDto> list = productDao.productByReservationId(reservation_id);
-		if(list == null) {
+		if(list.isEmpty()) {
 			throw new NullCustomException(604, "Invalid ReservationID");
 		}
 		return list;
 	}
 	
 	public List<ProductDto> productByCategoryId(int category_id) throws NullCustomException{
-		List<ProductDto> list = productDao.productByCategoryId(category_id);
-		if(list == null) {
+		List<ProductDto> list = productDao.productByCategoryId(category_id); 
+		if(list.isEmpty()) {
 			throw new NullCustomException(604, "Invalid CategoryID");
 		}
 		return list;
 	}
 	
-	public JSONObject deleteProduct(int product_id) throws SQLCustomException {
-		JSONObject obj = new JSONObject();
-		try {
-			productDao.deleteProduct(product_id);
-			obj.put("msg", "Success Product Delete");
-		}catch(Exception e) {
-			throw new SQLCustomException(605, "Fail : Product Delete SQL Error");
+	public JSONObject deleteProduct(int product_id) throws NullCustomException {
+		
+		if(productByProductId(product_id) != null) {
+			try{
+				productDao.deleteProduct(product_id);
+			}catch(Exception e) {
+				throw new NullCustomException(605, "Fail : Product Delete SQL Error");
+			}
 		}
+		JSONObject obj = new JSONObject();
+		obj.put("msg", "Success Product Delete");
 		return obj;
 	}
 	

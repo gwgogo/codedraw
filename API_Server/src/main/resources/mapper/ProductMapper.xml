@@ -25,9 +25,12 @@
 		 SELECT 
 		 ORDER_INFORMATION.reservation_id, PRODUCT.product_id, 
 		 PRODUCT.product_name, PRODUCT.image_url, ORDER_INFORMATION.quantity,
-		 PRODUCT.price * ORDER_INFORMATION.quantity AS part_price
-		 FROM PRODUCT JOIN ORDER_INFORMATION 
+		 PRODUCT.price, CATEGORY.category_name
+		 FROM PRODUCT 
+		 	JOIN ORDER_INFORMATION 
 			ON PRODUCT.product_id = ORDER_INFORMATION.product_id AND ORDER_INFORMATION.reservation_id = #{reservation_id}
+			JOIN CATEGORY
+			USING (category_id) 
 	</select>
 	
 	<select id="productByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">

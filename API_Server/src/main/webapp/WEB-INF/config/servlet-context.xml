@@ -39,13 +39,18 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/mypage" />
+			<mvc:mapping path="/user/mypage*/**" />
 			<mvc:mapping path="/baskets/**" />
 			<mvc:mapping path="/orders/**" />
 			<beans:bean class="com.tmon.platform.api.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/adminForm" />
+			<mvc:mapping path="/user/adminForm" />
+			<mvc:mapping path="/orders/admin/**" />
+			<mvc:mapping path="/holidays/*" />
+			<mvc:mapping path="/snapshots/*" />
+			<!-- <mvc:mapping path="/timeslots/*" /> -->
+			<!-- <mvc:mapping path="/timeslotsetting/*" /> -->
 			<beans:bean class="com.tmon.platform.api.interceptor.AdminCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

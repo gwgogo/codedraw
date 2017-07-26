@@ -1,10 +1,12 @@
 package com.tmon.platform.api.service.impl;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.ibm.icu.util.Calendar;
 import com.tmon.platform.api.dao.HolidayDao;
 import com.tmon.platform.api.dto.HolidayDto;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.HolidayService;
 import com.tmon.platform.api.util.LunarConverter;
 
@@ -35,7 +38,8 @@ public class HolidayServiceImpl implements HolidayService {
 	SimpleDateFormat dateFormat;
 
 	@Override
-	public int insert(int holiday_lunar, String holiday_date, String holiday_title) {
+	public Map<String, String> insert(int holiday_lunar, String holiday_date, String holiday_title)
+			throws SQLCustomException {
 
 		HolidayDto holidayDto = new HolidayDto();
 
@@ -48,11 +52,21 @@ public class HolidayServiceImpl implements HolidayService {
 		// 새롭게 삽입되는 공휴일 이름
 		holidayDto.setHoliday_title(holiday_title);
 
-		return holidayDao.insert(holidayDto);
+		Map<String, String> out = new HashMap<String, String>();
+		try {
+			// Holiday Insert 성공
+			holidayDao.insert(holidayDto);
+			out.put("msg", "Success Insert Holiday");
+		} catch (Exception e) {
+			// Holiday Insert 실패
+			throw new SQLCustomException(617, "Fail Insert HOLIDAY SQL Error");
+		}
+		return out;
 	}
 
 	@Override
-	public int update(int holiday_lunar, String holiday_date, String holiday_title, int holiday_id) {
+	public Map<String, String> update(int holiday_lunar, String holiday_date, String holiday_title, int holiday_id)
+			throws SQLCustomException {
 
 		HolidayDto holidayDto = new HolidayDto();
 
@@ -68,29 +82,62 @@ public class HolidayServiceImpl implements HolidayService {
 		// 수정한 공휴일의 공휴일 고유번호
 		holidayDto.setHoliday_id(holiday_id);
 
-		return holidayDao.update(holidayDto);
+		Map<String, String> out = new HashMap<String, String>();
+		try {
+			// Holiday Update 성공
+			holidayDao.update(holidayDto);
+			out.put("msg", "Success Update Holiday");
+		} catch (Exception e) {
+			// Holiday Update 실패
+			throw new SQLCustomException(617, "Fail Update HOLIDAY SQL Error");
+		}
+		return out;
 	}
 
 	@Override
-	public int delete(int holiday_id) {
+	public Map<String, String> delete(int holiday_id) throws SQLCustomException {
 
 		HolidayDto holidayDto = new HolidayDto();
 
 		// 삭제할 공휴일의 고유번호
 		holidayDto.setHoliday_id(holiday_id);
 
-		return holidayDao.delete(holidayDto);
+		Map<String, String> out = new HashMap<String, String>();
+		try {
+			// Holiday Delete 성공
+			holidayDao.delete(holidayDto);
+			out.put("msg", "Success Delete Holiday");
+		} catch (Exception e) {
+			// Holiday Delete 실패
+			throw new SQLCustomException(617, "Fail Delete HOLIDAY SQL Error");
+		}
+
+		return null;
 	}
 
 	@Override
-	public List<HolidayDto> select() {
-		return holidayDao.select();
+	public List<HolidayDto> select() throws SQLCustomException {
+
+		try {
+			// Holiday Select 성공
+			return holidayDao.select();
+		} catch (Exception e) {
+			// Holiday Select 실패
+			throw new SQLCustomException(617, "Fail Select HOLIDAY SQL Error");
+		}
+
 	}
 
 	@Override
-	public List<HolidayDto> selectBythisYear(int year) throws ParseException {
-		// DB로부터 공휴일 목록을 가져온다.
-		List<HolidayDto> holidays = holidayDao.select();
+	public List<HolidayDto> selectBythisYear(int year) throws ParseException, SQLCustomException {
+
+		List<HolidayDto> holidays = null;
+		try {
+			// DB로부터 공휴일 목록을 가져온다.
+			holidays = holidayDao.select();
+		} catch (Exception e) {
+			throw new SQLCustomException(617, "Fail Select HOLIDAY SQL Error");
+		}
 
 		// 입력된 'year' 해당년도의 양력에 맞게 변환된 공휴일 날짜를 저장하는 List 객체를 선언한다.
 		List<HolidayDto> holidays_Year = new ArrayList<HolidayDto>();
@@ -118,6 +165,7 @@ public class HolidayServiceImpl implements HolidayService {
 				// 음력날짜
 				Date lunarDate = new Date(dateFormat.parse(holidayDto.getHoliday_date()).getTime());
 
+				// 양력으로 변환된 날짜
 				Date convertedDate = lunarConverter.convertToDate(lunarDate);
 				// 변환된 양력날짜 입력
 				holidayDto.setHoliday_date(dateFormat.format(convertedDate));

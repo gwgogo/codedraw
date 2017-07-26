@@ -1,39 +1,12 @@
 package com.tmon.platform.api.dto;
 
-public class ProductDto {
-	private int product_id;
-	private String product_name;
-	private int price;
-	private String image_url;
+public class ProductDto extends BaseProductDto{
+	
 	private int max_quantity;
 	private int sell_quantity;
 	private int category_id;
 	private String category_name; 
 	
-	public int getProduct_id() {
-		return product_id;
-	}
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
-	}
-	public String getProduct_name() {
-		return product_name;
-	}
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	public String getImage_url() {
-		return image_url;
-	}
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
-	}
 	public int getMax_quantity() {
 		return max_quantity;
 	}

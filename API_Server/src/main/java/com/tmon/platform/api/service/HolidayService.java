@@ -2,8 +2,10 @@ package com.tmon.platform.api.service;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import com.tmon.platform.api.dto.HolidayDto;
+import com.tmon.platform.api.exception.SQLCustomException;
 
 /**
  * HolidayService
@@ -13,13 +15,15 @@ import com.tmon.platform.api.dto.HolidayDto;
  */
 public interface HolidayService {
 
-	public int insert(int holiday_lunar, String holiday_date, String holiday_title);
+	public Map<String, String> insert(int holiday_lunar, String holiday_date, String holiday_title)
+			throws SQLCustomException;
 
-	public int update(int holiday_lunar, String holiday_date, String holiday_title, int holiday_id);
+	public Map<String, String> update(int holiday_lunar, String holiday_date, String holiday_title, int holiday_id)
+			throws SQLCustomException;
 
-	public int delete(int holiday_id);
+	public Map<String, String> delete(int holiday_id) throws SQLCustomException;
 
-	public List<HolidayDto> select();
+	public List<HolidayDto> select() throws SQLCustomException;
 
-	public List<HolidayDto> selectBythisYear(int year) throws ParseException;
+	public List<HolidayDto> selectBythisYear(int year) throws ParseException, SQLCustomException;
 }

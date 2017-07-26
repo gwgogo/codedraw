@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tmon.platform.api.dao.UserDao;
 import com.tmon.platform.api.dto.UserDto;
-import com.tmon.platform.api.exception.PreconditionException;
+import com.tmon.platform.api.exception.PreConditionException;
 import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
@@ -33,15 +33,18 @@ public class UserServiceImpl implements UserService {
 	 * @since 2017-07-13
 	 */
 	@SuppressWarnings("unchecked")
-	public JSONObject login(String user_id, String user_pw) throws PreconditionException{
+	public JSONObject login(String user_id, String user_pw) throws PreConditionException{
 		UserDto userDto = userDao.login(user_id, user_pw);			
+			
 		//계정정보 없음
 		if(userDto == null) 
-			throw new PreconditionException(602, "Invalid User Information");
+			throw new PreConditionException(602, "Invalid User Information");
 		
 		JSONObject result = new JSONObject();
 		String sessionValue = sessionManager.createSession(userDto);
+		
 		result.put("session", sessionValue);
+		
 		return result;
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tmon.platform.api.dto.TimeSlotDto;
+import com.tmon.platform.api.dto.TimeSlotInformationDto;
 
 /**
  * TimeSlotDao
@@ -21,6 +22,8 @@ public interface TimeSlotDao {
 	public int update(TimeSlotDto timeSlotDto);
 
 	public int delete(TimeSlotDto timeSlotDto);
+
+	public List<TimeSlotInformationDto> selectValid(Map<String, Object> validDate);
 
 	public List<TimeSlotDto> selectBydelivery_date(Map<String, Date> betweenDate);
 }

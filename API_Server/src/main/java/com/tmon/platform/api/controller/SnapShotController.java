@@ -5,16 +5,17 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.tmon.platform.api.dto.SnapShotDto;
 import com.tmon.platform.api.service.SnapShotService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -26,7 +27,9 @@ import io.swagger.annotations.ApiOperation;
  *         아닌경우에는 본 Controller에 접근하지 못하도록 막을 계획입니다.
  *
  */
-@Controller
+@RestController
+@RequestMapping(value = "/snapshots")
+@CrossOrigin
 public class SnapShotController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SnapShotController.class);
@@ -34,16 +37,11 @@ public class SnapShotController {
 	@Autowired
 	SnapShotService snapShotService;
 
-	/**
-	 * @author 구도원
-	 * @param search_init_time
-	 * @param search_finish_time
-	 * @return List<SnapShotDto> [JSON]
-	 */
-	@ApiOperation(value = "스냅샷을 검색할 수 있는 API입니다. 입력양식은 [yyyy-MM-dd HH:mm:ss] 입니다.")
-	@RequestMapping(value = "/admin_select_snapshot_time", method = RequestMethod.GET)
-	@ResponseBody
-	@CrossOrigin
+	@ApiOperation(value = "스냅샷 조회", notes = "지정한 날짜와 시간 범위에 해당하는 스냅샷을 조회할 수 있습니다.")
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "search_init_time", value = "조회 시작 시간[yyyy-MM-dd HH:mm:ss]", dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "search_finish_time", value = "조회 끝 시간[yyyy-MM-dd HH:mm:ss]", dataType = "String", paramType = "query") })
+	@RequestMapping(method = RequestMethod.GET)
 	public List<SnapShotDto> admin_select_snapshot_time(@RequestParam("search_init_time") String search_init_time,
 			@RequestParam("search_finish_time") String search_finish_time) throws Exception {
 		logger.info("This is admin_select_snapshot_time");

@@ -3,11 +3,11 @@ package com.tmon.platform.api.exception;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomException extends Exception{
+public abstract class AbstractCustomException extends Exception{
 
 	private int errCode;
 	private String errMsg;
-	public CustomException(int errCode, String errMsg ) {
+	public AbstractCustomException(int errCode, String errMsg ) {
 		this.errMsg = errMsg;
 		this.errCode = errCode;
 	}

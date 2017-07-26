@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmon.platform.api.dto.UserDto;
-import com.tmon.platform.api.exception.PreconditionException;
+import com.tmon.platform.api.exception.PreConditionException;
 import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.UserService;
 import com.tmon.platform.api.util.SessionManager;
@@ -67,10 +67,6 @@ public class UserController {
 	}
 
 	
-	/**
-	 * @author gwlee
-	 * @since 2017-07-13
-	 */
 	@ApiOperation(value="로그인", notes="로그인 성공시 API서버에서 세션키 발급 후 UI서버에서 쿠키에 저장")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "user_id", value = "사용자 ID", dataType = "string", paramType = "query"),
@@ -82,7 +78,7 @@ public class UserController {
     })
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws PreconditionException {
+	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws PreConditionException {
 		return userService.login(user_id, user_pw);
 	}
 	
@@ -94,7 +90,7 @@ public class UserController {
     })
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject logout(HttpServletRequest request) throws PreconditionException {
+	public JSONObject logout(HttpServletRequest request) {
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
@@ -109,7 +105,7 @@ public class UserController {
             @ApiResponse(code = 501, message = "{msg : Join Error(duplication ID)}")
     })
 	@ResponseBody
-	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws SQLCustomException {
+	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws SQLCustomException  {
 		UserDto userDto = new UserDto();
 		userDto.setUser_id(user_id);
 		userDto.setUser_pw(user_pw);
@@ -128,5 +124,14 @@ public class UserController {
 		return userService.user(session);
 	}
 	
+	@RequestMapping(value="/admin", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDto admin(HttpServletRequest request) {
+		
+		String rawCookie = request.getHeader("Cookie");
+		String session = sessionManager.getSession(rawCookie);
+		
+		return userService.user(session);
+	}
 	
 }
