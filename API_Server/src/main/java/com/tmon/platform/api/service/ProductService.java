@@ -11,9 +11,9 @@ import com.tmon.platform.api.exception.SQLCustomException;
 
 public interface ProductService {
 	public List<ProductDto> productAll();
-	public ProductDto productByProductId(int product_id) throws NullCustomException;
-	public List<OrderProductDto> productByReservationId(int reservation_id) throws NullCustomException;
-	public List<ProductDto> productByCategoryId(int category_id) throws NullCustomException;
-	public JSONObject deleteProduct(int product_id) throws NullCustomException;
+	public ProductDto productByProductId(int productID) throws NullCustomException;
+	public List<OrderProductDto> productByReservationID(int reservationID) throws NullCustomException;
+	public List<ProductDto> productByCategoryID(int categoryID) throws NullCustomException;
+	public JSONObject deleteProduct(int productID) throws NullCustomException;
 	
 }

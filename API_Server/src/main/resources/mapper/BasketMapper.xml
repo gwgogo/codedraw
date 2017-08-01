@@ -11,46 +11,47 @@
 		  ,product_id
 		  ,quantity
 		) VALUES (
-		   #{user_id}
-		  ,#{product_id}
+		   #{userID}
+		  ,#{productID}
 		  ,#{quantity}
 		) 
 	</insert>
 	
 	<select id="basket" parameterType="String" resultType="com.tmon.platform.api.dto.BasketDto">
-		SELECT BASKET.user_id, BASKET.product_id, BASKET.quantity, PRODUCT.product_name, PRODUCT.price, PRODUCT.image_url
+		SELECT BASKET.user_id AS userID, BASKET.product_id AS productID, BASKET.quantity,
+			 PRODUCT.product_name AS productName, PRODUCT.price, PRODUCT.image_url AS imageUrl
 		FROM BASKET JOIN PRODUCT 
-		USING (product_id) WHERE user_id=#{user_id}
+		USING (product_id) WHERE user_id=#{userID}
 	</select>
 	
 	<delete id="removeBasket" parameterType="Map">
 		DELETE FROM BASKET 
-		WHERE user_id = #{user_id} AND product_id = #{product_id}
+		WHERE user_id = #{userID} AND product_id = #{productID}
 	</delete>
 	
 	<delete id="cleanBasket" parameterType="String">
 		DELETE FROM BASKET
-		WHERE user_id = #{user_id}
+		WHERE user_id = #{userID}
 	</delete>
 	
 	<update id="incQuantity" parameterType="Map">
 		UPDATE BASKET SET quantity = quantity+1 
-	  	WHERE user_id = #{user_id}
-	    AND product_id = #{product_id}
+	  	WHERE user_id = #{userID}
+	    AND product_id = #{productID}
 	</update>
 
 	<update id="decQuantity" parameterType="Map">
 		UPDATE BASKET SET quantity = quantity-1 
-	  	WHERE user_id = #{user_id}
-	    AND product_id = #{product_id}
+	  	WHERE user_id = #{userID}
+	    AND product_id = #{productID}
 	</update>
 	
 	<select id="getBasketQuantity" parameterType="Map" resultType="Integer">
-		SELECT quantity FROM BASKET WHERE product_id=#{product_id} AND user_id=#{user_id}
+		SELECT quantity FROM BASKET WHERE product_id=#{productID} AND user_id=#{userID}
 	</select>
 	
 	<select id="getMaxQuantity" parameterType="int" resultType="int">
-		SELECT max_quantity - sell_quantity AS quantity FROM PRODUCT WHERE product_id=#{product_id}
+		SELECT max_quantity - sell_quantity AS quantity FROM PRODUCT WHERE product_id=#{productID}
 	</select>
 	
 </mapper>

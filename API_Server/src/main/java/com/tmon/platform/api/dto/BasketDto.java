@@ -1,14 +1,14 @@
 package com.tmon.platform.api.dto;
 
 public class BasketDto extends BaseProductDto{
-	private String user_id;
+	private String userID;
 	private int quantity;
 	
-	public String getUser_id() {
-		return user_id;
+	public String getUserID() {
+		return userID;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 	public int getQuantity() {
 		return quantity;

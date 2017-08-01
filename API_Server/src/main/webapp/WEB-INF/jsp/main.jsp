@@ -18,7 +18,7 @@
 			logout();
 		})
 		
-		$('#adminForm').click(function(){
+		$('#admin').click(function(){
 			adminForm();
 		})
 		
@@ -29,7 +29,7 @@
 		$.ajax({
 			type : "GET",
 			url : "/user/mypage",
-			dataType : 'json',	// 상관없음
+			//dataType : 'json',	// 상관없음
 			success : function(data){
 				alert(data.user_id);
 				location.href='http://localhost:8080/user/mypageForm';
@@ -77,7 +77,7 @@
 
 <input type="button" value="mypage" id="mypage"/><br/>
 <input type="button" value="logout" id="logout"/><br/>
-<input type="button" value="adminForm" id="adminForm"/><br/>
+<input type="button" value="admin" id="admin"/><br/>
 
 </body>
 </html>

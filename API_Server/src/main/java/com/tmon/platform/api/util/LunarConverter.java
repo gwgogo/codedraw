@@ -29,7 +29,7 @@ public class LunarConverter {
 		// 'chineseCalendar'를 입력된 음력날짜를 이용해 세팅한다.
 		ChineseCalendar chineseCalendar = new ChineseCalendar();
 		chineseCalendar.set(ChineseCalendar.EXTENDED_YEAR, calendatelunar.get(Calendar.YEAR) + 2637);
-		chineseCalendar.set(ChineseCalendar.MONTH, calendatelunar.get(Calendar.MONTH));
+		chineseCalendar.set(ChineseCalendar.MONTH, calendatelunar.get(Calendar.MONTH) - 1);
 		chineseCalendar.set(ChineseCalendar.DATE, calendatelunar.get(Calendar.DATE));
 
 		// 음력날짜인 'chineseCalendar'를 양력날짜인 'calendar'로 변환한다.

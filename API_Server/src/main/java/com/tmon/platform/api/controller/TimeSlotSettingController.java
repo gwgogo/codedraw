@@ -18,7 +18,11 @@ import com.tmon.platform.api.exception.DateFormatException;
 import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.TimeSlotSettingService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * TimeSlotSettingController
@@ -36,40 +40,59 @@ public class TimeSlotSettingController {
 	@Autowired
 	TimeSlotSettingService timeSlotSettingService;
 
-	@ApiOperation(value = "타임슬롯의 시간대를 새롭게 추가하는 API")
+	@ApiOperation(value = "타임슬롯 설정 신규 입력", notes = "타임슬롯 세팅 테이블에 시간대를 새롭게 추가할 수 있습니다.")
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "requestBody", value = "{ startTime : value, endTime : value, cutoff : value }", dataType = "String", paramType = "body") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success Insert TIMESLOT_SETTING SQL"),
+			@ApiResponse(code = 616, message = "Incorrect input Time data"),
+			@ApiResponse(code = 616, message = "startTime must be smaller than endTime"),
+			@ApiResponse(code = 619, message = "Fail Insert TIMESLOT_SETTING SQL Error") })
 	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, String> insert_timeslotsetting(@RequestBody Map<String, String> requestParams)
+	public Map<String, String> insertTimeslotsetting(@RequestBody Map<String, String> requestBody)
 			throws DateFormatException, SQLCustomException {
-		logger.info("This is insert_timeslotsetting");
+		logger.info("This is insertTimeslotsetting");
 
-		String start_time = requestParams.get("start_time");
-		String end_time = requestParams.get("end_time");
+		String startTime = requestBody.get("startTime");
+		String endTime = requestBody.get("endTime");
+		String cutoff = requestBody.get("cutoff");
 
 		// INSERT Query 실행
-		return timeSlotSettingService.insert(start_time, end_time);
+		return timeSlotSettingService.insert(startTime, endTime, cutoff);
 	}
 
-	@ApiOperation(value = "기존의 타임슬롯 시간대를 조정(수정)하는 API")
-	@RequestMapping(value = "/{timeslot_setting_id}", method = RequestMethod.PUT)
-	public Map<String, String> update_timeslotsetting(@PathVariable("timeslot_setting_id") int timeslot_setting_id,
-			@RequestBody Map<String, String> requestParams) throws DateFormatException, SQLCustomException {
-		logger.info("This is update_timeslotsetting");
+	@ApiOperation(value = "타임슬롯 설정 수정", notes = "타임슬롯 세팅 테이블에 시간대를 수정할 수 있습니다.")
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "timeslotSettingID", value = "타임슬롯 세팅 고유번호", dataType = "Integer", paramType = "path"),
+			@ApiImplicitParam(name = "requestBody", value = "{ startTime : value, endTime : value, cutoff : value }", dataType = "String", paramType = "body") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success Update TIMESLOT_SETTING SQL"),
+			@ApiResponse(code = 616, message = "Incorrect input Time data"),
+			@ApiResponse(code = 616, message = "startTime must be smaller than endTime"),
+			@ApiResponse(code = 619, message = "Fail Update TIMESLOT_SETTING SQL Error") })
+	@RequestMapping(value = "/{timeslotSettingID}", method = RequestMethod.PUT)
+	public Map<String, String> updateTimeslotsetting(@PathVariable("timeslotSettingID") int timeslotSettingID,
+			@RequestBody Map<String, String> requestBody) throws DateFormatException, SQLCustomException {
+		logger.info("This is updateTimeslotsetting");
 
-		String start_time = requestParams.get("start_time");
-		String end_time = requestParams.get("end_time");
+		String startTime = requestBody.get("startTime");
+		String endTime = requestBody.get("endTime");
+		String cutoff = requestBody.get("sutoff");
 
 		// UPDATE Query 실행
-		return timeSlotSettingService.update(timeslot_setting_id, start_time, end_time);
+		return timeSlotSettingService.update(timeslotSettingID, startTime, endTime, cutoff);
 	}
 
-	@ApiOperation(value = "기존의 타임슬롯 시간대를 삭제하는 API")
-	@RequestMapping(value = "/{timeslot_setting_id}", method = RequestMethod.DELETE)
-	public Map<String, String> delete_timeslotsetting(@PathVariable("timeslot_setting_id") int timeslot_setting_id)
+	@ApiOperation(value = "타임슬롯 설정을 삭제", notes = "타임슬롯 세팅 테입릉에 시간대를 삭제할 수 있습니다.")
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "timeslotSettingID", value = "타임슬롯 세팅 고유번호", dataType = "Integer", paramType = "path") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success Delete TIMESLOT_SETTING SQL"),
+			@ApiResponse(code = 619, message = "Fail Delete TIMESLOT_SETTING SQL Error") })
+	@RequestMapping(value = "/{timeslotSettingID}", method = RequestMethod.DELETE)
+	public Map<String, String> deleteTimeslotsetting(@PathVariable("timeslotSettingID") int timeslotSettingID)
 			throws DateFormatException, SQLCustomException {
-		logger.info("This is delete_timeslotsetting");
+		logger.info("This is deleteTimeslotsetting");
 
 		// DELETE Query 실행
-		return timeSlotSettingService.delete(timeslot_setting_id);
+		return timeSlotSettingService.delete(timeslotSettingID);
 	}
 
 	/**
@@ -82,10 +105,12 @@ public class TimeSlotSettingController {
 	 * @return
 	 * @throws SQLCustomException
 	 */
-	@ApiOperation(value = "현재 세팅되어 있는 TimeSlot 시간대")
+	@ApiOperation(value = "타임슬롯 설정을 전체 출력", notes = "현재 세팅되어 있는 TimeSlot 시간대")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success Select TIMESLOT_SETTING SQL"),
+			@ApiResponse(code = 619, message = "Fail Select TIMESLOT_SETTING SQL Error, TimeSlotSetting Select Error") })
 	@RequestMapping(method = RequestMethod.GET)
-	public List<TimeSlotSettingDto> select_timeslotsetting() throws SQLCustomException {
-		logger.info("This is select_timeslotsetting");
+	public List<TimeSlotSettingDto> selectTimeslotsetting() throws SQLCustomException {
+		logger.info("This is selectTimeslotsetting");
 
 		return timeSlotSettingService.select();
 	}

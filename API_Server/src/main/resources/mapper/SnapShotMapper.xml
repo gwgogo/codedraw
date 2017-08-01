@@ -6,15 +6,20 @@
 
 <mapper namespace="SnapShotMapper">
 
-	<select id="selectBysnapshot_time" parameterType="Map"
+	<select id="selectBysnapshotTime" parameterType="Map"
 		resultType="com.tmon.platform.api.dto.SnapShotDto">
-		SELECT *
+		SELECT 
+		snapshot_time snapshotTime,
+		snapshot_start_time snapshotStartTime,
+		snapshot_end_time snapshotEndTime,
+		snapshot_order_count snapshotOrderCount,
+		snapshot_cancel_count snapshotCancelCount
 		FROM
 		SNAPSHOT
 		WHERE
 		snapshot_time
 		between
-		#{search_init_time} AND #{search_finish_time}
+		#{searchInitTime} AND #{searchFinishTime}
 	</select>
 
 </mapper>

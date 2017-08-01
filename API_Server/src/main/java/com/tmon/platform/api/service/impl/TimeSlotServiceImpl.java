@@ -43,7 +43,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 	SimpleDateFormat timeFormat; // 시간 데이터가 포맷에 맞게 입력되었는지 확인한다.
 
 	@Override
-	public Map<String, String> insert(String start_time, String end_time, String delivery_date, int count)
+	public Map<String, String> insert(String startTime, String endTime, String deliveryDate, int count)
 			throws DateFormatException, SQLCustomException {
 
 		TimeSlotDto timeSlotDto = new TimeSlotDto();
@@ -55,21 +55,21 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			 * 
 			 * 'timeSlotDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 			 */
-			timeSlotDto.setStart_time(new Time(timeFormat.parse(start_time).getTime()));
-			timeSlotDto.setEnd_time(new Time(timeFormat.parse(end_time).getTime()));
-			timeSlotDto.setDelivery_date(dateFormat.parse(delivery_date));
+			timeSlotDto.setStartTime(new Time(timeFormat.parse(startTime).getTime()));
+			timeSlotDto.setEndTime(new Time(timeFormat.parse(endTime).getTime()));
+			timeSlotDto.setDeliveryDate(dateFormat.parse(deliveryDate));
 			timeSlotDto.setCount(count);
 
 		} catch (ParseException e) {
 			logger.info("Error at Timeslot insert");
-			throw new DateFormatException(500, "incorrect input Time or Date data");
+			throw new DateFormatException(616, "Incorrect input Time or Date data");
 		}
 
 		// 시작시간이 끝시간 보다 작아야 한다.
-		if (timeSlotDto.getStart_time().getTime() >= timeSlotDto.getEnd_time().getTime()) {
-			logger.info("start_time: " + timeSlotDto.getStart_time());
-			logger.info("end_time: " + timeSlotDto.getEnd_time());
-			throw new DateFormatException(500, "start_time must be smaller than end_time");
+		if (timeSlotDto.getStartTime().getTime() >= timeSlotDto.getEndTime().getTime()) {
+			logger.info("startTime: " + timeSlotDto.getStartTime());
+			logger.info("endTime: " + timeSlotDto.getEndTime());
+			throw new DateFormatException(616, "startTime must be smaller than endTime");
 		}
 
 		Map<String, String> out = new HashMap<String, String>();
@@ -79,14 +79,14 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			out.put("msg", "Success Insert TimeSlot");
 		} catch (Exception e) {
 			// TimeSlot Insert 실패
-			throw new SQLCustomException(500, "TimeSlot Insert Error");
+			throw new SQLCustomException(618, "TimeSlot Insert Error");
 		}
 
 		return out;
 	}
 
 	@Override
-	public Map<String, String> update(String start_time, String end_time, int timeslot_id)
+	public Map<String, String> update(String startTime, String endTime, int timeslotID)
 			throws DateFormatException, SQLCustomException {
 
 		TimeSlotDto timeSlotDto = new TimeSlotDto();
@@ -98,19 +98,19 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			 * 
 			 * 'timeSlotDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 			 */
-			timeSlotDto.setStart_time(new Time(timeFormat.parse(start_time).getTime()));
-			timeSlotDto.setEnd_time(new Time(timeFormat.parse(end_time).getTime()));
-			timeSlotDto.setTimeslot_id(timeslot_id);
+			timeSlotDto.setStartTime(new Time(timeFormat.parse(startTime).getTime()));
+			timeSlotDto.setEndTime(new Time(timeFormat.parse(endTime).getTime()));
+			timeSlotDto.setTimeslotID(timeslotID);
 		} catch (ParseException e) {
 			logger.info("Error at Timeslot update");
-			throw new DateFormatException(500, "incorrect input Time or Date data");
+			throw new DateFormatException(616, "Incorrect input Time or Date data");
 		}
 
 		// 시작시간이 끝시간 보다 작아야 한다.
-		if (timeSlotDto.getStart_time().getTime() >= timeSlotDto.getEnd_time().getTime()) {
-			logger.info("start_time: " + timeSlotDto.getStart_time());
-			logger.info("end_time: " + timeSlotDto.getEnd_time());
-			throw new DateFormatException(500, "start_time must be smaller than end_time");
+		if (timeSlotDto.getStartTime().getTime() >= timeSlotDto.getEndTime().getTime()) {
+			logger.info("startTime: " + timeSlotDto.getStartTime());
+			logger.info("endTime: " + timeSlotDto.getEndTime());
+			throw new DateFormatException(616, "startTime must be smaller than endTime");
 		}
 
 		Map<String, String> out = new HashMap<String, String>();
@@ -123,20 +123,20 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 		} catch (Exception e) {
 
 			// TimeSlot Update 실패
-			throw new SQLCustomException(500, "TimeSlot Update Error");
+			throw new SQLCustomException(618, "TimeSlot Update Error");
 		}
 		return out;
 	}
 
 	@Override
-	public Map<String, String> delete(int timeslot_id) throws SQLCustomException {
+	public Map<String, String> delete(int timeslotID) throws SQLCustomException {
 
 		TimeSlotDto timeSlotDto = new TimeSlotDto();
 
 		// 삭제할 타임슬롯의 고유번호를 입력한다. 'timeSlotDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 		// CASCADE DELETE를 설정하지 않는다.
 
-		timeSlotDto.setTimeslot_id(timeslot_id);
+		timeSlotDto.setTimeslotID(timeslotID);
 
 		Map<String, String> out = new HashMap<String, String>();
 		try {
@@ -145,13 +145,13 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			out.put("msg", "Success Delete TimeSlot");
 		} catch (Exception e) {
 			// TimeSlot Delete 실패
-			throw new SQLCustomException(500, "TimeSlot Delete Error");
+			throw new SQLCustomException(618, "TimeSlot Delete Error");
 		}
 		return out;
 	}
 
 	@Override
-	public List<TimeSlotInformationDto> selectValid(String search_init_date, int validDays)
+	public List<TimeSlotInformationDto> selectValid(String searchInitDate)
 			throws DateFormatException, SQLCustomException {
 
 		// WHERE절 변수 입력을 위해 parameteryType을 Map구조로 한다.
@@ -163,13 +163,15 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			 * 검색할 날짜의 입력이 바르게 입력되었는지 확인한 후 String을 Date타입으로 변환한다.
 			 * 
 			 * 'validDate' Map 객체에 Object를 저장한다.
+			 * 
+			 * 검색 날짜로 부터 유효일자 검색은 3일로 정한다.
 			 */
-			validDate.put("search_init_date", dateFormat.parse(search_init_date));
-			validDate.put("validDays", validDays);
+			validDate.put("searchInitDate", dateFormat.parse(searchInitDate));
+			validDate.put("validDays", 3);
 
 		} catch (ParseException e) {
 			logger.info("Error at TimeSlot selectValid");
-			throw new DateFormatException(500, "incorrect input Date data");
+			throw new DateFormatException(616, "Incorrect input Date data");
 		}
 
 		try {
@@ -177,12 +179,12 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			return timeSlotDao.selectValid(validDate);
 		} catch (Exception e) {
 			// TimeSlot Select 실패
-			throw new SQLCustomException(500, "TimeSlot selectValid Error");
+			throw new SQLCustomException(618, "Fail Select TimeSlot SQL Error, TimeSlot selectValid Error");
 		}
 	}
 
 	@Override
-	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date)
+	public List<TimeSlotInformationDto> selectBydeliveryDate(String searchInitDate, String searchFinishDate)
 			throws DateFormatException, SQLCustomException {
 
 		// WHERE절 변수 입력을 위해 parameterType을 Map구조로 한다.
@@ -195,29 +197,30 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 			 * 
 			 * 'betweenDate' Map 객체에 data를 저장한다.
 			 */
-			betweenDate.put("search_init_date", dateFormat.parse(search_init_date));
-			betweenDate.put("search_finish_date", dateFormat.parse(search_finish_date));
+			betweenDate.put("searchInitDate", dateFormat.parse(searchInitDate));
+			betweenDate.put("searchFinishDate", dateFormat.parse(searchFinishDate));
 
 		} catch (ParseException e) {
-			logger.info("Error at TimeSlot selectBydelivery_date");
-			throw new DateFormatException(500, "incorrect input Date data");
+			logger.info("Error at TimeSlot selectBydeliveryDate");
+			throw new DateFormatException(616, "Incorrect input Date data");
 		}
 
 		// 검색 시작 날짜가 검색 끝 날짜 보다 작아야 한다.
-		long initDate = ((Date) betweenDate.get("search_init_date")).getTime();
-		long finishDate = ((Date) betweenDate.get("search_finish_date")).getTime();
+		long initDate = ((Date) betweenDate.get("searchInitDate")).getTime();
+		long finishDate = ((Date) betweenDate.get("searchFinishDate")).getTime();
 		if (initDate > finishDate) {
-			logger.info("search_start_time: " + betweenDate.get("search_init_date"));
-			logger.info("search_end_time: " + betweenDate.get("search_finish_date"));
-			throw new DateFormatException(500, "search_init_date must be smaller than search_finish_date");
+			logger.info("searchStartTime: " + betweenDate.get("searchInitDate"));
+			logger.info("searchEndTime: " + betweenDate.get("searchFinishDate"));
+			throw new DateFormatException(616, "searchInitDate must be smaller than searchFinishDate");
 		}
 
 		try {
 			// Dao에서는 Map객체를 parameter로 받는다.
-			return timeSlotDao.selectBydelivery_date(betweenDate);
+			return timeSlotDao.selectBydeliveryDate(betweenDate);
 		} catch (Exception e) {
 			// TimeSlot Select 실패
-			throw new SQLCustomException(500, "TimeSlot selectBydelivery_date Error");
+			e.printStackTrace();
+			throw new SQLCustomException(618, "Fail Select TimeSlot SQL Error, TimeSlot selectBydeliveryDate Error");
 		}
 	}
 }

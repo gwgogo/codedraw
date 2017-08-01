@@ -21,23 +21,23 @@ public class ProductDaoImpl implements ProductDao {
 	}
 	
 	
-	public ProductDto productByProductId(int product_id) {
-		return sqlSession.selectOne("ProductMapper.productByProductId",product_id);
+	public ProductDto productByProductId(int productID) {
+		return sqlSession.selectOne("ProductMapper.productByProductId",productID);
 	}
 	
 	
-	public List<OrderProductDto> productByReservationId(int reservation_id){
-		return sqlSession.selectList("ProductMapper.productByReservationId", reservation_id);
+	public List<OrderProductDto> productByReservationID(int reservationID){
+		return sqlSession.selectList("ProductMapper.productByReservationId", reservationID);
 	}
 	
 	
-	public List<ProductDto> productByCategoryId(int category_id){
-		return sqlSession.selectList("ProductMapper.productByCategoryId", category_id);
+	public List<ProductDto> productByCategoryID(int categoryID){
+		return sqlSession.selectList("ProductMapper.productByCategoryId", categoryID);
 	}
 	
 	
-	public void deleteProduct(int product_id) {
-		sqlSession.delete("ProductMapper.deleteProduct", product_id);
+	public void deleteProduct(int productID) {
+		sqlSession.delete("ProductMapper.deleteProduct", productID);
 	}
 	
 	

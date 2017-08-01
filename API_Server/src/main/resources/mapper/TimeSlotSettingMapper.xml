@@ -8,10 +8,11 @@
 
 	<insert id="insert" parameterType="com.tmon.platform.api.dto.TimeSlotSettingDto">
 		INSERT INTO
-		TIMESLOT_SETTING(start_time, end_time)
+		TIMESLOT_SETTING(start_time, end_time, cutoff)
 		VALUES(
-		#{start_time},
-		#{end_time}
+		#{startTime},
+		#{endTime},
+		#{cutoff}
 		)
 	</insert>
 
@@ -19,10 +20,11 @@
 		UPDATE
 		TIMESLOT_SETTING
 		SET
-		start_time=#{start_time},
-		end_time=#{end_time}
+		start_time=#{startTime},
+		end_time=#{endTime},
+		cutoff=#{cutoff}
 		WHERE
-		timeslot_setting_id=#{timeslot_setting_id}
+		timeslot_setting_id=#{timeslotSettingID}
 	</update>
 
 	<delete id="delete" parameterType="com.tmon.platform.api.dto.TimeSlotSettingDto">
@@ -30,12 +32,15 @@
 		FROM
 		TIMESLOT_SETTING
 		WHERE
-		timeslot_setting_id=#{timeslot_setting_id}
+		timeslot_setting_id=#{timeslotSettingID}
 	</delete>
 
 	<select id="select" resultType="com.tmon.platform.api.dto.TimeSlotSettingDto">
 		SELECT
-		*
+		timeslot_setting_id timeslotSettingID,
+		start_time startTime,
+		end_time endTime,
+		cutoff cutoff
 		FROM
 		TIMESLOT_SETTING
 		ORDER BY

@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
 	SessionManager sessionManager;
 	
 	public UserDto user(String session){
-		String user_id = sessionManager.getUserId(session);
-		return userDao.user(user_id);
+		String userID = sessionManager.getUserId(session);
+		return userDao.user(userID);
 	}
 	
 	/**
@@ -33,17 +33,20 @@ public class UserServiceImpl implements UserService {
 	 * @since 2017-07-13
 	 */
 	@SuppressWarnings("unchecked")
-	public JSONObject login(String user_id, String user_pw) throws PreConditionException{
-		UserDto userDto = userDao.login(user_id, user_pw);			
+	public JSONObject login(String userID, String userPW) throws PreConditionException{
+		UserDto userDto = userDao.login(userID, userPW);			
 			
 		//계정정보 없음
 		if(userDto == null) 
 			throw new PreConditionException(602, "Invalid User Information");
 		
 		JSONObject result = new JSONObject();
+		
 		String sessionValue = sessionManager.createSession(userDto);
+		int privilege = sessionManager.getPrivilege(sessionValue);
 		
 		result.put("session", sessionValue);
+		result.put("privilege", String.valueOf(privilege));
 		
 		return result;
 	}

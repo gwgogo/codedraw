@@ -9,18 +9,18 @@
 	<insert id="insert" parameterType="com.tmon.platform.api.dto.HolidayDto">
 		INSERT INTO
 		HOLIDAY(holiday_lunar, holiday_date, holiday_title)
-		VALUES(#{holiday_lunar}, #{holiday_date}, #{holiday_title});
+		VALUES(#{holidayLunar}, #{holidayDate}, #{holidayTitle});
 	</insert>
 
 	<update id="update" parameterType="com.tmon.platform.api.dto.HolidayDto">
 		UPDATE
 		HOLIDAY
 		SET
-		holiday_lunar=#{holiday_lunar},
-		holiday_date=#{holiday_date},
-		holiday_title=#{holiday_title}
+		holiday_lunar=#{holidayLunar},
+		holiday_date=#{holidayDate},
+		holiday_title=#{holidayTitle}
 		WHERE
-		holiday_id=#{holiday_id}
+		holiday_id=#{holidayID}
 	</update>
 
 	<delete id="delete" parameterType="com.tmon.platform.api.dto.HolidayDto">
@@ -28,15 +28,15 @@
 		FROM
 		HOLIDAY
 		WHERE
-		holiday_id=#{holiday_id}
+		holiday_id=#{holidayID}
 	</delete>
 
 	<select id="select" resultType="com.tmon.platform.api.dto.HolidayDto">
 		SELECT
-		holiday_id,
-		CAST(holiday_lunar AS SIGNED) holiday_lunar,
-		holiday_date,
-		holiday_title
+		holiday_id holidayID,
+		CAST(holiday_lunar AS SIGNED) holidayLunar,
+		holiday_date holidayDate,
+		holiday_title holidayTitle
 		FROM
 		HOLIDAY
 		ORDER BY

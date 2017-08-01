@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tmon.platform.api.dto.SnapShotDto;
+import com.tmon.platform.api.exception.DateFormatException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.SnapShotService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * SnapShotController
@@ -39,14 +43,17 @@ public class SnapShotController {
 
 	@ApiOperation(value = "스냅샷 조회", notes = "지정한 날짜와 시간 범위에 해당하는 스냅샷을 조회할 수 있습니다.")
 	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "search_init_time", value = "조회 시작 시간[yyyy-MM-dd HH:mm:ss]", dataType = "String", paramType = "query"),
-			@ApiImplicitParam(name = "search_finish_time", value = "조회 끝 시간[yyyy-MM-dd HH:mm:ss]", dataType = "String", paramType = "query") })
+			@ApiImplicitParam(name = "searchInitTime", value = "조회 시작 시간[yyyy-MM-dd HH:mm:ss]", dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "searchFinishTime", value = "조회 끝 시간[yyyy-MM-dd HH:mm:ss]", dataType = "String", paramType = "query") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success Select SNAPSHOT SQL"),
+			@ApiResponse(code = 616, message = "Incorrect input Time or Date data"),
+			@ApiResponse(code = 616, message = "searchInitTime must be smaller than searchFinishTime") })
 	@RequestMapping(method = RequestMethod.GET)
-	public List<SnapShotDto> admin_select_snapshot_time(@RequestParam("search_init_time") String search_init_time,
-			@RequestParam("search_finish_time") String search_finish_time) throws Exception {
-		logger.info("This is admin_select_snapshot_time");
+	public List<SnapShotDto> adminSelectSnapshotTime(@RequestParam("searchInitTime") String searchInitTime,
+			@RequestParam("searchFinishTime") String searchFinishTime) throws DateFormatException, SQLCustomException {
+		logger.info("This is adminSelectSnapshotTime");
 
-		return snapShotService.selectBysnapshot_time(search_init_time, search_finish_time);
+		return snapShotService.selectBysnapshotTime(searchInitTime, searchFinishTime);
 	}
 
 }

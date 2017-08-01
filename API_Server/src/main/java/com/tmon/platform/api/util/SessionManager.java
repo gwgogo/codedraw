@@ -4,13 +4,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.tmon.platform.api.dto.UserDto;
+import com.tmon.platform.api.exception.NullCustomException;
 
 /**
  * @since 2017-07-13
@@ -37,11 +40,14 @@ public class SessionManager {
 	 * 같은 유저의 경우 같은 세션값이 부여된다.
 	 */
 	public String createSession(UserDto userDto){
+		
+		resetSession(userDto);	// sessionPool에 있는 사용자가 새로운 로그인 시도하면 기존 세션 삭제
+		
 		String sessionKey = null;
 		
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			String originalString = userDto.getUser_id().toString() + "TMON"; // salting
+			String originalString = userDto.getUserID().toString() + "TMON"; // salting
 			md.update(originalString.getBytes());
 			
 			sessionKey = md.digest().toString();
@@ -49,10 +55,20 @@ public class SessionManager {
 
 		} catch(NoSuchAlgorithmException e) {
 			logger.error("SessionManager.getSessionKey(NoSuchAlgorithmException) : " +
-					userDto.getUser_id(), e);
+					userDto.getUserID(), e);
 		}
 		
 		return sessionKey;
+	}
+	
+	/* 접속했던 사용자가 로그아웃하지 않고 새로운 접속을 시도할 때 기존 세션을 풀에서 삭제하고 새로운 세션 발급 */ 
+	private void resetSession(UserDto userDto) {
+		for(Map.Entry<String, UserDto> entry : sessionPool.entrySet()) {
+			if(entry.getValue().getUserID().equals(userDto.getUserID())) {
+				String session = entry.getKey();
+				sessionPool.remove(session);
+			}
+		}
 	}
 	
 	/**
@@ -72,7 +88,7 @@ public class SessionManager {
 	public String getUserId(String session) {
 		UserDto user = getValidUserDto(session);
 		if(user != null) {
-			return user.getUser_id(); 
+			return user.getUserID(); 
 		} else {
 			return null;
 		}
@@ -98,7 +114,10 @@ public class SessionManager {
 		return false;
 	}
 	
-	public String getSession(String rawCookie) {
+	public String getSession(String rawCookie) throws NullCustomException {
+		if(rawCookie == null) {
+			throw new NullCustomException(619, "rawCookie is null");
+		}
 		String session = null;
 		try {
 			rawCookie = URLDecoder.decode(rawCookie, "UTF-8");
@@ -112,7 +131,6 @@ public class SessionManager {
 				}
 			}
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return session;

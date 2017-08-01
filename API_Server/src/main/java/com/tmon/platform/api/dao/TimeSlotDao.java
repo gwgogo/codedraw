@@ -25,5 +25,5 @@ public interface TimeSlotDao {
 
 	public List<TimeSlotInformationDto> selectValid(Map<String, Object> validDate);
 
-	public List<TimeSlotDto> selectBydelivery_date(Map<String, Date> betweenDate);
+	public List<TimeSlotInformationDto> selectBydeliveryDate(Map<String, Date> betweenDate);
 }

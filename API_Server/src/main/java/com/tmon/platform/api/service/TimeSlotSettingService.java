@@ -15,13 +15,12 @@ import com.tmon.platform.api.exception.SQLCustomException;
  */
 public interface TimeSlotSettingService {
 
-	public Map<String, String> insert(String start_time, String end_time)
+	public Map<String, String> insert(String startTime, String endTime, String cutoffTime) throws DateFormatException, SQLCustomException;
+
+	public Map<String, String> update(int timeslotSettingID, String startTime, String endTime, String cutoff)
 			throws DateFormatException, SQLCustomException;
 
-	public Map<String, String> update(int timeslot_setting_id, String start_time, String end_time)
-			throws DateFormatException, SQLCustomException;
-
-	public Map<String, String> delete(int timeslot_setting_id) throws DateFormatException, SQLCustomException;
+	public Map<String, String> delete(int timeslotSettingID) throws DateFormatException, SQLCustomException;
 
 	public List<TimeSlotSettingDto> select() throws SQLCustomException;
 }

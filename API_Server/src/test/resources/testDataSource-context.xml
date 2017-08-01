@@ -17,9 +17,9 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${db.driverClass}" />
-		<property name="url" value="${db.devUrl}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
+		<property name="url" value="${db.shinUrl}" />
+		<property name="username" value="${db.shinUsername}" />
+		<property name="password" value="${db.shinPassword}" />
 	</bean>
 
 </beans>

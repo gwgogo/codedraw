@@ -8,8 +8,8 @@
 
 	<resultMap id="timeslotList"
 		type="com.tmon.platform.api.dto.TimeSlotInformationDto">
-		<result property="delivery_date" column="delivery_date" />
-		<collection property="timeList" column="delivery_date"
+		<result property="deliveryDate" column="deliveryDate" />
+		<collection property="timeList" column="deliveryDate"
 			javaType="ArrayList" ofType="com.tmon.platform.api.dto.TimeSlotDto"
 			select="selectTimeSlots" />
 	</resultMap>
@@ -24,9 +24,9 @@
 		cutoff
 		)
 		VALUES(
-		#{start_time},
-		#{end_time},
-		#{delivery_date},
+		#{startTime},
+		#{endTime},
+		#{deliveryDate},
 		#{count},
 		#{cutoff}
 		)
@@ -36,10 +36,10 @@
 		UPDATE
 		TIMESLOT
 		SET
-		start_time=#{start_time},
-		end_time=#{end_time}
+		start_time=#{startTime},
+		end_time=#{endTime}
 		WHERE
-		timeslot_id=#{timeslot_id}
+		timeslot_id=#{timeslotID}
 	</update>
 
 	<delete id="delete" parameterType="com.tmon.platform.api.dto.TimeSlotDto">
@@ -47,39 +47,39 @@
 		FROM
 		TIMESLOT
 		WHERE
-		timeslot_id=#{timeslot_id}
+		timeslot_id=#{timeslotID}
 	</delete>
 
 	<select id="selectValid" parameterType="Map" resultMap="timeslotList">
 		SELECT
-		delivery_date
+		delivery_date deliveryDate
 		FROM TIMESLOT 
-		<![CDATA[WHERE delivery_date>#{search_init_date} GROUP BY delivery_date LIMIT #{validDays}]]>
+		<![CDATA[WHERE delivery_date>#{searchInitDate} GROUP BY deliveryDate LIMIT #{validDays}]]>
+	</select>
+
+	<select id="selectBydeliveryDate" parameterType="Map" resultMap="timeslotList">
+		SELECT
+		delivery_date deliveryDate
+		FROM TIMESLOT
+		<![CDATA[WHERE delivery_date>=#{searchInitDate} AND delivery_date<date_add(#{searchFinishDate}, interval 1 day) GROUP BY delivery_date]]>
+		ORDER BY
+		delivery_date
+		ASC
 	</select>
 
 	<select id="selectTimeSlots" resultType="com.tmon.platform.api.dto.TimeSlotDto">
 		SELECT
-		*
-		FROM TIMESLOT
-		WHERE delivery_date=#{delivery_date}
-	</select>
-
-	<select id="selectBydelivery_date" parameterType="Map"
-		resultType="com.tmon.platform.api.dto.TimeSlotDto">
-		SELECT
-		*
-		FROM
-		TIMESLOT
-		WHERE
+		timeslot_id
+		timeslotID,
+		start_time startTime,
+		end_time endTime,
 		delivery_date
-		BETWEEN
-		#{search_init_date}
-		AND
-		#{search_finish_date}
-		ORDER BY
-		delivery_date ASC,
-		start_time ASC,
-		end_time ASC
+		deliveryDate,
+		count,
+		cutoff
+		FROM TIMESLOT
+		WHERE
+		delivery_date=#{deliveryDate}
 	</select>
 
 </mapper>

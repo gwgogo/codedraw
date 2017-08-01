@@ -6,46 +6,46 @@
 <mapper namespace="ProductMapper">
 	
 	<select id="productAll" resultType="com.tmon.platform.api.dto.ProductDto">
-		SELECT product_id, product_name, price, 
-		image_url, max_quantity, sell_quantity, 
-		PRODUCT.category_id, CATEGORY.category_name 
+		SELECT product_id AS productID, product_name AS productName, price, 
+		image_url AS imageUrl, max_quantity AS maxQuantity, sell_quantity AS sellQuantity, 
+		PRODUCT.category_id AS categoryID, CATEGORY.category_name AS categoryName 
 		FROM PRODUCT JOIN CATEGORY 
 		USING (category_id)
 	</select>
 	
 	<select id="productByProductId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
-		SELECT product_id, product_name, price, 
-		image_url, max_quantity, sell_quantity, 
-		PRODUCT.category_id, CATEGORY.category_name 
+		SELECT product_id AS productID, product_name AS productName, price, 
+		image_url AS imageUrl, max_quantity AS maxQuantity, sell_quantity AS sellQuantity,  
+		PRODUCT.category_id AS categoryID, CATEGORY.category_name AS categoryName 
 		FROM PRODUCT JOIN CATEGORY 
-		USING (category_id) WHERE PRODUCT.product_id = #{product_id}
+		USING (category_id) WHERE PRODUCT.product_id = #{productIDd}
 	</select>
 
 	<select id="productByReservationId" resultType="com.tmon.platform.api.dto.OrderProductDto" parameterType="int">
 		 SELECT 
-		 ORDER_INFORMATION.reservation_id, PRODUCT.product_id, 
-		 PRODUCT.product_name, PRODUCT.image_url, ORDER_INFORMATION.quantity,
-		 PRODUCT.price, CATEGORY.category_name
+		 ORDER_INFORMATION.reservation_id AS reservationID, PRODUCT.product_id AS productID, 
+		 PRODUCT.product_name AS productName, PRODUCT.image_url AS imageUrl, ORDER_INFORMATION.quantity,
+		 PRODUCT.price, CATEGORY.category_name AS categoryName
 		 FROM PRODUCT 
 		 	JOIN ORDER_INFORMATION 
-			ON PRODUCT.product_id = ORDER_INFORMATION.product_id AND ORDER_INFORMATION.reservation_id = #{reservation_id}
+			ON PRODUCT.product_id = ORDER_INFORMATION.product_id AND ORDER_INFORMATION.reservation_id = #{reservationID}
 			JOIN CATEGORY
 			USING (category_id) 
 	</select>
 	
 	<select id="productByCategoryId" resultType="com.tmon.platform.api.dto.ProductDto" parameterType="int">
-		SELECT product_id, product_name, price, 
-	        	image_url,  max_quantity, sell_quantity,
-	    		PRODUCT.category_id, CATEGORY.category_name 
+		SELECT product_id AS productID, product_name AS productName, price, 
+	        	image_url AS imageUrl,  max_quantity AS maxQuantity, sell_quantity AS sellQuantity,
+	    		PRODUCT.category_id AS categoryID, CATEGORY.category_name AS categoryName 
 		FROM PRODUCT JOIN CATEGORY 
 	    USING (category_id)
-	    WHERE PRODUCT.category_id=#{category_id}
+	    WHERE PRODUCT.category_id=#{categoryID}
 
 	</select> 
 	
 	<delete id="deleteProduct" parameterType="int">
 		DELETE FROM PRODUCT
-		WHERE product_id=#{product_id}
+		WHERE product_id=#{productID}
 	</delete>
 	
 	

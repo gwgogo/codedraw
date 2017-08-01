@@ -11,43 +11,43 @@ import java.util.Date;
  */
 public class TimeSlotDto {
 
-	private int timeslot_id;
-	private Time start_time;
-	private Time end_time;
-	private Date delivery_date;
+	private int timeslotID;
+	private Time startTime;
+	private Time endTime;
+	private Date deliveryDate;
 	private int count;
 	private Date cutoff;
 
-	public int getTimeslot_id() {
-		return timeslot_id;
+	public int getTimeslotID() {
+		return timeslotID;
 	}
 
-	public void setTimeslot_id(int timeslot_id) {
-		this.timeslot_id = timeslot_id;
+	public void setTimeslotID(int timeslotID) {
+		this.timeslotID = timeslotID;
 	}
 
-	public Time getStart_time() {
-		return start_time;
+	public Time getStartTime() {
+		return startTime;
 	}
 
-	public void setStart_time(Time date) {
-		this.start_time = date;
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
 	}
 
-	public Time getEnd_time() {
-		return end_time;
+	public Time getEndTime() {
+		return endTime;
 	}
 
-	public void setEnd_time(Time date) {
-		this.end_time = date;
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
 	}
 
-	public Date getDelivery_date() {
-		return delivery_date;
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
 
-	public void setDelivery_date(Date delivery_date) {
-		this.delivery_date = delivery_date;
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
 	public int getCount() {

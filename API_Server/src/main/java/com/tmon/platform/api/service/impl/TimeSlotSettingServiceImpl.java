@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tmon.platform.api.dao.TimeSlotSettingDao;
 import com.tmon.platform.api.dto.TimeSlotSettingDto;
@@ -38,7 +39,7 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 	SimpleDateFormat timeFormat; // 시간 데이터가 포맷에 맞게 입력되었는지 확인한다.
 
 	@Override
-	public Map<String, String> insert(String start_time, String end_time)
+	public Map<String, String> insert(String startTime, String endTime, String cutoff)
 			throws DateFormatException, SQLCustomException {
 
 		TimeSlotSettingDto timeSlotSettingDto = new TimeSlotSettingDto();
@@ -48,18 +49,19 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 			 * 
 			 * 'timeSlotSettingDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 			 */
-			timeSlotSettingDto.setStart_time(new Time(timeFormat.parse(start_time).getTime()));
-			timeSlotSettingDto.setEnd_time(new Time(timeFormat.parse(end_time).getTime()));
+			timeSlotSettingDto.setStartTime(new Time(timeFormat.parse(startTime).getTime()));
+			timeSlotSettingDto.setEndTime(new Time(timeFormat.parse(endTime).getTime()));
+			timeSlotSettingDto.setCutoff(new Time(timeFormat.parse(cutoff).getTime()));
 		} catch (ParseException e) {
 			logger.info("Error at TimeslotSetting insert");
-			throw new DateFormatException(500, "incorrect input Time data");
+			throw new DateFormatException(616, "Incorrect input Time data");
 		}
 
 		// 시작시간이 끝시간 보다 작아야 한다.
-		if (timeSlotSettingDto.getStart_time().getTime() >= timeSlotSettingDto.getEnd_time().getTime()) {
-			logger.info("start_time: " + timeSlotSettingDto.getStart_time());
-			logger.info("end_time: " + timeSlotSettingDto.getEnd_time());
-			throw new DateFormatException(500, "start_time must be smaller than end_time");
+		if (timeSlotSettingDto.getStartTime().getTime() >= timeSlotSettingDto.getEndTime().getTime()) {
+			logger.info("startTime: " + timeSlotSettingDto.getStartTime());
+			logger.info("endTime: " + timeSlotSettingDto.getEndTime());
+			throw new DateFormatException(616, "startTime must be smaller than endTime");
 		}
 
 		Map<String, String> out = new HashMap<String, String>();
@@ -69,14 +71,14 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 			out.put("msg", "Success Insert TimeSlot");
 		} catch (Exception e) {
 			// TimeSlotSetting Insert 실패
-			throw new SQLCustomException(500, "TimeSlotSetting Insert Error");
+			throw new SQLCustomException(619, "Fail Insert TIMESLOT_SETTING SQL Error");
 		}
 
 		return out;
 	}
 
 	@Override
-	public Map<String, String> update(int timeslot_setting_id, String start_time, String end_time)
+	public Map<String, String> update(int timeslotSettingID, String startTime, String endTime, String cutoff)
 			throws DateFormatException, SQLCustomException {
 
 		TimeSlotSettingDto timeSlotSettingDto = new TimeSlotSettingDto();
@@ -86,19 +88,20 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 			 * 
 			 * 'timeSlotSettingDto'객체의 setter를 이용하여 변수에 data를 저장한다.
 			 */
-			timeSlotSettingDto.setStart_time(new Time(timeFormat.parse(start_time).getTime()));
-			timeSlotSettingDto.setEnd_time(new Time(timeFormat.parse(end_time).getTime()));
-			timeSlotSettingDto.setTimeslot_setting_id(timeslot_setting_id);
+			timeSlotSettingDto.setStartTime(new Time(timeFormat.parse(startTime).getTime()));
+			timeSlotSettingDto.setEndTime(new Time(timeFormat.parse(endTime).getTime()));
+			timeSlotSettingDto.setCutoff(new Time(timeFormat.parse(cutoff).getTime()));
+			timeSlotSettingDto.setTimeslotSettingID(timeslotSettingID);
 		} catch (ParseException e) {
 			logger.info("Error at TimeslotSetting update");
-			throw new DateFormatException(500, "incorrect input Time data");
+			throw new DateFormatException(616, "Incorrect input Time data");
 		}
 
 		// 시작시간이 끝시간 보다 작아야 한다.
-		if (timeSlotSettingDto.getStart_time().getTime() >= timeSlotSettingDto.getEnd_time().getTime()) {
-			logger.info("start_time: " + timeSlotSettingDto.getStart_time());
-			logger.info("end_time: " + timeSlotSettingDto.getEnd_time());
-			throw new DateFormatException(500, "start_time must be smaller than end_time");
+		if (timeSlotSettingDto.getStartTime().getTime() >= timeSlotSettingDto.getEndTime().getTime()) {
+			logger.info("startTime: " + timeSlotSettingDto.getStartTime());
+			logger.info("endTime: " + timeSlotSettingDto.getEndTime());
+			throw new DateFormatException(616, "startTime must be smaller than endTime");
 		}
 
 		Map<String, String> out = new HashMap<String, String>();
@@ -108,19 +111,19 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 			out.put("msg", "Success Update TimeSlot");
 		} catch (Exception e) {
 			// TimeSlotSetting Update 실패
-			throw new SQLCustomException(500, "TimeSlotSetting Update Error");
+			throw new SQLCustomException(619, "Fail Update TIMESLOT_SETTING SQL Error");
 		}
 
 		return out;
 	}
 
 	@Override
-	public Map<String, String> delete(int timeslot_setting_id) throws DateFormatException, SQLCustomException {
+	public Map<String, String> delete(int timeslotSettingID) throws DateFormatException, SQLCustomException {
 
 		TimeSlotSettingDto timeSlotSettingDto = new TimeSlotSettingDto();
 
 		// 삭제할 타임슬롯 시간대의 고유번호
-		timeSlotSettingDto.setTimeslot_setting_id(timeslot_setting_id);
+		timeSlotSettingDto.setTimeslotSettingID(timeslotSettingID);
 
 		Map<String, String> out = new HashMap<String, String>();
 		try {
@@ -129,7 +132,7 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 			out.put("msg", "Success Delete TimeSlot");
 		} catch (Exception e) {
 			// TimeSlotSetting Delete 실패
-			throw new SQLCustomException(500, "TimeSlotSetting Delete Error");
+			throw new SQLCustomException(619, "Fail Delete TIMESLOT_SETTING SQL Error");
 		}
 		return out;
 	}
@@ -140,7 +143,7 @@ public class TimeSlotSettingServiceImpl implements TimeSlotSettingService {
 			return timeSlotSettingDao.select();
 		} catch (Exception e) {
 			// TimeSlot Select 실패
-			throw new SQLCustomException(500, "TimeSlotSetting Select Error");
+			throw new SQLCustomException(619, "Fail Select TIMESLOT_SETTING SQL Error, TimeSlotSetting Select Error");
 		}
 	}
 

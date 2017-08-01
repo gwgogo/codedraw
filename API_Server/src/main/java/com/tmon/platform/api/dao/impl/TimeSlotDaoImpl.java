@@ -47,8 +47,8 @@ public class TimeSlotDaoImpl implements TimeSlotDao {
 	}
 
 	@Override
-	public List<TimeSlotDto> selectBydelivery_date(Map<String, Date> betweenDate) {
-		return sqlSession.selectList("TimeSlotMapper.selectBydelivery_date", betweenDate);
+	public List<TimeSlotInformationDto> selectBydeliveryDate(Map<String, Date> betweenDate) {
+		return sqlSession.selectList("TimeSlotMapper.selectBydeliveryDate", betweenDate);
 	}
 
 }

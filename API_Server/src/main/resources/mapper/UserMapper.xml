@@ -5,7 +5,7 @@
 
 <mapper namespace="UserMapper">
 	<select id="userById" resultType="com.tmon.platform.api.dto.UserDto" parameterType="String">
-		SELECT * FROM USER WHERE user_id=#{user_id}
+		SELECT user_id AS userID, user_pw AS userPW, privilege, address, phone, email FROM USER WHERE user_id=#{userID}
 	</select>
 	
 	<insert id="insertUser" parameterType="com.tmon.platform.api.dto.UserDto">
@@ -13,16 +13,16 @@
 		   user_id
 		  ,user_pw
 		) VALUES (
-		   #{user_id} 
-		  ,#{user_pw}
+		   #{userID} 
+		  ,#{userPW}
 		)
 	</insert>
 	
 	<select id="user" resultType="com.tmon.platform.api.dto.UserDto" parameterType="String">
-		SELECT user_id, privilege, address, phone, email FROM USER WHERE user_id=#{user_id}
+		SELECT user_id AS userID, privilege, address, phone, email FROM USER WHERE user_id=#{userID}
 	</select>
 	
 	<select id="login" resultType="com.tmon.platform.api.dto.UserDto" parameterType="Map">
-		SELECT * FROM USER WHERE user_id=#{user_id} and user_pw=#{user_pw}
+		SELECT user_id AS userID, privilege, address, phone, email FROM USER WHERE user_id=#{userID} and user_pw=#{userPW}
 	</select>
 </mapper>

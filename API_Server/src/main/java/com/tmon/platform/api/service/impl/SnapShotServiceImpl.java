@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.tmon.platform.api.dao.SnapShotDao;
 import com.tmon.platform.api.dto.SnapShotDto;
 import com.tmon.platform.api.exception.DateFormatException;
+import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.SnapShotService;
 
 /**
@@ -34,41 +35,45 @@ public class SnapShotServiceImpl implements SnapShotService {
 	SnapShotDao snapShotDao;
 
 	@Override
-	public List<SnapShotDto> selectBysnapshot_time(String search_init_time, String search_finish_time)
-			throws DateFormatException {
+	public List<SnapShotDto> selectBysnapshotTime(String searchInitTime, String searchFinishTime)
+			throws DateFormatException, SQLCustomException {
 
-		SimpleDateFormat searchFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+		SimpleDateFormat searchFormat = new SimpleDateFormat("yyyy-MM-dd HH");
 
-		Date converted_search_init_time;
-		Date converted_search_finish_time;
+		Date convertedSearchInitTime;
+		Date convertedSearchFinishTime;
 		try {
-			converted_search_init_time = searchFormat.parse(search_init_time);
-			converted_search_finish_time = searchFormat.parse(search_finish_time);
+			convertedSearchInitTime = searchFormat.parse(searchInitTime);
+			convertedSearchFinishTime = searchFormat.parse(searchFinishTime);
 		} catch (ParseException e) {
 			logger.info(e.toString());
-			throw new DateFormatException(500, "incorrect input Time or Date data");
+			throw new DateFormatException(616, "Incorrect input Time or Date data");
 		}
 
 		// WHERE절 변수 입력을 위해 parameterType을 Map구조로 한다.
 		Map<String, Date> betweenTime = new HashMap<String, Date>();
 
 		// 스냅샷테이블에서 검색할 배치 시간 (검색 시작 조건)
-		betweenTime.put("search_init_time", converted_search_init_time);
+		betweenTime.put("searchInitTime", convertedSearchInitTime);
 
 		// 스냅샷테이블에서 검색할 배치 시간 (검색 끝 조건)
-		betweenTime.put("search_finish_time", converted_search_finish_time);
+		betweenTime.put("searchFinishTime", convertedSearchFinishTime);
 
 		// 검색 시작 날짜가 검색 끝 날짜 보다 작아야 한다.
-		long initDate = ((Date) betweenTime.get("search_init_time")).getTime();
-		long finishDate = ((Date) betweenTime.get("search_finish_time")).getTime();
+		long initDate = ((Date) betweenTime.get("searchInitTime")).getTime();
+		long finishDate = ((Date) betweenTime.get("searchFinishTime")).getTime();
 		if (initDate > finishDate) {
-			logger.info("search_start_time: " + betweenTime.get("search_init_time"));
-			logger.info("search_end_time: " + betweenTime.get("search_finish_time"));
-			throw new DateFormatException(500, "search_init_time must be smaller than search_finish_time");
+			logger.info("searchStartTime: " + betweenTime.get("searchInitTime"));
+			logger.info("searchEndTime: " + betweenTime.get("searchFinishTime"));
+			throw new DateFormatException(616, "searchInitTime must be smaller than searchFinishTime");
 		}
 
-		// Dao에서는 Map객체를 parameter로 받는다.
-		return snapShotDao.selectBysnapshot_time(betweenTime);
+		try {
+			return snapShotDao.selectBysnapshotTime(betweenTime);
+
+		} catch (Exception e) {
+			throw new SQLCustomException(620, "Fail Select SNAPSHOT SQL Error, SnapShot select Error");
+		}
 	}
 
 }

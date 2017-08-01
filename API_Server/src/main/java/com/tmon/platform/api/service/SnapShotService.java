@@ -3,6 +3,8 @@ package com.tmon.platform.api.service;
 import java.util.List;
 
 import com.tmon.platform.api.dto.SnapShotDto;
+import com.tmon.platform.api.exception.DateFormatException;
+import com.tmon.platform.api.exception.SQLCustomException;
 
 /**
  * SnapShotService
@@ -14,5 +16,6 @@ import com.tmon.platform.api.dto.SnapShotDto;
  */
 public interface SnapShotService {
 
-	public List<SnapShotDto> selectBysnapshot_time(String search_init_time, String search_finish_time) throws Exception;
+	public List<SnapShotDto> selectBysnapshotTime(String searchInitTime, String searchFinishTime)
+			throws DateFormatException, SQLCustomException;
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.tmon.platform.api.exception.AuthException;
 import com.tmon.platform.api.exception.DateFormatException;
@@ -21,13 +22,12 @@ import com.tmon.platform.api.exception.SQLCustomException;
 @RestController
 public class ExceptionController {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
 
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public String ExceptionHandler(Exception e) {
-		e.printStackTrace();
-		logger.error("Error Message : " + e.getMessage());
+		logger.error("Error Message", e);
 		// throw new CustomException(501, e.getMessage()); // 에러로 리턴
 		return e.getMessage(); // 코드 200(성공)으로 리턴
 	}
@@ -36,7 +36,7 @@ public class ExceptionController {
 	@ResponseStatus(value = HttpStatus.PRECONDITION_FAILED) // 412(사전조건 실패)
 	@ExceptionHandler(PreConditionException.class)
 	public Map<String, String> UserExceptionHandler(PreConditionException e) {
-		e.printStackTrace();
+		logger.error("Error Message", e);
 		return e.getErrorStatus();
 	}
 
@@ -44,7 +44,7 @@ public class ExceptionController {
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED) // 401(권한 없음)
 	@ExceptionHandler(AuthException.class)
 	public Map<String, String> AuthExceptionHandler(AuthException e) {
-		e.printStackTrace();
+		logger.error("Error Message", e);
 		return e.getErrorStatus();
 	}
 
@@ -52,7 +52,7 @@ public class ExceptionController {
 	@ResponseStatus(value = HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE) // 416(처리할 수 없는 요청범위)
 	@ExceptionHandler(RangeNotSatisfyException.class)
 	public Map<String, String> RangeNotSatisfyExceptionHandler(RangeNotSatisfyException e) {
-		e.printStackTrace();
+		logger.error("Error Message", e);
 		return e.getErrorStatus();
 	}
 
@@ -60,7 +60,7 @@ public class ExceptionController {
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR) // 500(내부 서버 오류)
 	@ExceptionHandler(SQLCustomException.class)
 	public Map<String, String> SQLCustomException(SQLCustomException e) {
-		e.printStackTrace();
+		logger.error("Error Message", e);
 		return e.getErrorStatus();
 	}
 
@@ -68,7 +68,7 @@ public class ExceptionController {
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR) // 500(내부 서버 오류)
 	@ExceptionHandler(NullCustomException.class)
 	public Map<String, String> NullCustomException(NullCustomException e) {
-		e.printStackTrace();
+		logger.error("Error Message", e);
 		return e.getErrorStatus();
 	}
 
@@ -76,8 +76,16 @@ public class ExceptionController {
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR) // 500(내부 서버 오류)
 	@ExceptionHandler(DateFormatException.class)
 	public Map<String, String> DateFormatException(DateFormatException e) {
-		e.printStackTrace();
+		logger.error("Error Message", e);
 		return e.getErrorStatus();
 	}
-
+	
+	
+	/* RequestParameter 타입 불일치 예외시 사용 */
+	@ResponseStatus(value = HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE) // 416(처리할 수 없는 요청범위)
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public Map<String, String> MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+		NullCustomException exception = new NullCustomException(620, "RequestParameterType Mismatch");
+		return exception.getErrorStatus();
+	}
 }

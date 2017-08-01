@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tmon.platform.api.dto.BasketDto;
 import com.tmon.platform.api.exception.AbstractCustomException;
+import com.tmon.platform.api.exception.NullCustomException;
 import com.tmon.platform.api.service.BasketService;
 import com.tmon.platform.api.util.SessionManager;
 
@@ -42,87 +43,84 @@ public class BasketController {
 
 	@ApiOperation(value="장바구니에 상품 등록", notes="현재 로그인한 사용자의 세션을 통해 사용자의 장바구니에 상품 등록")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "path"),
+		@ApiImplicitParam(name = "productID", value = "상품 ID", dataType = "int", paramType = "path"),
 		@ApiImplicitParam(name = "quantity", value = "상품 수량", dataType = "int", paramType = "path")
 	})
 	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Success Insert Basket}"),
-            @ApiResponse(code = 501, message = "{msg : Fail Insert Basket Error}")
+            @ApiResponse(code = 200, message = "Success Insert Basket"),
+            @ApiResponse(code = 608, message = "Fail : Insert Basket SQL Error")
     })
-	@RequestMapping(value="/{product_id}/{quantity}", method=RequestMethod.POST)
-	public JSONObject addBasket(HttpServletRequest request, @PathVariable("product_id") int product_id, @PathVariable("quantity") int quantity) throws AbstractCustomException {
+	@RequestMapping(value="/{productID}/{quantity}", method=RequestMethod.POST)
+	public JSONObject addBasket(HttpServletRequest request, @PathVariable("productID") int productID, @PathVariable("quantity") int quantity) throws AbstractCustomException {
 		String strCk = request.getHeader("Cookie");
-		String user_id = getUser_id(strCk);
-		return basketService.addBasket(user_id, product_id, quantity);
+		String userID = getUserID(strCk);
+		return basketService.addBasket(userID, productID, quantity);
 	}
 	
 	
 	@ApiOperation(value="장바구니 조회", notes="현재 로그인한 사용자의 세션을 통해 장바구니 상품 조회")
 	@RequestMapping(method=RequestMethod.GET)
-	public List<BasketDto> basket(HttpServletRequest request){
+	public List<BasketDto> basket(HttpServletRequest request) throws NullCustomException{
 		
-		String user_id= getUser_id(request.getHeader("Cookie"));
-		return basketService.basket(user_id);
+		String userID= getUserID(request.getHeader("Cookie"));
+		return basketService.basket(userID);
 	}
 	
 	
 	@ApiOperation(value="장바구니 상품 제거")
-	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "productID", value = "상품 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Success Remove Basket}"),
-            @ApiResponse(code = 501, message = "{msg : Fail Remove Basket Error}")
+            @ApiResponse(code = 200, message = "Success Remove Basket"),
+            @ApiResponse(code = 609, message = "Deleted Zero RowCount : Invalid productID")
     })
-	@RequestMapping(value="/{product_id}", method=RequestMethod.DELETE)
-	public JSONObject removeBasket(HttpServletRequest request, @PathVariable("product_id")int product_id) throws AbstractCustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
-		return basketService.removeBasket(user_id, product_id);
+	@RequestMapping(value="/{productID}", method=RequestMethod.DELETE)
+	public JSONObject removeBasket(HttpServletRequest request, @PathVariable("productID")int productID) throws AbstractCustomException{
+		String userID = getUserID(request.getHeader("Cookie"));
+		return basketService.removeBasket(userID, productID);
 	}
 	
 	
 	@ApiOperation(value="장바구니 초기화")
-	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Success Clean Basket}"),
-            @ApiResponse(code = 501, message = "{msg : Fail Clean Basket Error}")
-    })
-	@RequestMapping(method=RequestMethod.DELETE)
+    @ApiResponse(code = 200, message = "{msg : Success Clean Basket}")
+    @RequestMapping(method=RequestMethod.DELETE)
 	public JSONObject cleanBasket(HttpServletRequest request) throws AbstractCustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
-		return basketService.cleanBasket(user_id);
+		String userID = getUserID(request.getHeader("Cookie"));
+		return basketService.cleanBasket(userID);
 	}
 	
 	
 	@ApiOperation(value="장바구니 상품 수량 증가")
-	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "productID", value = "상품 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Success Inc Quantity}"),
-            @ApiResponse(code = 501, message = "{msg : Fail Inc Quantity Error}")
+            @ApiResponse(code = 200, message = "Success Inc Quantity"),
+            @ApiResponse(code = 609, message = "Can't Over MaxQuantity")
     })
-	@RequestMapping(value="/{product_id}/plus", method=RequestMethod.PUT)
-	public JSONObject incQuantity(HttpServletRequest request, @PathVariable("product_id")int product_id) throws AbstractCustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
-		return basketService.incQuantity(user_id, product_id);
+	@RequestMapping(value="/{productID}/plus", method=RequestMethod.PUT)
+	public JSONObject incQuantity(HttpServletRequest request, @PathVariable("productID")int productID) throws AbstractCustomException{
+		String userID = getUserID(request.getHeader("Cookie"));
+		return basketService.incQuantity(userID, productID);
 	}
 	
 	
 	@ApiOperation(value="장바구니 상품 수량 감소")
-	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "productID", value = "상품 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Success Dec Quantity}"),
-            @ApiResponse(code = 501, message = "{msg : Fail Dec Quantity Error}")
+            @ApiResponse(code = 200, message = "Success Dec Quantity"),
+            @ApiResponse(code = 609, message = "Can't Under ZeroQuantity")
     })
-	@RequestMapping(value="/{product_id}/minus", method=RequestMethod.PUT)
-	public JSONObject decQuantity(HttpServletRequest request, @PathVariable("product_id") int product_id) throws AbstractCustomException{
-		String user_id = getUser_id(request.getHeader("Cookie"));
-		return basketService.decQuantity(user_id, product_id);
+	@RequestMapping(value="/{productID}/minus", method=RequestMethod.PUT)
+	public JSONObject decQuantity(HttpServletRequest request, @PathVariable("productID") int productID) throws AbstractCustomException{
+		String userID = getUserID(request.getHeader("Cookie"));
+		return basketService.decQuantity(userID, productID);
 	}
 	
 	
 	
-	/* Cookie 값으로부터 user_id 추출  */
-	private String getUser_id(String rawCookie) {
+	/* Cookie 값으로부터 userID 추출  */
+	private String getUserID(String rawCookie) throws NullCustomException {
 		String session = sessionManger.getSession(rawCookie);
-		String user_id = sessionManger.getUserId(session);
-		logger.info(user_id);
-		return user_id;
+		String userID = sessionManger.getUserId(session);
+		logger.info(userID);
+		return userID;
 	}	
 }

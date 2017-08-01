@@ -15,5 +15,5 @@ import com.tmon.platform.api.dto.SnapShotDto;
  */
 public interface SnapShotDao {
 
-	public List<SnapShotDto> selectBysnapshot_time(Map<String, Date> betweenTime);
+	public List<SnapShotDto> selectBysnapshotTime(Map<String, Date> betweenTime);
 }

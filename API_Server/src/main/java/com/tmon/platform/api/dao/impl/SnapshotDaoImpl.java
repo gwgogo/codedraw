@@ -26,8 +26,8 @@ public class SnapshotDaoImpl implements SnapShotDao {
 	SqlSession sqlSession;
 
 	@Override
-	public List<SnapShotDto> selectBysnapshot_time(Map<String, Date> betweenTime) {
-		return sqlSession.selectList("SnapShotMapper.selectBysnapshot_time", betweenTime);
+	public List<SnapShotDto> selectBysnapshotTime(Map<String, Date> betweenTime) {
+		return sqlSession.selectList("SnapShotMapper.selectBysnapshotTime", betweenTime);
 	}
 
 }

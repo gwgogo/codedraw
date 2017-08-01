@@ -5,15 +5,15 @@ import java.util.List;
 
 public class TimeSlotInformationDto {
 
-	private Date delivery_date;
+	private Date deliveryDate;
 	private List<TimeSlotDto> timeList;
 
-	public Date getDelivery_date() {
-		return delivery_date;
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
 
-	public void setDelivery_date(Date delivery_date) {
-		this.delivery_date = delivery_date;
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
 	public List<TimeSlotDto> getTimeList() {

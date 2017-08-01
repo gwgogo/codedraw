@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ProductDto;
@@ -31,8 +32,8 @@ import com.tmon.platform.api.service.ProductService;
 "file:src/test/resources/testServlet-context.xml",
 "file:src/test/resources/testDataSource-context.xml",
 "file:src/test/resources/testDateFormat-context.xml"})
-public class ProductControllerTest {
-	private static final Logger logger = LoggerFactory.getLogger(ProductControllerTest.class);
+public class ProductServiceTest {
+	private static final Logger logger = LoggerFactory.getLogger(ProductServiceTest.class);
 	
 	private static final int VALID_PRODUCT_ID = 1;		// 1 ~ 10
 	private static final int INVALID_PRODUCT_ID = 100;	// other
@@ -51,7 +52,7 @@ public class ProductControllerTest {
 	public void productAll() {
 		List<ProductDto> list = productService.productAll();
 		assertThat(list, notNullValue());
-		logger.info(list.get(0).getProduct_name());
+		logger.info(list.get(0).getProductName());
 	}
 	
 	@Test
@@ -68,28 +69,38 @@ public class ProductControllerTest {
 	
 	@Test
 	public void productByValidCategoryId() throws NullCustomException  {
-		List<ProductDto> list = productService.productByCategoryId(VALID_CATEGORY_ID);
+		List<ProductDto> list = productService.productByCategoryID(VALID_CATEGORY_ID);
 		assertThat(list,notNullValue());
+	}
+	
+	@Test(expected=MethodArgumentTypeMismatchException.class)
+	public void productByCategoryId() throws NullCustomException  {
+		
+		String requestParam = "aa";
+		int cateogry_id = Integer.parseInt(requestParam);
+		List<ProductDto> list = productService.productByCategoryID(cateogry_id);
+		assertThat(list,notNullValue());
+	
 	}
 	
 	
 	@Test(expected=NullCustomException.class)
 	public void productByInvalidCategoryId() throws NullCustomException  {
-		List<ProductDto> list = productService.productByCategoryId(INVALID_CATEGORY_ID);
+		List<ProductDto> list = productService.productByCategoryID(INVALID_CATEGORY_ID);
 		assertThat(list,notNullValue());
 	}
 	
 	
 	@Test
-	public void productByValidReservationId() throws NullCustomException  {
-		List<OrderProductDto> list = productService.productByReservationId(VALID_RESERVATION_ID);
+	public void productByValidReservation_id() throws NullCustomException  {
+		List<OrderProductDto> list = productService.productByReservationID(VALID_RESERVATION_ID);
 		assertThat(list,notNullValue());
 	}
 	
 	
 	@Test(expected=NullCustomException.class)
-	public void productByInvalidReservationId() throws NullCustomException  {
-		List<OrderProductDto> list = productService.productByReservationId(INVALID_RESERVATION_ID);
+	public void productByInvalidReservation_id() throws NullCustomException  {
+		List<OrderProductDto> list = productService.productByReservationID(INVALID_RESERVATION_ID);
 		assertThat(list,notNullValue());
 	}
 }

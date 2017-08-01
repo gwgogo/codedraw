@@ -18,18 +18,18 @@ import com.tmon.platform.api.exception.SQLCustomException;
  */
 public interface TimeSlotService {
 
-	public Map<String, String> insert(String start_time, String end_time, String delivery_date, int count)
+	public Map<String, String> insert(String startTime, String endTime, String deliveryDate, int count)
 			throws DateFormatException, SQLCustomException;
 
-	public Map<String, String> update(String start_time, String end_time, int timeslot_id)
+	public Map<String, String> update(String startTime, String endTime, int timeslotID)
 			throws DateFormatException, SQLCustomException;
 
-	public Map<String, String> delete(int timeslot_id) throws SQLCustomException;
+	public Map<String, String> delete(int timeslotID) throws SQLCustomException;
 
-	public List<TimeSlotInformationDto> selectValid(String search_init_date, int validDays)
+	public List<TimeSlotInformationDto> selectValid(String searchInitDate)
 			throws DateFormatException, SQLCustomException;
 
-	public List<TimeSlotDto> selectBydelivery_date(String search_init_date, String search_finish_date)
+	public List<TimeSlotInformationDto> selectBydeliveryDate(String searchInitDate, String searchFinishDate)
 			throws DateFormatException, SQLCustomException;
 
 }

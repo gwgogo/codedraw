@@ -1,5 +1,6 @@
 package com.tmon.platform.api.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,75 +32,81 @@ public class OrderInformationDaoImpl implements OrderInformationDao {
 	
 	public int addOrder(Map<String, String> orderDto) {
 		sqlSession.insert("OrderInformationMapper.addOrder", orderDto);
-		return Integer.parseInt(orderDto.get("reservation_id"));
-		
+		return Integer.parseInt(orderDto.get("reservationID"));
 	}
 	
-	public int addInstantOrder(Map<String, String> orderDto) {
-		sqlSession.insert("OrderInformationMapper.addOrder", orderDto);
-		return Integer.parseInt(orderDto.get("reservation_id"));
-	}
 	
 	public void addOrderProduct(Map<String, String> product) {
 		sqlSession.insert("OrderInformationMapper.addOrderProduct", product);
 	}
 	
 
-	public void incCountTimeSlot(int timeslot_id) {
-		sqlSession.update("OrderInformationMapper.incCountTimeSlot", timeslot_id);
+	public void incCountTimeSlot(int timeslotID) {
+		sqlSession.update("OrderInformationMapper.incCountTimeSlot", timeslotID);
 	}
 	
-	public void decCountTimeSlot(int timeslot_id) {
-		sqlSession.update("OrderInformationMapper.decCountTimeSlot", timeslot_id);
+	public void decCountTimeSlot(int timeslotID) {
+		sqlSession.update("OrderInformationMapper.decCountTimeSlot", timeslotID);
 	}
 
-	public void cancelOrder(int reservation_id) {
-		sqlSession.update("OrderInformationMapper.cancelOrder", reservation_id);
+	public void cancelOrder(int reservationID) {
+		sqlSession.update("OrderInformationMapper.cancelOrder", reservationID);
 	}
 	
-	public int getTimeSlotId(int reservation_id) {
-		return sqlSession.selectOne("OrderInformationMapper.getTimeSlotId", reservation_id);
+	public int getTimeSlotCount(int timeslotID) {
+		return sqlSession.selectOne("OrderInformationMapper.getTimeSlotCount", timeslotID);
 	}
 	
-	public int getTimeSlotCount(int timeslot_id) {
-		return sqlSession.selectOne("OrderInformationMapper.getTimeSlotCount", timeslot_id);
-	}
-	
-	public void setTimeSlotCutOff(int timeslot_id) {
-		sqlSession.update("OrderInformationMapper.setTimeSlotCutOff", timeslot_id);
-	}
-	
-	public void resetTimeSlotCutOff(int timeslot_id) {
-		sqlSession.update("OrderInformationMapper.resetTimeSlotCutOff", timeslot_id);
-	}
-	
-	public void incSellQuantity(int product_id, int quantity) {
+	public void incSellQuantity(int productID, int quantity) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("product_id", String.valueOf(product_id));
+		map.put("productID", String.valueOf(productID));
 		map.put("quantity", String.valueOf(quantity));
-		sqlSession.update("OrderInformationMapper.incQuantity", map);
+		sqlSession.update("OrderInformationMapper.incSellQuantity", map);
 	}
 	
-	public void decSellQuantity(int product_id, int quantity) {
+	public void decSellQuantity(int productID, int quantity) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("product_id", String.valueOf(product_id));
+		map.put("productID", String.valueOf(productID));
 		map.put("quantity", String.valueOf(quantity));
 		sqlSession.update("OrderInformationMapper.decQuantity", map);
+		/*Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productList", productList);
+		sqlSession.update("OrderInformationMapper.decSellQuantity", map);*/
 	}
 	
-	public int getStockQuantity(int product_id) {
-		return sqlSession.selectOne("OrderInformationMapper.getStockQuantity", product_id);
+	public int getStockQuantity(int productID) {
+		return sqlSession.selectOne("OrderInformationMapper.getStockQuantity", productID);
 	}
 	
-	public List<OrderProductDto> getOrderProductList(int reservation_id){
-		return sqlSession.selectList("OrderInformationMapper.getOrderProductList", reservation_id);
+	public List<OrderProductDto> getOrderProductList(int reservationID){
+		return sqlSession.selectList("OrderInformationMapper.getOrderProductList", reservationID);
+	}
+	
+	public int getOrderStatus(int reservationID) {
+		return sqlSession.selectOne("OrderInformationMapper.getOrderStatus", reservationID);
+	}
+	
+	public Map<String, Integer>getTimeSlotAndStatus (int reservationID){
+		return sqlSession.selectOne("OrderInformationMapper.getTimeSlotAndStatus", reservationID);
 	}
 
-	public int getOrderStatus(int reservation_id) {
-		return sqlSession.selectOne("OrderInformationMapper.getOrderStatus", reservation_id);
+	public String getUserId(int reservationID) {
+		return sqlSession.selectOne("OrderInformationMapper.getUserId", reservationID);
+	}
+
+	public Date getCutOff(int timeslotID) {
+		return sqlSession.selectOne("OrderInformationMapper.getCutOff", timeslotID);
 	}
 	
-	public Map<String, Integer>getTimeSlotAndStatus (int reservation_id){
-		return sqlSession.selectOne("OrderInformationMapper.getTimeSlotAndStatus", reservation_id);
+	/* 테스트용 */
+	public int getTimeSlotId(int reservationID) {
+		return sqlSession.selectOne("OrderInformationMapper.getTimeSlotId", reservationID);
 	}
+	public int getReservationID(Map<String,String> paramMap) {
+		return sqlSession.selectOne("OrderInformationMapper.getReservationID", paramMap);
+	}
+	public OrderInformationDto getReservationDto(int reservationID) {
+		return sqlSession.selectOne("OrderInformationMapper.getReservationDto", reservationID);
+	}
+	
 }

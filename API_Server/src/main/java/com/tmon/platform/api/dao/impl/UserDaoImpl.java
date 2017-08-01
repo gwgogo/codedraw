@@ -16,14 +16,14 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public UserDto user(String user_id){
-		return sqlSession.selectOne("UserMapper.user", user_id);
+	public UserDto user(String userID){
+		return sqlSession.selectOne("UserMapper.user", userID);
 	}
 	
-	public UserDto login(String user_id, String user_pw) {
+	public UserDto login(String userID, String userPW) {
 		Map<String, String> argument = new HashMap<>();
-		argument.put("user_id", user_id);
-		argument.put("user_pw", user_pw);
+		argument.put("userID", userID);
+		argument.put("userPW", userPW);
 		return sqlSession.selectOne("UserMapper.login", argument);
 	}
 	

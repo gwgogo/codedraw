@@ -11,4 +11,8 @@
 		<constructor-arg value="HH:mm:ss" />
 	</bean>
 
+	<bean id="cutOffTimeFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg value="MMddHHmm"/>
+	</bean>
+
 </beans>

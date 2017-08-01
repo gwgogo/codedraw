@@ -12,102 +12,81 @@ import java.util.List;
  */
 public class OrderInformationDto {
 
-	private int reservation_id;
-	private String reservation_date;
-	private String cancel_date;
-	private String user_id;
-	private int status_id;
-	private String status_string;
-	private int timeslot_id;
-	private String delivery_date; // {join TIMESLOT}
-	private Time start_time; // {join TIMESLOT}
-	private Time end_time; // {join TIMESLOT}
+	private int reservationID;
+	private String reservationDate;
+	private String cancelDate;
+	private String userID;
+	private int statusID;
+	private String statusString;
+	private int timeslotID;
+	private String deliveryDate; // {join TIMESLOT}
+	private Time startTime; // {join TIMESLOT}
+	private Time endTime; // {join TIMESLOT}
 	private List<OrderProductDto> productList;
-
-	public int getReservation_id() {
-		return reservation_id;
+	
+	public int getReservationID() {
+		return reservationID;
 	}
-
-	public void setReservation_id(int reservation_id) {
-		this.reservation_id = reservation_id;
+	public void setReservationID(int reservationID) {
+		this.reservationID = reservationID;
 	}
-
-	public String getReservation_date() {
-		return reservation_date;
+	public String getReservationDate() {
+		return reservationDate;
 	}
-
-	public void setReservation_date(String reservation_date) {
-		this.reservation_date = reservation_date;
+	public void setReservationDate(String reservationDate) {
+		this.reservationDate = reservationDate;
 	}
-
-	public String getCancel_date() {
-		return cancel_date;
+	public String getCancelDate() {
+		return cancelDate;
 	}
-
-	public void setCancel_date(String cancel_date) {
-		this.cancel_date = cancel_date;
+	public void setCancelDate(String cancelDate) {
+		this.cancelDate = cancelDate;
 	}
-
-	public String getUser_id() {
-		return user_id;
+	public String getUserID() {
+		return userID;
 	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
-
-	public int getStatus_id() {
-		return status_id;
+	public int getStatusID() {
+		return statusID;
 	}
-
-	public void setStatus_id(int status_id) {
-		this.status_id = status_id;
+	public void setStatusID(int statusID) {
+		this.statusID = statusID;
 	}
-
-	public String getStatus_string() {
-		return status_string;
+	public String getStatusString() {
+		return statusString;
 	}
-
-	public void setStatus_string(String status_string) {
-		this.status_string = status_string;
+	public void setStatusString(String statusString) {
+		this.statusString = statusString;
 	}
-
-	public int getTimeslot_id() {
-		return timeslot_id;
+	public int getTimeslotID() {
+		return timeslotID;
 	}
-
-	public void setTimeslot_id(int timeslot_id) {
-		this.timeslot_id = timeslot_id;
+	public void setTimeslotID(int timeslotID) {
+		this.timeslotID = timeslotID;
 	}
-
-	public String getDelivery_date() {
-		return delivery_date;
+	public String getDeliveryDate() {
+		return deliveryDate;
 	}
-
-	public void setDelivery_date(String delivery_date) {
-		this.delivery_date = delivery_date;
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
-
-	public Time getStart_time() {
-		return start_time;
+	public Time getStartTime() {
+		return startTime;
 	}
-
-	public void setStart_time(Time start_time) {
-		this.start_time = start_time;
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
 	}
-
-	public Time getEnd_time() {
-		return end_time;
+	public Time getEndTime() {
+		return endTime;
 	}
-
-	public void setEnd_time(Time end_time) {
-		this.end_time = end_time;
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
 	}
-
 	public List<OrderProductDto> getProductList() {
 		return productList;
 	}
-
 	public void setProductList(List<OrderProductDto> productList) {
 		this.productList = productList;
 	}

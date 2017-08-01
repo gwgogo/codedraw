@@ -10,6 +10,6 @@ public interface UserService {
 
 	public JSONObject join(UserDto userDto) throws SQLCustomException;
 	public UserDto user(String session);
-	public JSONObject login(String user_id, String user_pw) throws PreConditionException;
+	public JSONObject login(String userID, String userPW) throws PreConditionException;
 	public JSONObject logout(String session);
 }

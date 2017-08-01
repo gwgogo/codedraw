@@ -32,16 +32,18 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/mypage" />
+			<mvc:mapping path="/user/mypage" />
+			<mvc:mapping path="/orders/**" />
+			<mvc:mapping path="/baskets/**" />
 			<beans:bean
 				class="com.tmon.platform.api.interceptor.LoginCheckInterceptorTest" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/admin" />
+			<mvc:mapping path="/user/admin" />
 			<mvc:mapping path="/orders/admin/**" />
 			<mvc:mapping path="/holidays/*" />
 			<mvc:mapping path="/snapshots/*" />
-<!-- 			<mvc:mapping path="/timeslots/*" /> -->
+			<mvc:mapping path="/timeslots/*" />
 			<mvc:mapping path="/timeslotsetting/*" />
 			<beans:bean
 				class="com.tmon.platform.api.interceptor.AdminCheckInterceptorTest" />

@@ -15,13 +15,13 @@ import com.tmon.platform.api.exception.SQLCustomException;
  */
 public interface HolidayService {
 
-	public Map<String, String> insert(int holiday_lunar, String holiday_date, String holiday_title)
+	public Map<String, String> insert(int holidayLunar, String holidayDate, String holidayTitle)
 			throws SQLCustomException;
 
-	public Map<String, String> update(int holiday_lunar, String holiday_date, String holiday_title, int holiday_id)
+	public Map<String, String> update(int holidayLunar, String holidayDate, String holidayTitle, int holidayID)
 			throws SQLCustomException;
 
-	public Map<String, String> delete(int holiday_id) throws SQLCustomException;
+	public Map<String, String> delete(int holidayID) throws SQLCustomException;
 
 	public List<HolidayDto> select() throws SQLCustomException;
 

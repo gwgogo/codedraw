@@ -19,8 +19,8 @@
 			url : "/join",
 			dataType : 'json',
 			data : {
-				user_id : $('#user_id').val(),
-				user_pw : $('#user_pw').val()
+				userID : $('#userID').val(),
+				userPW : $('#userPW').val()
 			},
 			success : function(data) {
 				alert("success " + data.msg);
@@ -40,8 +40,8 @@
 <body>
 	<h3>회원가입</h3>
 	<form>
-		아이디 : <input type="text" name="user_id" id="user_id" /><br /> 비번 : <input
-			type="password" name="user_pw" id="user_pw" /><br /> <input
+		아이디 : <input type="text" name="userID" id="userID" /><br /> 비번 : <input
+			type="password" name="userPW" id="userPW" /><br /> <input
 			type="button" value="전송" id="button" />
 	</form>
 </body>

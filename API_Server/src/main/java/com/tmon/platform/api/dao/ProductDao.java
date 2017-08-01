@@ -10,8 +10,8 @@ import com.tmon.platform.api.dto.ProductDto;
 
 public interface ProductDao {
 	public List<ProductDto> productAll();
-	public ProductDto productByProductId(int product_id);
-	public List<OrderProductDto> productByReservationId(int reservation_id);
-	public List<ProductDto> productByCategoryId(int category_id);
-	public void deleteProduct(int product_id);
+	public ProductDto productByProductId(int productID);
+	public List<OrderProductDto> productByReservationID(int reservationID);
+	public List<ProductDto> productByCategoryID(int categoryID);
+	public void deleteProduct(int productID);
 }

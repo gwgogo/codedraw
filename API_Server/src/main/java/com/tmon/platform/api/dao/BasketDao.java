@@ -7,12 +7,12 @@ import org.json.simple.JSONObject;
 import com.tmon.platform.api.dto.BasketDto;
 
 public interface BasketDao {
-	public void addBasket(String user_id, int product_id, int quantity);
-	public List<BasketDto> basket(String user_id);
-	public int removeBasket(String user_id, int product_id);
-	public void cleanBasket(String user_id);
-	public void incQuantity(String user_id, int product_id);
-	public void decQuantity(String user_id, int product_id);
-	public int getBasketQuantity(String user_id, int product_id);
-	public Integer getMaxQuantity(int product_id);
+	public void addBasket(String userID, int productID, int quantity);
+	public List<BasketDto> basket(String userID);
+	public int removeBasket(String userID, int productID);
+	public void cleanBasket(String userID);
+	public void incQuantity(String userID, int productID);
+	public void decQuantity(String userID, int productID);
+	public int getBasketQuantity(String userID, int productID);
+	public Integer getMaxQuantity(int productID);
 }

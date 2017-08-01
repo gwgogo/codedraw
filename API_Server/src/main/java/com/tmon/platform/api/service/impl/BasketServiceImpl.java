@@ -24,57 +24,57 @@ public class BasketServiceImpl implements BasketService {
 	@Autowired
 	BasketDao basketDao;
 
-	public JSONObject addBasket(String user_id, int product_id, int quantity)
+	public JSONObject addBasket(String userID, int productID, int quantity)
 			throws SQLCustomException, RangeNotSatisfyException, NullCustomException {
 
-		Integer maxQuantity = getMaxQuantity(product_id);
+		Integer maxQuantity = getMaxQuantity(productID);
 		if (quantity > maxQuantity.intValue() || quantity <= 0) {
 			throw new RangeNotSatisfyException(609, "Quantity Range Error");
 		}
 		try {
-			basketDao.addBasket(user_id, product_id, quantity);
+			basketDao.addBasket(userID, productID, quantity);
 		} catch (Exception e) {
-			throw new SQLCustomException(608, "Fail : Already Exist Product in BASKET or Invalid ProductID");
+			throw new SQLCustomException(608, "Fail : Already Exist Product in BASKET or Invalid productID");
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success : Insert Basket");
 		return obj;
 	}
 
-	public List<BasketDto> basket(String user_id) {
-		return basketDao.basket(user_id);
+	public List<BasketDto> basket(String userID) {
+		return basketDao.basket(userID);
 	}
 
 	
 
-	public JSONObject removeBasket(String user_id, int product_id) throws NullCustomException {
-		int rowCount = basketDao.removeBasket(user_id, product_id);
+	public JSONObject removeBasket(String userID, int productID) throws NullCustomException {
+		int rowCount = basketDao.removeBasket(userID, productID);
 		if(rowCount == 0)
-			throw new NullCustomException(615, "Deleted Zero RowCount : Invalid ProductID");
+			throw new NullCustomException(615, "Deleted Zero RowCount : Invalid productID");
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Remove Basket");
 		return obj;
 	}
 
 	
-	public JSONObject cleanBasket(String user_id) {
-		basketDao.cleanBasket(user_id);
+	public JSONObject cleanBasket(String userID) {
+		basketDao.cleanBasket(userID);
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Clean Basket");
 		return obj;
 	}
 
 	
-	public JSONObject incQuantity(String user_id, int product_id) throws RangeNotSatisfyException, NullCustomException {
-		int maxQuantity = getMaxQuantity(product_id);
-		Integer basketQuantity = getBasketQuantity(user_id, product_id);
+	public JSONObject incQuantity(String userID, int productID) throws RangeNotSatisfyException, NullCustomException {
+		int maxQuantity = getMaxQuantity(productID);
+		Integer basketQuantity = getBasketQuantity(userID, productID);
 
 		// 장바구니 상품의 수량은 재고량을 초과할 수 없음
 		if (basketQuantity >= maxQuantity) {
 			throw new RangeNotSatisfyException(609, "Can't Over MaxQuantity");
 		}
 
-		basketDao.incQuantity(user_id, product_id);
+		basketDao.incQuantity(userID, productID);
 
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Inc Quantity");
@@ -82,14 +82,14 @@ public class BasketServiceImpl implements BasketService {
 	}
 
 	
-	public JSONObject decQuantity(String user_id, int product_id) throws RangeNotSatisfyException, NullCustomException {
-		Integer quantity = getBasketQuantity(user_id, product_id);
+	public JSONObject decQuantity(String userID, int productID) throws RangeNotSatisfyException, NullCustomException {
+		Integer quantity = getBasketQuantity(userID, productID);
 		
 		// 장바구니 상품의 수량 체크 - 0보다 작게 할 수 없음
 		if (quantity <= 0) {
 			throw new RangeNotSatisfyException(609, "Can't Under ZeroQuantity");
 		}
-		basketDao.decQuantity(user_id, product_id);
+		basketDao.decQuantity(userID, productID);
 
 		JSONObject obj = new JSONObject();
 		obj.put("msg", "Success Dec Quantity");
@@ -97,29 +97,25 @@ public class BasketServiceImpl implements BasketService {
 	}
 
 	/* 테스트코드에서 사용하기위해 잠시 public - 배포할때는 private로 변경 */
-	public int getBasketQuantity(String user_id, int product_id) throws NullCustomException {
+	public int getBasketQuantity(String userID, int productID) throws NullCustomException {
 		int basketQuantity;
 		try {
-			basketQuantity = basketDao.getBasketQuantity(user_id, product_id);
+			basketQuantity = basketDao.getBasketQuantity(userID, productID);
 		}catch(NullPointerException e) {
-			throw new NullCustomException(609, "Invalid Product_id in BASKET");
+			throw new NullCustomException(609, "Invalid productID in BASKET");
 		}
 		return basketQuantity;
 	}
 
 	
 	/* 테스트코드에서 사용하기위해 잠시 public - 배포할때는 private로 변경 */
-	public Integer getMaxQuantity(int product_id) throws NullCustomException{
+	public Integer getMaxQuantity(int productID) throws NullCustomException{
 		/* Integer 타입으로 선언하면 null로 비교 가능 - getBasketQuantity()와 비교 */ 
-		Integer maxQuantity = basketDao.getMaxQuantity(product_id);
+		Integer maxQuantity = basketDao.getMaxQuantity(productID);
 		if(maxQuantity == null) {
-			throw new NullCustomException(609, "Invalid Product_id in PRODUCT");
+			throw new NullCustomException(609, "Invalid productID in PRODUCT");
 		}
-		/*try {
-			maxQuantity = basketDao.getMaxQuantity(product_id);
-		}catch(NullPointerException e) {
-			throw new NullCustomException(609, "Invalid Product_id in PRODUCT");
-		}*/
+
 		return maxQuantity;
 	}
 

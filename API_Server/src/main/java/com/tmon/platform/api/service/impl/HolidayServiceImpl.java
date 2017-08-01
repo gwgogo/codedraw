@@ -38,19 +38,19 @@ public class HolidayServiceImpl implements HolidayService {
 	SimpleDateFormat dateFormat;
 
 	@Override
-	public Map<String, String> insert(int holiday_lunar, String holiday_date, String holiday_title)
+	public Map<String, String> insert(int holidayLunar, String holidayDate, String holidayTitle)
 			throws SQLCustomException {
 
 		HolidayDto holidayDto = new HolidayDto();
 
 		// 새롭게 삽입되는 공휴일의 양력(1), 음력(2) 구분
-		holidayDto.setHoliday_lunar(holiday_lunar);
+		holidayDto.setHolidayLunar(holidayLunar);
 
 		// 새롭게 삽입되는 공휴일의 날짜
-		holidayDto.setHoliday_date(holiday_date);
+		holidayDto.setHolidayDate(holidayDate);
 
 		// 새롭게 삽입되는 공휴일 이름
-		holidayDto.setHoliday_title(holiday_title);
+		holidayDto.setHolidayTitle(holidayTitle);
 
 		Map<String, String> out = new HashMap<String, String>();
 		try {
@@ -65,22 +65,22 @@ public class HolidayServiceImpl implements HolidayService {
 	}
 
 	@Override
-	public Map<String, String> update(int holiday_lunar, String holiday_date, String holiday_title, int holiday_id)
+	public Map<String, String> update(int holidayLunar, String holidayDate, String holidayTitle, int holidayID)
 			throws SQLCustomException {
 
 		HolidayDto holidayDto = new HolidayDto();
 
 		// 수정할 공휴일의 수정된 날짜
-		holidayDto.setHoliday_date(holiday_date);
+		holidayDto.setHolidayDate(holidayDate);
 
 		// 수정할 공휴일의 수정할 양력(1), 음력(2) 구분
-		holidayDto.setHoliday_lunar(holiday_lunar);
+		holidayDto.setHolidayLunar(holidayLunar);
 
 		// 수정할 공휴일의 공휴일 이름
-		holidayDto.setHoliday_title(holiday_title);
+		holidayDto.setHolidayTitle(holidayTitle);
 
 		// 수정한 공휴일의 공휴일 고유번호
-		holidayDto.setHoliday_id(holiday_id);
+		holidayDto.setHolidayID(holidayID);
 
 		Map<String, String> out = new HashMap<String, String>();
 		try {
@@ -95,12 +95,12 @@ public class HolidayServiceImpl implements HolidayService {
 	}
 
 	@Override
-	public Map<String, String> delete(int holiday_id) throws SQLCustomException {
+	public Map<String, String> delete(int holidayID) throws SQLCustomException {
 
 		HolidayDto holidayDto = new HolidayDto();
 
 		// 삭제할 공휴일의 고유번호
-		holidayDto.setHoliday_id(holiday_id);
+		holidayDto.setHolidayID(holidayID);
 
 		Map<String, String> out = new HashMap<String, String>();
 		try {
@@ -140,7 +140,7 @@ public class HolidayServiceImpl implements HolidayService {
 		}
 
 		// 입력된 'year' 해당년도의 양력에 맞게 변환된 공휴일 날짜를 저장하는 List 객체를 선언한다.
-		List<HolidayDto> holidays_Year = new ArrayList<HolidayDto>();
+		List<HolidayDto> holidaysYear = new ArrayList<HolidayDto>();
 
 		// 음력날짜를 양력날짜로 변환하기 위한 LunarConverter 객체를 생성한다.
 		LunarConverter lunarConverter = new LunarConverter();
@@ -154,26 +154,26 @@ public class HolidayServiceImpl implements HolidayService {
 			 * 입력된 해당년도를 9999년에서 'year'로 바꿔준다.
 			 * 
 			 */
-			Date holidayDate = new Date(dateFormat.parse(holidayDto.getHoliday_date()).getTime());
+			Date holidayDate = new Date(dateFormat.parse(holidayDto.getHolidayDate()).getTime());
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(holidayDate);
 			calendar.set(Calendar.YEAR, year);
-			holidayDto.setHoliday_date(dateFormat.format(calendar.getTime()));
+			holidayDto.setHolidayDate(dateFormat.format(calendar.getTime()));
 
 			// HOLIDAY 테이블에 음력날짜만 양력으로 바꿔준다.
-			if (holidayDto.getHoliday_lunar() == 2) {
+			if (holidayDto.getHolidayLunar() == 2) {
 				// 음력날짜
-				Date lunarDate = new Date(dateFormat.parse(holidayDto.getHoliday_date()).getTime());
+				Date lunarDate = new Date(dateFormat.parse(holidayDto.getHolidayDate()).getTime());
 
 				// 양력으로 변환된 날짜
 				Date convertedDate = lunarConverter.convertToDate(lunarDate);
 				// 변환된 양력날짜 입력
-				holidayDto.setHoliday_date(dateFormat.format(convertedDate));
+				holidayDto.setHolidayDate(dateFormat.format(convertedDate));
 			}
 
 			// 올해날짜로 최종 수정된것을 add한다.
-			holidays_Year.add(holidayDto);
+			holidaysYear.add(holidayDto);
 		}
-		return holidays_Year;
+		return holidaysYear;
 	}
 }

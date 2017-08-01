@@ -18,53 +18,53 @@ public class BasketDaoImpl implements BasketDao {
 	SqlSession sqlSession;
 	
 	@Override
-	public void addBasket(String user_id, int product_id, int quantity) {
+	public void addBasket(String userID, int productID, int quantity) {
 		Map<String, String> map = new HashMap<>();
-		map.put("user_id", user_id);
-		map.put("product_id", String.valueOf(product_id));
+		map.put("userID", userID);
+		map.put("productID", String.valueOf(productID));
 		map.put("quantity", String.valueOf(quantity));
 		sqlSession.insert("BasketMapper.addBasket", map);
 	}
 
 
-	public List<BasketDto> basket(String user_id){
-		return sqlSession.selectList("BasketMapper.basket", user_id);
+	public List<BasketDto> basket(String userID){
+		return sqlSession.selectList("BasketMapper.basket", userID);
 	}
 	
 	
-	public int removeBasket(String user_id, int product_id) {
+	public int removeBasket(String userID, int productID) {
 		Map<String, String> map = new HashMap<>();
-		map.put("user_id", user_id);
-		map.put("product_id", String.valueOf(product_id));
+		map.put("userID", userID);
+		map.put("productID", String.valueOf(productID));
 		return sqlSession.delete("BasketMapper.removeBasket", map);
 	}
 	
-	public void cleanBasket(String user_id) {
-		sqlSession.delete("BasketMapper.cleanBasket", user_id);
+	public void cleanBasket(String userID) {
+		sqlSession.delete("BasketMapper.cleanBasket", userID);
 	}
 	
-	public void incQuantity(String user_id, int product_id) {
+	public void incQuantity(String userID, int productID) {
 		Map<String, String> map = new HashMap<>();
-		map.put("user_id", user_id);
-		map.put("product_id", String.valueOf(product_id));
+		map.put("userID", userID);
+		map.put("productID", String.valueOf(productID));
 		sqlSession.update("BasketMapper.incQuantity", map);
 	}
 	
-	public void decQuantity(String user_id, int product_id) {
+	public void decQuantity(String userID, int productID) {
 		Map<String, String> map = new HashMap<>();
-		map.put("user_id", user_id);
-		map.put("product_id", String.valueOf(product_id));
+		map.put("userID", userID);
+		map.put("productID", String.valueOf(productID));
 		sqlSession.update("BasketMapper.decQuantity", map);
 	}
 	
-	public int getBasketQuantity(String user_id, int product_id) {
+	public int getBasketQuantity(String userID, int productID) {
 		Map<String, String> map = new HashMap<>();
-		map.put("user_id", user_id);
-		map.put("product_id", String.valueOf(product_id));
+		map.put("userID", userID);
+		map.put("productID", String.valueOf(productID));
 		return sqlSession.selectOne("BasketMapper.getBasketQuantity", map);
 	}
 	
-	public Integer getMaxQuantity(int product_id) {
-		return sqlSession.selectOne("BasketMapper.getMaxQuantity", product_id);
+	public Integer getMaxQuantity(int productID) {
+		return sqlSession.selectOne("BasketMapper.getMaxQuantity", productID);
 	}
 }

@@ -28,6 +28,7 @@ public class LoginCheckInterceptorTest extends HandlerInterceptorAdapter {
 		Cookie[] cookie =request.getCookies();
 		String session = cookie[0].getValue(); 
 		
+		
 		if(!sessionManager.isValidSession(session)) {	// 그 value(세션키)가 현재 세션풀에 있는지 검사하여 있으면 return true
 			throw new AuthException(606, "Login Unauthorized");
 		}

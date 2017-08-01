@@ -1,6 +1,8 @@
 package com.tmon.platform.api.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmon.platform.api.dto.UserDto;
+import com.tmon.platform.api.exception.NullCustomException;
 import com.tmon.platform.api.exception.PreConditionException;
 import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.UserService;
@@ -69,28 +72,31 @@ public class UserController {
 	
 	@ApiOperation(value="로그인", notes="로그인 성공시 API서버에서 세션키 발급 후 UI서버에서 쿠키에 저장")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "user_id", value = "사용자 ID", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "user_pw", value = "사용자 PW", dataType = "string", paramType = "query")
+		@ApiImplicitParam(name = "userID", value = "사용자 ID", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "userPW", value = "사용자 PW", dataType = "string", paramType = "query")
 	})
 	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{session : 세션키}"),
-            @ApiResponse(code = 501, message = "{msg : Invalid User Information}")
+            @ApiResponse(code = 200, message = "session : 세션키"),
+            @ApiResponse(code = 602, message = "Invalid User Information")
     })
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws PreConditionException {
-		return userService.login(user_id, user_pw);
+	public JSONObject login(HttpServletResponse response, @RequestParam("userID") String userID, @RequestParam("userPW") String userPW) throws PreConditionException {
+		
+		JSONObject result = userService.login(userID, userPW);
+		
+		Cookie sessionCookie = new Cookie("session", (String) result.get("session"));
+		sessionCookie.setPath("/");
+		//sessionCookie.setDomain("52.231.28.248");
+		response.addCookie(sessionCookie);
+		return result;
 	}
 	
 	
 	@ApiOperation(value="로그아웃", notes="세션삭제를 위한 로그아웃")
-	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Success Delete Session}"),
-            @ApiResponse(code = 501, message = "{msg : Invalid Session}")
-    })
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject logout(HttpServletRequest request) {
+	public JSONObject logout(HttpServletRequest request) throws NullCustomException {
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
@@ -101,14 +107,14 @@ public class UserController {
 	@ApiOperation(value="회원가입", notes="현재는 ID, PW 만으로 회원가입 가능")
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	@ApiResponses(value = {
-            @ApiResponse(code = 200, message = "{msg : Join Success}"),
-            @ApiResponse(code = 501, message = "{msg : Join Error(duplication ID)}")
+            @ApiResponse(code = 200, message = "Join Success"),
+            @ApiResponse(code = 603, message = "Fail : User Join SQL Error")
     })
 	@ResponseBody
-	public JSONObject join(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) throws SQLCustomException  {
+	public JSONObject join(@RequestParam("userID") String userID, @RequestParam("userPW") String userPW) throws SQLCustomException  {
 		UserDto userDto = new UserDto();
-		userDto.setUser_id(user_id);
-		userDto.setUser_pw(user_pw);
+		userDto.setUserID(userID);
+		userDto.setUserPW(userPW);
 		return userService.join(userDto);
 	}
 	
@@ -116,18 +122,19 @@ public class UserController {
 	@ApiOperation(value="사용자 정보 조회", notes="MyPage등에 사용할 사용자 정보 조회 - 핸들러 인터셉터에서 세션 검사")
 	@RequestMapping(value="/mypage", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDto mypage(HttpServletRequest request) {
-		
+	public UserDto mypage(HttpServletRequest request) throws NullCustomException {
+		logger.info("mypage start");
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		
 		return userService.user(session);
 	}
 	
+	
 	@RequestMapping(value="/admin", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDto admin(HttpServletRequest request) {
-		
+	public UserDto admin(HttpServletRequest request) throws NullCustomException {
+		logger.info("admin start");
 		String rawCookie = request.getHeader("Cookie");
 		String session = sessionManager.getSession(rawCookie);
 		

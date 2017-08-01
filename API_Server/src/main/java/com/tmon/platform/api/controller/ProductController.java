@@ -3,17 +3,19 @@ package com.tmon.platform.api.controller;
 import java.util.List;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.tmon.platform.api.dto.OrderProductDto;
 import com.tmon.platform.api.dto.ProductDto;
 import com.tmon.platform.api.exception.NullCustomException;
-import com.tmon.platform.api.exception.SQLCustomException;
 import com.tmon.platform.api.service.ProductService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,6 +35,8 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/products")
 public class ProductController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+	
 	@Autowired
 	private ProductService productService;
 	
@@ -45,50 +49,57 @@ public class ProductController {
 	
 	
 	@ApiOperation(value="상품 상세 조회", notes="상품ID에 대한 상품 상세 조회 ")
-	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "productID", value = "상품 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "{data : List<ProductDto>}"),
-			@ApiResponse(code = 501, message = "{msg : Invalid ProductID}")
+			@ApiResponse(code = 200, message = "data : List<ProductDto>"),
+			@ApiResponse(code = 604, message = "Invalid productID"),
+			@ApiResponse(code = 620, message = "RequestParameterType Mismatch")
 	})
-	@RequestMapping(value="/{product_id}", method=RequestMethod.GET)
-	public ProductDto productByProductId(@PathVariable("product_id")int product_id) throws NullCustomException {
-		return productService.productByProductId(product_id);
+	@RequestMapping(value="/{productID}", method=RequestMethod.GET)
+	public ProductDto productByProductId(@PathVariable("productID")int productID) throws NullCustomException, MethodArgumentTypeMismatchException {
+		return productService.productByProductId(productID);
 	}
 	
 	
 	@ApiOperation(value="주문번호에 따른 상품 목록 조회", notes="하나의 주문에 포함된 상품 목록 조회")
-	@ApiImplicitParam(name = "reservation_id", value = "주문 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "reservationID", value = "주문 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "{data : List<ProductDto>}"),
-			@ApiResponse(code = 501, message = "{msg : Invalid ReservationID}")
+			@ApiResponse(code = 200, message = "data : List<ProductDto>"),
+			@ApiResponse(code = 604, message = "Invalid reservationID"),
+			@ApiResponse(code = 620, message = "RequestParameterType Mismatch")
 	})
-	@RequestMapping(value="/reservation/{reservation_id}", method=RequestMethod.GET)
-	public List<OrderProductDto> productByReservationId(@PathVariable("reservation_id") int reservation_id) throws NullCustomException {
-		return productService.productByReservationId(reservation_id);
+	@RequestMapping(value="/reservation/{reservationID}", method=RequestMethod.GET)
+	public List<OrderProductDto> productByReservationID(@PathVariable("reservationID") int reservationID) throws NullCustomException, MethodArgumentTypeMismatchException {
+		return productService.productByReservationID(reservationID);
 	}
 	
 	
 	@ApiOperation(value="카테고리 번호에 따른 상품 목록 조회", notes="카테고리별 상품 조회를 위한 API")
-	@ApiImplicitParam(name = "category_id", value = "카테고리 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "categoryID", value = "카테고리 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "{data : List<ProductDto>}"),
-			@ApiResponse(code = 501, message = "{msg : Invalid CategoryID}")
+			@ApiResponse(code = 200, message = "data : List<ProductDto>"),
+			@ApiResponse(code = 604, message = "Invalid categoryID"),
+			@ApiResponse(code = 620, message = "RequestParameterType Mismatch")
 	})
-	@RequestMapping(value="/category/{category_id}", method=RequestMethod.GET)
-	public List<ProductDto> productByCategoryId(@PathVariable("category_id") int category_id) throws NullCustomException {
-		return productService.productByCategoryId(category_id);
+	@RequestMapping(value="/category/{categoryID}", method=RequestMethod.GET)
+	public List<ProductDto> productByCategoryID(@PathVariable("categoryID") int categoryID) throws NullCustomException, MethodArgumentTypeMismatchException {
+		
+		return productService.productByCategoryID(categoryID);
 	}
 	
 	
 	@ApiOperation(value="상품 삭제")
-	@ApiImplicitParam(name = "product_id", value = "상품 ID", dataType = "int", paramType = "path")
+	@ApiImplicitParam(name = "productID", value = "상품 ID", dataType = "int", paramType = "path")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "{msg : Success DeleteProduct}"),
-			@ApiResponse(code = 501, message = "{msg : Fail : Delete SQL Error}")
+			@ApiResponse(code = 200, message = "Success DeleteProduct"),
+			@ApiResponse(code = 604, message = "Invalid productID"),
+			@ApiResponse(code = 605, message = "Fail : Product Delete SQL Error"),
+			@ApiResponse(code = 620, message = "RequestParameterType Mismatch")
 	})
-	@RequestMapping(value="/{product_id}", method=RequestMethod.DELETE)
-	public JSONObject deleteProduct(@PathVariable("product_id")int product_id) throws NullCustomException {
-		return productService.deleteProduct(product_id);
+	@RequestMapping(value="/{productID}", method=RequestMethod.DELETE)
+	public JSONObject deleteProduct(@PathVariable("productID")int productID) throws NullCustomException, MethodArgumentTypeMismatchException{
+		
+		return productService.deleteProduct(productID);
 	}
 	
 	

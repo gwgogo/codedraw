@@ -10,32 +10,40 @@ import java.sql.Time;
  */
 public class TimeSlotSettingDto {
 
-	private int timeslot_setting_id;
-	private Time start_time;
-	private Time end_time;
+	private int timeslotSettingID;
+	private Time startTime;
+	private Time endTime;
+	private Time cutoff;
 
-	public int getTimeslot_setting_id() {
-		return timeslot_setting_id;
+	public int getTimeslotSettingID() {
+		return timeslotSettingID;
 	}
 
-	public void setTimeslot_setting_id(int timeslot_setting_id) {
-		this.timeslot_setting_id = timeslot_setting_id;
+	public void setTimeslotSettingID(int timeslotSettingID) {
+		this.timeslotSettingID = timeslotSettingID;
 	}
 
-	public Time getStart_time() {
-		return start_time;
+	public Time getStartTime() {
+		return startTime;
 	}
 
-	public void setStart_time(Time start_time) {
-		this.start_time = start_time;
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
 	}
 
-	public Time getEnd_time() {
-		return end_time;
+	public Time getEndTime() {
+		return endTime;
 	}
 
-	public void setEnd_time(Time end_time) {
-		this.end_time = end_time;
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
 	}
 
+	public Time getCutoff() {
+		return cutoff;
+	}
+
+	public void setCutoff(Time cutoff) {
+		this.cutoff = cutoff;
+	}
 }

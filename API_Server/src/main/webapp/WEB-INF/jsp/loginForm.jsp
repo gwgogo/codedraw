@@ -19,12 +19,11 @@
 			url : "/user/login",
 			dataType : 'json',
 			data : {
-				user_id : $('#user_id').val(),
-				user_pw : $('#user_pw').val()
+				userID : $('#userID').val(),
+				userPW : $('#userPW').val()
 			},
 			
 			success : function(data) {
-				document.cookie = "session=" + data.session;
 				alert("success, session : " + data.session);
 				location.href='http://localhost:8080/user/main';
 				
@@ -44,8 +43,8 @@
 <body>
 <h3>로그인</h3>
 	<form>
-		아이디 : <input type="text" name="user_id" id="user_id" /><br/> 
-		비번 : <input type="password" name="user_pw" id="user_pw"/><br/> 
+		아이디 : <input type="text" name="userID" id="userID" /><br/> 
+		비번 : <input type="password" name="userPW" id="userPW"/><br/> 
 		<input type="button" value="전송" id="button" />
 	</form>
 </body>

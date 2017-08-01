@@ -39,23 +39,23 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/mypage*/**" />
+			<mvc:mapping path="/user/mypage" />
 			<mvc:mapping path="/baskets/**" />
 			<mvc:mapping path="/orders/**" />
 			<beans:bean class="com.tmon.platform.api.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/adminForm" />
-			<mvc:mapping path="/orders/admin/**" />
-			<mvc:mapping path="/holidays/*" />
-			<mvc:mapping path="/snapshots/*" />
-			<!-- <mvc:mapping path="/timeslots/*" /> -->
-			<!-- <mvc:mapping path="/timeslotsetting/*" /> -->
+			<mvc:mapping path="/user/admin" />
+			<mvc:mapping path="/orders/admin/*" />
+			<mvc:mapping path="/holidays/**" />
+			<mvc:mapping path="/snapshots/**" />
+			<mvc:mapping path="/timeslots/**" />
+			<mvc:mapping path="/timeslotsetting/**" />
+			<mvc:exclude-mapping path="/timeslots/validDays"/>
 			<beans:bean class="com.tmon.platform.api.interceptor.AdminCheckInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-
-	<!-- <mvc:cors> <mvc:mapping path="/**" allowed-origins="*" allowed-methods="GET, 
-		PUT, POST, OPTION, DELETE" /> </mvc:cors> -->
+	<!-- <mvc:cors> <mvc:mapping path="/**" allowed-methods="GET, PUT, POST, 
+		OPTION, DELETE" /> </mvc:cors> -->
 
 </beans:beans>
