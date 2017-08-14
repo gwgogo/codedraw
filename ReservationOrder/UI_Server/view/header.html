@@ -1,0 +1,24 @@
+<div class="container-fluid" ng-controller="header">
+    <div class="navbar-header">
+        <label class="navbar-brand">{{title}}</label>
+        <label class="navbar-brand" ng-show="user !=''">{{user}}님이 접속하였습니다.</label>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+            <i class="ti-key"></i>
+            <p class="notification">
+            </p>
+            <p>
+            </p>
+            <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a ng-href="#!login">로그인</a></li>
+                <li><a ng-href="#!logout">로그아웃</a></li>
+            </ul>
+            </li>
+        </ul>
+    </div>
+</div>

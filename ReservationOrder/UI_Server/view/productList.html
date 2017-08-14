@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="card">
+        <table class="categoryTable">
+        <tr>
+            <td class="categoryTd">
+                <button type="button" class="btn btn-inverse" ng-click="searchAll()">전체보기</button>
+            </td>
+            <td ng-repeat="category in categoryList" class="categoryTd">
+                <button type="button" class="btn btn-inverse" ng-click="searchInCategory(category.categoryID)">{{category.categoryName}}</button>
+            </td>
+        </tr>
+        </table>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card card-map">
+        <div class="header">
+            <h4 class="title"></h4>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div ng-repeat="product in productList" class="col-md-4">
+                <div class="">
+                    <div class="">
+                        <a ng-href="#!product/{{product.productID}}">
+                        <img ng-src="{{product.imageUrl}}" alt="image" style="height: 300px; width: 300px">
+                        </a>
+                        <div class="">
+                            <a ng-href="#!product/{{product.productID}}">
+                            <p style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
+                                {{product.productName}}
+                            </p>
+                            </a>
+                        </div>
+                        <div class="">
+                            <p>
+                                가격 : {{product.price|won}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p>
+                            현재 수량 : {{product.maxQuantity-product.sellQuantity|number}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

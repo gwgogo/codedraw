@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TimeSlotMapper.xml @author 구도원 -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TimeSlotMapper">
+
+	<resultMap id="timeslotList"
+		type="com.tmon.platform.api.dto.TimeSlotInformationDto">
+		<result property="deliveryDate" column="deliveryDate" />
+		<collection property="timeList" column="deliveryDate"
+			javaType="ArrayList" ofType="com.tmon.platform.api.dto.TimeSlotDto"
+			select="selectTimeSlots" />
+	</resultMap>
+
+	<select id="selectValid" parameterType="Map" resultMap="timeslotList">
+		SELECT
+		delivery_date deliveryDate
+		FROM TIMESLOT 
+		<![CDATA[WHERE delivery_date>#{searchInitDate} GROUP BY deliveryDate LIMIT #{validDays}]]>
+	</select>
+
+	<select id="selectBydeliveryDate" parameterType="Map" resultMap="timeslotList">
+		SELECT
+		delivery_date deliveryDate
+		FROM TIMESLOT
+		<![CDATA[WHERE delivery_date>=#{searchInitDate} AND delivery_date<date_add(#{searchFinishDate}, interval 1 day) GROUP BY delivery_date]]>
+		ORDER BY
+		delivery_date
+		ASC
+	</select>
+
+	<select id="selectTimeSlots" resultType="com.tmon.platform.api.dto.TimeSlotDto">
+		SELECT
+		timeslot_id
+		timeslotID,
+		start_time startTime,
+		end_time endTime,
+		delivery_date
+		deliveryDate,
+		count,
+		cutoff
+		FROM TIMESLOT
+		WHERE
+		delivery_date=#{deliveryDate}
+	</select>
+
+</mapper>

@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <!--  -->
+      <div class="card">
+        <div class="header">
+          <h4 class="title">공휴일 추가하기</h4>
+        </div>
+        <div class="header">
+          <h4 class="title"></h4>
+          <p class="category">
+          </p>
+          <div class="row justify-content-around">
+            <div class="col-md-3 text-center">
+              <p>
+                공휴일 명칭을 입력해주세요
+              </p>
+              <form class="form-group">
+                <div class="col-xs-12">
+                  <input class="form-control original" ng-model="holidayTitle" placeholder="ex) 설날, 추석">
+                </div>
+              </form>
+            </div>
+            <div class="col-md-5 text-center" style="">
+              <p>
+                공휴일날짜를 입력해주세요
+              </p>
+              <form class="form-group">
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="holidayYear">
+                    <option ng-repeat="n in [] | range:2016:2021">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="holidayMonth">
+                    <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="holidayDay">
+                    <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-3 text-center" style="">
+              <br/>
+              <button type="button" class="btn btn-default btn-lg" ng-click="insertHoliday()">추가하기</button>
+            </div>
+            <div class="col-md-1">
+            </div>
+          </div>
+          <br/>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <!--  -->
+      <div class="card">
+        <div class="header">
+          <h4 class="title">휴일 조회하기</h4>
+          <p class="category">
+          </p>
+          <div class="row">
+              <div class="col-md-4"></div>
+              <div class="input-group col-md-4">
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default btn-number" ng-click='minusYear()'>
+                  <span class="glyphicon glyphicon-minus"></span>
+                  </button>
+                  </span>
+                  <label class="form-control input-number" min="{{minYear}}" style="text-align: center;" ng-model="searchYear">{{searchYear}}</label>
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default btn-number" ng-click='pulsYear()'>
+                  <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                  </span>
+              </div>
+              <div class="col-md-4"></div>
+          </div>
+        </div>
+        <div ng-hide="holidayList.length" style="width: auto;text-align: center">
+          <h3>공휴일 정보가 없습니다.</h3>
+        </div>
+        <div class="content table-responsive table-full-width" >
+          <table class="table table-striped">
+          <thead ng-show="holidayList.length">
+
+          <th class="text-center">
+            공휴일
+          </th>
+          <th class="text-center">
+            날짜
+          </th>
+          <th class="text-center">
+            변경
+          </th>
+          <th class="text-center">
+            삭제
+          </th>
+          </thead>
+          <tbody>
+          <tr ng-repeat="holiday in holidayList">
+
+            
+            <td>
+              <input class="form-control original" type="text" name="" ng-model="holiday.holidayTitle">
+            </td>
+            <td>
+              <div class="col-xs-4">
+                <select class="form-control original" ng-model="holiday.holidayYear" >
+                  <!-- -->
+                  <option ng-repeat="n in [] | range:2016:2025">{{n}}</option>
+                </select>
+              </div>
+              <div class="col-xs-4">
+                <select class="form-control original" ng-model="holiday.holidayMonth" >
+                  <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                </select>
+              </div>
+              <div class="col-xs-4">
+                <select class="form-control original" ng-model="holiday.holidayDay" >
+                  <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                </select>
+              </div>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-primary" ng-hide="holiday.holidaySection==1" ng-click="changeHoliday(holiday)">변경하기</button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-primary" ng-hide="holiday.holidaySection==1" ng-click="deleteHolidy(holiday)">삭제하기</button>
+            </td>
+          </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

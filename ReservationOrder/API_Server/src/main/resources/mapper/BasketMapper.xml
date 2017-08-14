@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace = "BasketMapper" >
+
+	<insert id="addBasket" parameterType="Map" >
+		INSERT INTO BASKET (
+		   user_id
+		  ,product_id
+		  ,quantity
+		) VALUES (
+		   #{userID}
+		  ,#{productID}
+		  ,#{quantity}
+		) 
+	</insert>
+	
+	<select id="basket" parameterType="String" resultType="com.tmon.platform.api.dto.BasketDto">
+		SELECT BASKET.user_id AS userID, BASKET.product_id AS productID, BASKET.quantity,
+			 PRODUCT.product_name AS productName, PRODUCT.price, PRODUCT.image_url AS imageUrl
+		FROM BASKET JOIN PRODUCT 
+		USING (product_id) WHERE user_id=#{userID}
+	</select>
+	
+	<delete id="removeBasket" parameterType="Map">
+		DELETE FROM BASKET 
+		WHERE user_id = #{userID} AND product_id = #{productID}
+	</delete>
+	
+	<delete id="cleanBasket" parameterType="String">
+		DELETE FROM BASKET
+		WHERE user_id = #{userID}
+	</delete>
+	
+	<update id="incQuantity" parameterType="Map">
+		UPDATE BASKET SET quantity = quantity+1 
+	  	WHERE user_id = #{userID}
+	    AND product_id = #{productID}
+	</update>
+
+	<update id="decQuantity" parameterType="Map">
+		UPDATE BASKET SET quantity = quantity-1 
+	  	WHERE user_id = #{userID}
+	    AND product_id = #{productID}
+	</update>
+	
+	<select id="getBasketQuantity" parameterType="Map" resultType="int">
+		SELECT quantity FROM BASKET WHERE product_id=#{productID} AND user_id=#{userID}
+	</select>
+	
+	<select id="getMaxQuantity" parameterType="int" resultType="int">
+		SELECT max_quantity - sell_quantity AS quantity FROM PRODUCT WHERE product_id=#{productID}
+	</select>
+	
+</mapper>

@@ -1,0 +1,70 @@
+<div class="sidebar" data-background-color="white" data-active-color="danger">
+    <!--
+        Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+        Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+    -->
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="#" class="simple-text">
+            Platform Team </a>
+        </div>
+        <ul class="nav">
+            <li ng-class="{'active': sidebar=='productList'}">
+            <a ng-href="#">
+            <i class="ti-layers-alt"></i>
+            <p>
+                상품 페이지
+            </p>
+            </a>
+            </li>
+            <li ng-class="{'active': sidebar=='cart'}">
+            <a ng-href="#!cart">
+            <i class="ti-shopping-cart"></i>
+            <p>
+                장바구니
+            </p>
+            </a>
+            </li>
+            <li ng-class="{'active': sidebar=='order'}">
+            <a ng-href="#!order">
+            <i class="ti-bookmark-alt"></i>
+            <p>
+                주문하기
+            </p>
+            </a>
+            </li>
+            <li ng-class="{'active': sidebar=='mypage'}">
+            <a ng-href="#!mypage">
+            <i class="ti-user"></i>
+            <p>
+                마이페이지
+            </p>
+            </a>
+            </li>
+            <li ng-class="{'active': sidebar=='dashboard'}" ng-show="privilege">
+            <a ng-href="#!dashboard">
+            <i class="ti-bar-chart-alt"></i>
+            <p>
+                대시보드 및 구매현황
+            </p>
+            </a>
+            </li>
+            <li ng-class="{'active': sidebar=='timeslot'}" ng-show="privilege">
+            <a ng-href="#!timeslot">
+            <i class="ti-view-list-alt"></i>
+            <p>
+                배송시간 관리
+            </p>
+            </a>
+            </li>
+            <li ng-class="{'active': sidebar=='holiday'}" ng-show="privilege">
+            <a ng-href="#!holiday">
+            <i class="ti-calendar"></i>
+            <p>
+                공휴일 관리
+            </p>
+            </a>
+            </li>
+        </ul>
+    </div>
+</div>

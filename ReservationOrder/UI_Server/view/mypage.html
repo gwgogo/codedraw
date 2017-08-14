@@ -1,0 +1,211 @@
+<div class="container-fluid">
+    <h4>배송자 정보</h4>
+    <div class="tbl_wrap">
+        <table class="table table-hover">
+        <colgroup>
+        <col style="width:170px;">
+        <col>
+        </colgroup>
+        <tbody id="_shipping_content">
+        <tr>
+            <th scope="row" class="bd0">
+                구매자명
+            </th>
+            <td>
+                {{userName}}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="bd0">
+                연락처
+            </th>
+            <td>
+                 {{userPhone}}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="bd0">
+                주소
+            </th>
+            <td>
+                 {{userAddress}}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="bd0">
+                이메일
+            </th>
+            <td>
+                 {{userEmail}}
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card-plain">
+        <div class="header">
+            <h4 class="title">주문 현황</h4>
+            <div class="row justify-content-around">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4 text-center" style="">
+                    <p>
+                        조회시작일
+                    </p>
+                    <p>
+                    </p>
+                    <form class="form-group">
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-3" style="padding-right: 0px;">
+                            <select class="form-control original" ng-model="startYear">
+                                <option ng-repeat="sy in [] | range:2016:2021">{{sy}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3" style="padding-right: 0px;">
+                            <select class="form-control original" ng-model="startMonth">
+                                <option ng-repeat="sm in [] | range:1:13">{{sm}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3" style="padding-right: 0px;">
+                            <select class="form-control original" ng-model="startDay">
+                                <option ng-repeat="sd in [] | range:1:32">{{sd}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4 text-center" style="">
+                    <p>
+                        조회종료일
+                    </p>
+                    <p>
+                    </p>
+                    <form class="form-group">
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-3" style="padding-right: 0px;">
+                            <select class="form-control original" ng-model="endYear">
+                                <option ng-repeat="ey in [] | range:2016:2021">{{ey}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3" style="padding-right: 0px;">
+                            <select class="form-control original" ng-model="endMonth">
+                                <option ng-repeat="em in [] | range:1:13">{{em}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3" style="padding-right: 0px;">
+                            <select class="form-control original" ng-model="endDay">
+                                <option ng-repeat="ed in [] | range:1:32">{{ed}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 text-center" style="">
+                    <br/>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="filter()">조회</button>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <div class="col-md-12">
+            <div class="card card-plain">
+                <div class="header">
+                    <h4 class="title"> 주문 현황 출력</h4>
+                    <p class="category">
+                    </p>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <div ng-hide="orderList.length" style="width: auto;text-align: center">
+                        <h3>주문 정보가 없습니다.</h3>
+                    </div>
+                    <table class="table" ng-show="orderList.length">
+                    <thead>
+                    <th class="text-center">
+                        주문번호
+                    </th>
+                    <th class="text-center">
+                        주문일자
+                    </th>
+                    <th class="text-center">
+                        상품이름
+                    </th>
+                    <th class="text-center">
+                        구매개수
+                    </th>
+                    <th class="text-center">
+                        단가
+                    </th>
+                    <th class="text-center">
+                        합계
+                    </th>
+                    <th class="text-center">
+                        총계
+                    </th>
+                    <th class="text-center">
+                        배송예정일 및 시간
+                    </th>
+                    <th colspan="2" class="text-center">
+                        배송상태
+                    </th>
+                    </thead>
+                    <tbody ng-repeat="order in orderList">
+                    <tr>
+                        <td rowspan="{{order.productList.length}}" class="text-center">
+                            {{order.reservationID}}
+                        </td>
+                        <td rowspan="{{order.productList.length}}">
+                            {{order.reservationDate | date:'yy-MM-dd HH:mm'}}
+                        </td>
+                        <td>
+                            {{order.productList[0].productName}}
+                        </td>
+                        <td class="text-center">
+                            {{order.productList[0].quantity|number}}
+                        </td>
+                        <td>
+                            {{order.productList[0].price | won}}
+                        </td>
+                        <td>
+                            {{order.productList[0].price * order.productList[0].quantity | won}}
+                        </td>
+                        <td rowspan="{{order.productList.length}}">
+                            {{orderSum[$index] | won}}
+                        </td>
+                        <td rowspan="{{order.productList.length}}">
+                            {{order.deliveryDate | date:'yy-MM-dd'}} / {{order.startTime | limitTo:5}} ~ {{order.endTime | limitTo:5}}
+                        </td>
+                        <td rowspan="{{order.productList.length}}" ng-class="setClassIfCancled(order.statusString)" colspan="{{order.statusString=='주문완료'?1:2}}" class="text-center">
+                            {{order.statusString}} <br ng-show="order.cancelDate">
+                             {{(order.cancelDate ? order.cancelDate : '') |date:'yy-MM-dd HH:mm'}}
+                        </td>
+                        <td class="text-center" rowspan="{{order.productList.length}}" ng-show="order.statusString=='주문완료'">
+                            <button type="button" class="btn btn-primary" ng-click="deleteOrderLIst(order.reservationID)">주문취소</button>
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat="product in order.productList | limitTo: (1 - order.productList.length)">
+                        <td>
+                            {{product.productName}}
+                        </td>
+                        <td class="text-center">
+                            {{product.quantity|number}}
+                        </td>
+                        <td>
+                            {{product.price | won}}
+                        </td>
+                        <td>
+                            {{product.price * product.quantity | won}}
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

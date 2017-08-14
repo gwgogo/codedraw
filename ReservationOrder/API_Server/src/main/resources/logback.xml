@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="3 seconds">
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<layout>
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+			<pattern>
+				<!-- %d{HH:mm:ss.SSS} [%thread] %-5level %c %logger{32} - %msg%n -->
+				%-5level : %d{HH:mm:ss.SSS} [%thread] %c - %msg%n
+			</pattern>
+		</layout>
+	</appender>
+
+	<timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss" />
+	<appender name="file" class="ch.qos.logback.core.FileAppender">
+		<file>/home/tuser01/platformLog/APIserver/APIServerLOG-${bySecond}.log</file>
+		<encoder>
+			<pattern>
+				%-5level : %d{HH:mm:ss.SSS} [%thread] %c - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- <logger name="org.springframework" level="INFO" /> -->
+
+	<!-- trace, debug, info, warn, error -->
+
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</root>
+
+</configuration>

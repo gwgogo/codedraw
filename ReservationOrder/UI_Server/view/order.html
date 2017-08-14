@@ -1,0 +1,159 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="checkout_delivery" id="_shipping" style="">
+            <div class="info_section">
+                <h4>배송지 정보</h4>
+                <div class="tbl_wrap">
+                    <table class="table table-hover">
+                    <colgroup>
+                    <col style="width:170px;">
+                    <col>
+                    </colgroup>
+                    <tbody id="_shipping_content">
+                    <tr>
+                        <th scope="row" class="bd0">
+                            구매자명
+                        </th>
+                        <td>
+                            <em>{{userName}}</em>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bd0">
+                            연락처
+                        </th>
+                        <td>
+                            <em class="text">{{userPhone}}</em>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bd0">
+                            주소
+                        </th>
+                        <td>
+                            <em class="text">{{userAddress}}</em>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bd0">
+                            이메일
+                        </th>
+                        <td>
+                            <em class="text">{{userEmail}}</em>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <h4>주문 정보 확인</h4>
+        <table class="table table-hover">
+        <colgroup>
+        <col style="width:170px;">
+        <col style="width:320px;">
+        <col style="width:140px;">
+        <col style="width:110px;">
+        <col style="width:105px;">
+        <col>
+        </colgroup>
+        <thead class="thead-default">
+        <tr>
+            <th scope="col" colspan="2" style="text-align: center;">
+                상품정보
+            </th>
+            <th scope="col">
+                상품금액
+            </th>
+            <th scope="col">
+                상품개수
+            </th>
+            <th scope="col">
+                배송비
+            </th>
+            <th scope="col">
+                주문금액
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="_deal" ng-repeat="product in productList">
+            <td>
+                <div>
+                    <a ng-href="#!product/{{product.productID}}">
+                    <!-- 상품상세로 리다이렉트하는 이미지 -->
+                    <img ng-src="{{product.imageUrl}}" alt="{{product.productName}}" class="text-center" style="height: 230px;width: auto;"></a>
+                </div>
+            </td>
+            <td class="v_top">
+                <div class="product_title">
+                    <div class="info">
+                        <!-- 상품상세로 리다이렉트 하는 텍스트 -->
+                        <!-- 딜 체제로 가는건 아니기 때문에 옵션은 삭제했음 -->
+                        <p class="title">
+                            <a ng-href="#!product/{{product.productID}}" title="{{product.productName}}">{{product.productName}}</a>
+                        </p>
+                    </div>
+                </div>
+            </td>
+            <td class="mgl align_center">
+                <span class="int_blue"><em>{{product.price|won}}</em></span>
+            </td>
+            <td class="mgl align_center">
+                <span class="int_blue"><em>{{product.quantity|number}}</em><i class="won">개</i></span>
+            </td>
+            <td rowspan="1" class="mgl align_center">
+                <div class="delivery_cont">
+                    <p class="delivery_free">
+                        무료배송
+                    </p>
+                </div>
+            </td>
+            <td rowspan="1" class="mgl align_center">
+                <span class="int_black_big"><em>{{product.price * product.quantity|won}}</em></span>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="6" class="bd0">
+                <div class="money_tot">
+                    <em>총 주문금액</em>
+                    <span class="int_black_big"><em>{{productPriceSum|won}}</em></span>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+        </table>
+        <div class="checkout_delivery" id="_shipping" style="">
+            <div class="info_section">
+                <h4>예약 배송날짜 선택</h4>
+                <div class="tbl_wrap">
+                    <table class="table table-hover">
+                    <tr>
+                        <td ng-repeat="day in days">
+                            <label>
+                            <input type="radio" name="currentDate" ng-value="day" ng-click="getTimeslots($index)">{{day}} </label>
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="info_section" ng-show="timeslotSelected">
+            <h4>예약 배송시간 선택</h4>
+            <div class="tbl_wrap">
+                <table class="table table-hover">
+                <tr>
+                    <td ng-repeat="timeslot in currentTimeslots" ng-class="{cancelLint: isCutoffPassedOrisCountPassed(timeslot)}">
+                        <label>
+                            <input type="radio" name="selectedTimeslot" ng-value="timeslot.timeslotID" ng-model="radioSelectedTimeslot" ng-click="setCurrentTimeslot(timeslot)" ng-disabled="isCutoffPassedOrisCountPassed(timeslot)">{{timeslot.startTime | limitTo:5}}~{{timeslot.endTime | limitTo:5}}
+                        </label>
+                    </td>
+                </tr>
+                </table>
+            </div>
+        </div>
+        <button type="button" class="btn btn-default btn-lg" ng-click="order()">주문하기</button>
+    </div>
+</div>

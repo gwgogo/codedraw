@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="container col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
+            <br/>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2>Login</h2>
+                    <label ng-if="dataLoading">Wait Server Response..</label>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                            <i class="ti-text" style="width: auto"></i>
+                            </span>
+                            <input id="txtUsuario" runat="server" type="text" class="form-control" ng-model="userID" placeholder="아이디" required="" autofocus/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                            <i class="ti-text" style="width: auto"></i>
+                            </span>
+                            <input id="txtSenha" runat="server" type="password" class="form-control" ng-model="userPassword" placeholder="비밀번호" required="" ng-keypress="enter($event)"/>
+                        </div>
+                    </div>
+                    <button id="btnLogin" runat="server" class="btn btn-default" ng-click="login()" style="width: 100%">
+                    <i class="ti-unlock"></i> 로그인 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

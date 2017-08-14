@@ -1,0 +1,407 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="">
+            <div class="card">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header" style="padding-bottom: 30px;">
+                            <!-- 이부분을 강제로 패팅을 줬는데 옳은 방법일까? -->
+                            <h4 class="title">주문 현황</h4>
+                            <p class="category">
+                                <!-- 날짜를 입력해주세요. -->
+                            </p>
+                            <div class="row justify-content-around">
+                                <div class="col-md-1 text-center" style="">
+                                </div>
+                                <div class="col-md-4 text-center" style="">
+                                    <p>
+                                         조회시작일
+                                    </p>
+                                    <p>
+                                    </p>
+                                    <form class="form-group">
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex1" >조회시작일자</label> -->
+                                            <select id="ex1" class="form-control original" ng-model="startChartYear">
+                                                <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
+                                            <select id="ex2" class="form-control original" ng-model="startChartMonth">
+                                                <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                            <select id="ex3" class="form-control original" ng-model="startChartDay">
+                                                <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                            <select id="ex3" class="form-control original" ng-model="startChartHour">
+                                                <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-4 text-center" style="">
+                                    <p>
+                                         조회종료일
+                                    </p>
+                                    <p>
+                                    </p>
+                                    <form class="form-group">
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex1" >조회시작일자</label> -->
+                                            <select id="ex1" class="form-control original" ng-model="startChartYear" ng-disabled="true"><!-- ng-disabled="true"-->
+                                                <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
+                                            <select id="ex2" class="form-control original" ng-model="startChartMonth" ng-disabled="true">
+                                                <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                            <select id="ex3" class="form-control original" ng-model="startChartDay" ng-disabled="true">
+                                                <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                            <select id="ex3" class="form-control original" ng-model="endChartHour">
+                                                <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-3 text-center" style="">
+                                    <br/>
+                                    <button type="button" class="btn btn-default btn-lg" ng-click="submitChart()">조회</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">시간별 주문현황</h4>
+                            <p class="category">
+                            </p>
+                        </div>
+                        <div class="content">
+                            <!-- 이부분에 차트 넣기 -->
+                            <canvas id="line" class="chart chart-line" chart-data="orderChart" chart-labels="labels" chart-series="seriesOrder" chart-options="optionsOrder" chart-click="onClick" chart-colors="colorsOrder">
+                            </canvas>
+                            <div class="footer">
+                                <div class="chart-legend" style="float: right;">
+                                    <i class="fa fa-circle text-info"></i> 시간별 거래 현황
+                                </div>
+                                <hr style="clear: both;">
+                                <div class="stats">
+                                    <!-- <i class="ti-timer"></i> Campaign sent 2 days ago -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">시간별 취소현황</h4>
+                            <p class="category">
+                            </p>
+                        </div>
+                        <div class="content">
+                            <!-- 이부분에 차트 넣기 -->
+                            <canvas id="line" class="chart chart-line" chart-data="cancelChart" chart-labels="labels" chart-series="seriesCancel" chart-options="optionsCancel" chart-click="onClick" chart-colors="colorsCancel">
+                            </canvas>
+                            <div class="footer">
+                                <div class="chart-legend" style="float: right;">
+                                    <i class="fa fa-circle text-danger"></i>시간별 취소 현황
+                                </div>
+                                <hr style="clear: both;">
+                                <div class="stats">
+                                    <!-- <i class="ti-check"></i> Data information certified -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- col-md-12 end 태그 -->
+    </div>
+    <!-- row-->
+    <!-- 주문 출력을 하는 로직  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <p>
+                        <button type="button" ng-class="{'buttonDateClick': buttonDate}" class="btn btn-primary btn-lg" ng-click="showView('dateView');buttonChange('dateView')">날짜별 주문목록 조회</button>
+                        <button type="button" ng-class="{'buttonUserClikc': buttonUser}" class="btn btn-default btn-lg" ng-click="showView('userView');buttonChange('userView')">사용자별 주문목록 조회</button>
+                    </p>
+                </div>
+                <div class="header" ng-show="dateView" style="padding-bottom : 20px;">
+                    <!-- 이부분을 강제로 패팅을 줬는데 옳은 방법일까? -->
+                    <h4 class="title"></h4>
+                    <p class="category">
+                        <!-- 날짜를 입력해주세요. -->
+                    </p>
+                    <div class="row justify-content-around">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-4 text-center" style="">
+                            <p>
+                                 조회시작일
+                            </p>
+                            <p>
+                            </p>
+                            <form class="form-group">
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex1" >조회시작일자</label> -->
+                                    <select id="ex1" class="form-control original" ng-model="startOrderYear">
+                                        <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex2" class="form-control original" ng-model="startOrderMonth">
+                                        <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex3" class="form-control original" ng-model="startOrderDay">
+                                        <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 text-center" style="">
+                            <p>
+                                 조회종료일
+                            </p>
+                            <p>
+                            </p>
+                            <form class="form-group">
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex1" >조회시작일자</label> -->
+                                    <select id="ex1" class="form-control original" ng-model="endOrderYear">
+                                        <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex2" class="form-control original" ng-model="endOrderMonth">
+                                        <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex3" class="form-control original" ng-model="endOrderDay">
+                                        <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3 text-center" style="">
+                            <button type="button" class="btn btn-default btn-lg" ng-click="getorderList()">조회</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 아래와 같은 포맷으로 목록별 조회 날짜별, 사용자별, 주문별, 취소별  -->
+                <div class="header" ng-show="userview">
+                    <!-- ng-show="userview"-->
+                    <h4 class="title"></h4>
+                    <p class="category">
+                    </p>
+                    <div class="row justify-content-around">
+                        <div class="col-md-3 text-center" style="">
+                            <p>
+                                 조회시작일
+                            </p>
+                            <p>
+                            </p>
+                            <form class="form-group">
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex1" >조회시작일자</label> -->
+                                    <select id="ex1" class="form-control original" ng-model="startOrderYear">
+                                        <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex2" class="form-control original" ng-model="startOrderMonth">
+                                        <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex3" class="form-control original" ng-model="startOrderDay">
+                                        <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3 text-center" style="">
+                            <p>
+                                 조회종료일
+                            </p>
+                            <p>
+                            </p>
+                            <form class="form-group">
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex1" >조회시작일자</label> -->
+                                    <select id="ex1" class="form-control original" ng-model="endOrderYear">
+                                        <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex2" class="form-control original" ng-model="endOrderMonth">
+                                        <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
+                                    <select id="ex3" class="form-control original" ng-model="endOrderDay">
+                                        <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-group col-md-3 text-center">
+                            <!-- <label for="">구매자 ID를 입력하세요</label> -->
+                            <p style="margin-bottom: 15px;">
+                                구매자 ID를 입력하세요
+                            </p>
+                            <input type="text" class="form-control original" id="" placeholder="구매자 ID" ng-model="userID">
+                        </div>
+                        <div class="col-md-3 text-center" style="">
+                            <button type="button" class="btn btn-default btn-lg" ng-click="getOrderListWithUser()">조회</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 아래와 같은 포맷으로 목록별 조회 날짜별, 사용자별, 주문별, 취소별  -->
+            </div>
+            <!-- card 종료 태그 -->
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="content">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <!-- card 있던 자리 -->
+                            <div class="header">
+                                <h4 class="title"> 주문 현황 출력결과 </h4>
+                                <p class="category">
+                                </p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <div ng-hide="orderList.length" style="width: auto;text-align: center">
+                                    <h3>주문 정보가 없습니다.</h3>
+                                </div>
+                                <table class="table table-striped" ng-show="orderList.length">
+                                <thead>
+                                <th class="text-center">
+                                     주문번호
+                                </th>
+                                <th class="text-center">
+                                     주문일자
+                                </th>
+                                <th class="text-center">
+                                     상품이름
+                                </th>
+                                <th class="text-center">
+                                     상품갯수
+                                </th>
+                                <th class="text-center">
+                                     가격
+                                </th>
+                                <th class="text-center">
+                                     총가격
+                                </th>
+                                <th class="text-center">
+                                     배송날짜 및 시간
+                                </th>
+                                <th class="text-center">
+                                     구매자ID
+                                </th>
+                                <th class="text-center" colspan="2">
+                                     배송상태
+                                </th>
+
+                                </thead>
+                                <tbody ng-repeat="order in orderList">
+                                <tr>
+                                    <td class="text-center" rowspan="{{order.productList.length}}">
+                                         {{order.reservationID}}
+                                    </td>
+                                    <td rowspan="{{order.productList.length}}">
+                                         {{order.reservationDate | date:'yy-MM-dd HH:mm'}}
+                                    </td>
+                                    <td>
+                                         {{order.productList[0].productName}}
+                                    </td>
+                                    <td class="text-center">
+                                         {{order.productList[0].quantity}}
+                                    </td>
+                                    <td class="text-center">
+                                         {{order.productList[0].price | won}}
+                                    </td>
+                                    <td class="text-center">
+                                         {{order.productList[0].price * order.productList[0].quantity | won}}
+                                    </td>
+                                    <td class="text-center" rowspan="{{order.productList.length}}">
+                                         {{order.deliveryDate| date:'yy-MM-dd HH:mm'}} / {{order.startTime | limitTo:5}} ~ {{order.endTime | limitTo:5}}
+                                    </td>
+                                    <td class="text-center" rowspan="{{order.productList.length}}">
+                                         {{order.userID}}
+                                    </td>
+                                    <td rowspan="{{order.productList.length}}" ng-class="setClassIfCancled(order.statusString)" colspan="{{order.statusString=='주문완료'?1:2}}" class="text-center">
+                                         {{order.statusString}} <br ng-show="order.cancelDate">
+                                         {{(order.cancelDate ? order.cancelDate : '') | date:'yy-MM-dd HH:mm'}}
+                                    </td>
+                                    <td class="text-center" rowspan="{{order.productList.length}}" ng-show="order.statusString=='주문완료'">
+                                        <button type="button" class="btn btn-primary" ng-click="deleteOrderLIst(order.reservationID)">주문취소</button>
+                                    </td>
+                                </tr>
+                                <tr data-ng-repeat="product in order.productList | limitTo: (1 - order.productList.length)">
+                                    <td>
+                                         {{product.productName}}
+                                    </td>
+                                    <td class="text-center">
+                                         {{product.quantity}}
+                                    </td>
+                                    <td class="text-center">
+                                         {{product.price | won}}
+                                    </td>
+                                    <td class="text-center">
+                                         {{product.price * product.quantity | won}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <hr>
+                        <div class="stats">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- col-md-12 class 종료 태그-->
+    </div>
+    <!-- row class 종료 태그 -->
+</div>
+<!-- container-fluid end 태그 -->

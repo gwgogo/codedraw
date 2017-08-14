@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- sqlMapper_reservationorder @author 구도원 -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReservationOrderMapper">
+
+	<select id="selectStatusTo1" parameterType="Map"
+		resultType="com.tmon.platform.batch.reservation.model.ReservationOrderDto">
+
+		SELECT
+
+		reservation_id reservationID,
+		status_id statusID,
+		timeslot_id
+		timeslotID
+
+		FROM RESERVATION_ORDER
+
+		WHERE
+		timeslot_id in
+		(
+		SELECT
+		timeslot_id
+		FROM
+		TIMESLOT
+		<![CDATA[WHERE cutoff<#{searchFinishDate}]]>
+		)
+		AND
+		status_id=0
+
+	</select>
+
+	<update id="updateStatusTo1"
+		parameterType="com.tmon.platform.batch.reservation.model.ReservationOrderDto">
+
+		UPDATE
+		RESERVATION_ORDER
+		SET
+		status_id=#{statusID}
+		WHERE
+		reservation_id=#{reservationID}
+
+	</update>
+
+	<select id="selectStatusTo2" parameterType="Map"
+		resultType="com.tmon.platform.batch.reservation.model.ReservationOrderDto">
+
+		SELECT
+
+		reservation_id reservationID,
+		status_id statusID,
+		timeslot_id
+		timeslotID
+
+		FROM RESERVATION_ORDER
+
+		WHERE
+		timeslot_id in
+		(
+		SELECT
+		timeslot_id
+		FROM
+		TIMESLOT
+		<![CDATA[WHERE delivery_date<#{deliveryDate} OR (delivery_date=#{deliveryDate} AND end_time<#{searchFinishTime})]]>
+		)
+		AND
+		status_id=1
+
+	</select>
+
+	<update id="updateStatusTo2"
+		parameterType="com.tmon.platform.batch.reservation.model.ReservationOrderDto">
+
+		UPDATE
+		RESERVATION_ORDER
+		SET
+		status_id=#{statusID}
+		WHERE
+		reservation_id=#{reservationID}
+
+	</update>
+
+</mapper>

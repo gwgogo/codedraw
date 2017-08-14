@@ -1,0 +1,355 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- 배송시간 현황 , 배송시간 변경 라디오  -->
+    <div class="col-md-12">
+      <div class="card card-plain">
+        <div class="header">
+          <h4 class="title"></h4>
+          <p class="category">
+          </p>
+        </div>
+        <!-- 라디오 추가 -->
+        <div class="container">
+          <div class="row">
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <label class="btn btn-success active" ng-click="showView('nowDeliveryView')">
+              <input type="radio" name="options" id="option1" autocomplete="off" checked>배송시간 현황보기 </label>
+              <label class="btn btn-success" ng-click="showView('DeliveryChangeView')">
+              <input type="radio" name="options" id="option2" autocomplete="off"> 배송시간 변경하기 </label>
+            </div>
+          </div>
+        </div>
+        <!-- 라디오 추가 -->
+      </div>
+    </div>
+    <!--   배송 시간 템플릿 변경하기  시작-->
+    <div class="col-md-12" ng-show="nowDeliveryView">
+      <!-- -->
+      <div class="card">
+        <div class="header">
+          <h4 class="title">배송시간 현황</h4>
+          <p class="category">
+          </p>
+        </div>
+        <!-- 이곳에 배송시간 현황 출력 -->
+        <div class="row justify-content-around">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-3 text-center" style="">
+            <p>
+              시작일자
+            </p>
+            <p>
+            </p>
+            <form class="form-group">
+              <div class="col-xs-4">
+                <select class="form-control original" ng-model="startOrderYear">
+                  <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                </select>
+              </div>
+              <div class="col-xs-4">
+                <select class="form-control original" ng-model="startOrderMonth">
+                  <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                </select>
+              </div>
+              <div class="col-xs-4">
+                <select class="form-control original" ng-model="startOrderDate">
+                  <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-2 text-center">
+          </div>
+          <div class="col-md-3 text-center" style="">
+            <p>
+              종료일자
+            </p>
+            <p>
+            </p>
+            <form class="form-group">
+              <div class="col-xs-4">
+                <!-- <label for="ex1" style="color:white;">종료일자</label> -->
+                <select id="ex1" class="form-control original" ng-model="endOrderYear">
+                  <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
+                </select>
+              </div>
+              <div class="col-xs-4">
+                <!-- <label for="ex2">종료일자</label> -->
+                <select id="ex2" class="form-control original" ng-model="endOrderMonth">
+                  <option ng-repeat="n in [] | range:1:13">{{n}}</option>
+                </select>
+              </div>
+              <div class="col-xs-4">
+                <!-- <label for="ex3" style="color:white;">종료일자</label> -->
+                <select id="ex3" class="form-control original" ng-model="endOrderDate">
+                  <option ng-repeat="n in [] | range:1:32">{{n}}</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-2 text-center">
+            <br/>
+            <button type="button" class="btn btn-default btn-lg" ng-click="getNowTimeSlot()">조회</button>
+          </div>
+          <div class="col-md-1">
+          </div>
+        </div>
+        <!-- 여기가 컨텐트  -->
+        <!-- card 있던 자리 -->
+        <div class="header">
+          <h4 class="title"> 주문 현황 출력결과 </h4>
+          <p class="category">
+          </p>
+        </div>
+        <div class="content table-responsive table-full-width">
+          <table class="table table-striped">
+          <thead>
+          <th class="text-center">
+             배송예정일자
+          </th>
+          <th class="text-center">
+             배송시작시간
+          </th>
+          <th class="text-center">
+             배송종료시간
+          </th>
+          <th class="text-center">
+             주문수량
+          </th>
+          <th class="text-center">
+             주문마감일자
+          </th>
+          </thead>
+          <tbody ng-repeat="order in nowTimeslotList">
+          <tr>
+            <td class="text-center" rowspan="{{order.timeList.length}}">
+               {{order.deliveryDate | date: 'yyyy-MM-dd'}}
+              <!-- yyyy-MM-dd HH:mm-->
+            </td>
+            <td class="text-center">
+               {{order.timeList[0].startTime |limitTo:5}}
+            </td>
+            <td class="text-center">
+               {{order.timeList[0].endTime | limitTo:5}}
+            </td>
+            <td class="text-center">
+               {{order.timeList[0].count}}
+            </td>
+            <td class="text-center">
+               {{order.timeList[0].cutoff | date: 'yyyy-MM-dd HH:mm'}}
+            </td>
+          </tr>
+          <tr data-ng-repeat="data in order.timeList | limitTo: (1 - order.timeList.length)">
+            <td class="text-center">
+               {{data.startTime | limitTo:5}}
+            </td>
+            <td class="text-center">
+               {{data.endTime | limitTo:5}}
+            </td>
+            <td class="text-center">
+               {{data.count}}
+            </td>
+            <td class="text-center">
+               {{data.cutoff | date: 'yyyy-MM-dd HH:mm'}}
+            </td>
+          </tr>
+          </tbody>
+          </table>
+        </div>
+        <!--  여기가 컨텐트  -->
+        <!-- 이곳에 배송시간 현황 출력 -->
+      </div>
+    </div>
+    <!--   배송 시간 템플릿 추가하기 시작-->
+    <div class="col-md-12" ng-show="DeliveryChangeView">
+      <!--  -->
+      <div class="card">
+        <div class="header">
+          <h4 class="title">배송시간 추가하기</h4>
+          <p class="category">
+          </p>
+          <div class="row justify-content-around">
+            <div class="col-md-3 text-center" style="">
+              <p>
+                시작시간
+              </p>
+              <p>
+              </p>
+              <form class="form-group">
+                <div class="col-xs-3">
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control original" ng-model="starthours" ng-init="starthours='00'">
+                    >
+                    <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control original" ng-model="startminute" ng-init="startminute='00'">
+                    <option ng-repeat="n in [] | range:0:60">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                </div>
+              </form>
+            </div>
+            <div class="col-md-3 text-center">
+              <p>
+                종료시간
+              </p>
+              <p>
+              </p>
+              <form class="form-group">
+                <div class="col-xs-3">
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control original" ng-model="endhours" ng-init="endhours='00'">
+                    <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control original" ng-model="endminute" ng-init="endminute='00'">
+                    <option ng-repeat="n in [] | range:0:60">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                </div>
+              </form>
+            </div>
+            <div class="col-md-3 text-center">
+              <p>
+                마감시간
+              </p>
+              <p>
+              </p>
+              <form class="form-group">
+                <div class="col-xs-3">
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control original" ng-model="cutoffHours" ng-init="cutoffHours='00'">
+                    <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                  <select class="form-control original" ng-model="cutoffMinute" ng-init="cutoffMinute='00'">
+                    <option ng-repeat="n in [] | range:0:60">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                </div>
+              </form>
+            </div>
+            <div class="col-md-3 text-center" style="">
+              <button type="button" class="btn btn-default btn-lg" ng-click="insertTimeslotsetting()">추가하기</button>
+            </div>
+          </div>
+          <br/>
+        </div>
+      </div>
+    </div>
+    <!--   배송 시간 템플릿 추가하기 시작-->
+    <!--   배송 시간 템플릿 출력하기 시작-->
+    <div class="col-md-12" ng-show="DeliveryChangeView">
+      <!--  -->
+      <div class="card">
+        <div class="header">
+          <h4 class="title">배송시간 변경하기</h4>
+          <p class="category">
+          </p>
+        </div>
+        <div class="content table-responsive table-full-width">
+          <table class="table table-striped">
+          <thead>
+
+          <th class="text-center">
+            배송 시작시간
+          </th>
+          <th class="text-center">
+            배송 종료시간
+          </th>
+          <th class="text-center">
+            배송 마감시간
+          </th>
+          <th class="text-center">
+            변경
+          </th>
+          <th class="text-center">
+            삭제
+          </th>
+          </thead>
+          <tbody>
+          <tr ng-repeat="timeslot in timeslotList">
+
+            <td>
+              <!-- 주문 시작 시간  -->
+              <form class="form-group">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="timeslot.starthours">
+                    <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="timeslot.startminute">
+                    <option ng-repeat="n in [] | range:0:60">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-2">
+                </div>
+              </form>
+            </td>
+            <td>
+              <!-- 주문 종료시간 -->
+              <form class="form-group">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="timeslot.endhours">
+                    <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="timeslot.endminute">
+                    <option ng-repeat="n in [] | range:0:60">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-2">
+                </div>
+              </form>
+            </td>
+            <td>
+              <!-- 주문 마감 시간 -->
+              <form class="form-group">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="timeslot.startCutoffHours">
+                    <option ng-repeat="n in [] | range:0:24">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-4">
+                  <select class="form-control original" ng-model="timeslot.endCutoffMinute">
+                    <option ng-repeat="n in [] | range:0:60">{{n}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-2">
+                </div>
+              </form>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-primary" ng-click="changetimeslotsetting(timeslot)">변경하기</button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-primary" ng-click="deleteTimeslotsetting(timeslot)">삭제하기</button>
+            </td>
+          </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--   배송 시간 템플릿 출력하기 시작-->
+  </div>
+</div>

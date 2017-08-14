@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- sqlMapper_holiday @author 구도원 -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HolidayMapper">
+
+	<select id="selectBythisYear" parameterType="Map"
+		resultType="com.tmon.platform.batch.holiday.util.HolidayDto">
+		SELECT
+		holiday_id holiday_ID,
+		holiday_date holidayDate,
+		holiday_title holidayTitle
+		FROM
+		HOLIDAY
+		<![CDATA[WHERE holiday_date >= #{year} AND holiday_date < #{yearAfter1}]]>
+		ORDER BY
+		holiday_date ASC;
+	</select>
+
+</mapper>
