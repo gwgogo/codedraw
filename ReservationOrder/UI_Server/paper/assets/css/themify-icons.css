@@ -1118,4 +1118,9 @@
 	padding: 10px 10px 10px 10px;
 }
 
-
+.fullSelect{
+	
+	/*padding: 0px;*/
+	width: auto;
+	margin: auto;
+}

@@ -20,27 +20,27 @@
                                     <p>
                                     </p>
                                     <form class="form-group">
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-4">
                                             <!-- <label for="ex1" >조회시작일자</label> -->
-                                            <select id="ex1" class="form-control original" ng-model="startChartYear">
+                                            <select id="ex1" class="form-control original fullSelect" ng-model="startChartYear">
                                                 <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-3">
                                             <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
-                                            <select id="ex2" class="form-control original" ng-model="startChartMonth">
+                                            <select id="ex2" class="form-control original fullSelect" ng-model="startChartMonth">
                                                 <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-3">
                                             <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                            <select id="ex3" class="form-control original" ng-model="startChartDay">
+                                            <select id="ex3" class="form-control original fullSelect" ng-model="startChartDay">
                                                 <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                                             </select>
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                            <select id="ex3" class="form-control original" ng-model="startChartHour">
+                                            <select id="ex3" class="form-control original fullSelect" ng-model="startChartHour">
                                                 <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                                             </select>
                                         </div>
@@ -53,27 +53,27 @@
                                     <p>
                                     </p>
                                     <form class="form-group">
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-4">
                                             <!-- <label for="ex1" >조회시작일자</label> -->
-                                            <select id="ex1" class="form-control original" ng-model="startChartYear" ng-disabled="true"><!-- ng-disabled="true"-->
+                                            <select id="ex1" class="form-control original fullSelect" ng-model="startChartYear" ng-disabled="true"><!-- ng-disabled="true"-->
                                                 <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-3">
                                             <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
-                                            <select id="ex2" class="form-control original" ng-model="startChartMonth" ng-disabled="true">
+                                            <select id="ex2" class="form-control original fullSelect" ng-model="startChartMonth" ng-disabled="true">
                                                 <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-3">
                                             <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                            <select id="ex3" class="form-control original" ng-model="startChartDay" ng-disabled="true">
+                                            <select id="ex3" class="form-control original fullSelect" ng-model="startChartDay" ng-disabled="true">
                                                 <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                                             </select>
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                            <select id="ex3" class="form-control original" ng-model="endChartHour">
+                                            <select id="ex3" class="form-control original fullSelect" ng-model="endChartHour">
                                                 <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                                             </select>
                                         </div>
@@ -166,19 +166,19 @@
                             <form class="form-group">
                                 <div class="col-xs-4">
                                     <!-- <label for="ex1" >조회시작일자</label> -->
-                                    <select id="ex1" class="form-control original" ng-model="startOrderYear">
+                                    <select id="ex1" class="form-control original fullSelect" ng-model="startOrderYear">
                                         <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex2" class="form-control original" ng-model="startOrderMonth">
+                                    <select id="ex2" class="form-control original fullSelect" ng-model="startOrderMonth">
                                         <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex3" class="form-control original" ng-model="startOrderDay">
+                                    <select id="ex3" class="form-control original fullSelect" ng-model="startOrderDay">
                                         <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                                     </select>
                                 </div>
@@ -193,19 +193,19 @@
                             <form class="form-group">
                                 <div class="col-xs-4">
                                     <!-- <label for="ex1" >조회시작일자</label> -->
-                                    <select id="ex1" class="form-control original" ng-model="endOrderYear">
+                                    <select id="ex1" class="form-control original fullSelect" ng-model="endOrderYear">
                                         <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex2" class="form-control original" ng-model="endOrderMonth">
+                                    <select id="ex2" class="form-control original fullSelect" ng-model="endOrderMonth">
                                         <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex3" class="form-control original" ng-model="endOrderDay">
+                                    <select id="ex3" class="form-control original fullSelect" ng-model="endOrderDay">
                                         <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                                     </select>
                                 </div>
@@ -223,7 +223,7 @@
                     <p class="category">
                     </p>
                     <div class="row justify-content-around">
-                        <div class="col-md-3 text-center" style="">
+                        <div class="col-md-4 text-center" style="">
                             <p>
                                  조회시작일
                             </p>
@@ -232,25 +232,25 @@
                             <form class="form-group">
                                 <div class="col-xs-4">
                                     <!-- <label for="ex1" >조회시작일자</label> -->
-                                    <select id="ex1" class="form-control original" ng-model="startOrderYear">
+                                    <select id="ex1" class="form-control original fullSelect" ng-model="startOrderYear">
                                         <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex2" class="form-control original" ng-model="startOrderMonth">
+                                    <select id="ex2" class="form-control original fullSelect" ng-model="startOrderMonth">
                                         <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex3" class="form-control original" ng-model="startOrderDay">
+                                    <select id="ex3" class="form-control original fullSelect" ng-model="startOrderDay">
                                         <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                                     </select>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-3 text-center" style="">
+                        <div class="col-md-4 text-center" style="">
                             <p>
                                  조회종료일
                             </p>
@@ -259,32 +259,32 @@
                             <form class="form-group">
                                 <div class="col-xs-4">
                                     <!-- <label for="ex1" >조회시작일자</label> -->
-                                    <select id="ex1" class="form-control original" ng-model="endOrderYear">
+                                    <select id="ex1" class="form-control original fullSelect" ng-model="endOrderYear">
                                         <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex2" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex2" class="form-control original" ng-model="endOrderMonth">
+                                    <select id="ex2" class="form-control original fullSelect" ng-model="endOrderMonth">
                                         <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
                                     <!-- <label for="ex3" style="color:white;">조회시작일자</label> -->
-                                    <select id="ex3" class="form-control original" ng-model="endOrderDay">
+                                    <select id="ex3" class="form-control original fullSelect" ng-model="endOrderDay">
                                         <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                                     </select>
                                 </div>
                             </form>
                         </div>
-                        <div class="form-group col-md-3 text-center">
+                        <div class="form-group col-md-2 text-center">
                             <!-- <label for="">구매자 ID를 입력하세요</label> -->
                             <p style="margin-bottom: 15px;">
-                                구매자 ID를 입력하세요
+                                구매자 ID
                             </p>
                             <input type="text" class="form-control original" id="" placeholder="구매자 ID" ng-model="userID">
                         </div>
-                        <div class="col-md-3 text-center" style="">
+                        <div class="col-md-2 text-center" style="">
                             <button type="button" class="btn btn-default btn-lg" ng-click="getOrderListWithUser()">조회</button>
                         </div>
                     </div>

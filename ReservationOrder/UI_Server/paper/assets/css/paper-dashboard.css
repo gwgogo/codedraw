@@ -736,7 +736,7 @@ hr {
   .btn-simple.btn-icon {
     padding: 7px; }
 
-.btn-lg {
+.btn-lg:not(.exception){
   font-size: 18px;
   border-radius: 50px;
   padding: 11px 30px;

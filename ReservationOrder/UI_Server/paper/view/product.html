@@ -11,7 +11,7 @@
                 <div class="x_content">
                     <div class="col-md-7 col-sm-7 col-xs-12">
                         <div class="product-image">
-                            <img ng-src="{{List.imageUrl}}" alt="{{List.productName}}" style="width: auto; height: 700px; padding: 50px 50px 50px 50px">
+                            <img ng-src="{{List.imageUrl}}" alt="{{List.productName}}" style="width: 100%; height: -webkit-fill-available; padding: 50px 50px 50px 50px">
                         </div>
                     </div>
                     <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
@@ -57,10 +57,10 @@
                                 <br>
                             </div>
                         </div>
-                        <div class="">
-                            <a ng-href="#!home"><button type="button" class="btn btn-default btn-lg">목록으로</button></a>
-                            <button type="button" class="btn btn-default btn-lg" ng-click='submit()'>장바구니 담기</button>
-                            <button type="button" class="btn btn-default btn-lg" ng-click='directBuy()'>바로 구매하기</button>
+                        <div class="row">
+                            <a ng-href="#!home"><button type="button" class="btn btn-default btn-lg col-md-4 text-center exception">목록으로</button></a>
+                            <button type="button" class="btn btn-default btn-lg col-md-4 text-center exception" ng-click='submit()'>장바구니 담기</button>
+                            <button type="button" class="btn btn-default btn-lg col-md-4 text-center exception" ng-click='directBuy()'>바로 구매하기</button>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@
           </p>
         </div>
         <!-- 라디오 추가 -->
-        <div class="container">
+        <div class=""><!-- 기존 container 클래스-->
           <div class="row">
             <div class="btn-group btn-group-justified" data-toggle="buttons">
               <label class="btn btn-success active" ng-click="showView('nowDeliveryView')">
@@ -35,7 +35,7 @@
         <div class="row justify-content-around">
           <div class="col-md-1">
           </div>
-          <div class="col-md-3 text-center" style="">
+          <div class="col-md-4 text-center" style="">
             <p>
               시작일자
             </p>
@@ -43,25 +43,25 @@
             </p>
             <form class="form-group">
               <div class="col-xs-4">
-                <select class="form-control original" ng-model="startOrderYear">
+                <select class="form-control original fullSelect" ng-model="startOrderYear">
                   <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                 </select>
               </div>
               <div class="col-xs-4">
-                <select class="form-control original" ng-model="startOrderMonth">
+                <select class="form-control original fullSelect" ng-model="startOrderMonth">
                   <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                 </select>
               </div>
               <div class="col-xs-4">
-                <select class="form-control original" ng-model="startOrderDate">
+                <select class="form-control original fullSelect" ng-model="startOrderDate">
                   <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                 </select>
               </div>
             </form>
           </div>
-          <div class="col-md-2 text-center">
+          <div class="col-md-1 text-center">
           </div>
-          <div class="col-md-3 text-center" style="">
+          <div class="col-md-4 text-center" style="">
             <p>
               종료일자
             </p>
@@ -70,19 +70,19 @@
             <form class="form-group">
               <div class="col-xs-4">
                 <!-- <label for="ex1" style="color:white;">종료일자</label> -->
-                <select id="ex1" class="form-control original" ng-model="endOrderYear">
+                <select id="ex1" class="form-control original fullSelect" ng-model="endOrderYear">
                   <option ng-repeat="n in [] | range:2017:2020">{{n}}</option>
                 </select>
               </div>
               <div class="col-xs-4">
                 <!-- <label for="ex2">종료일자</label> -->
-                <select id="ex2" class="form-control original" ng-model="endOrderMonth">
+                <select id="ex2" class="form-control original fullSelect" ng-model="endOrderMonth">
                   <option ng-repeat="n in [] | range:1:13">{{n}}</option>
                 </select>
               </div>
               <div class="col-xs-4">
                 <!-- <label for="ex3" style="color:white;">종료일자</label> -->
-                <select id="ex3" class="form-control original" ng-model="endOrderDate">
+                <select id="ex3" class="form-control original fullSelect" ng-model="endOrderDate">
                   <option ng-repeat="n in [] | range:1:32">{{n}}</option>
                 </select>
               </div>
@@ -91,8 +91,6 @@
           <div class="col-md-2 text-center">
             <br/>
             <button type="button" class="btn btn-default btn-lg" ng-click="getNowTimeSlot()">조회</button>
-          </div>
-          <div class="col-md-1">
           </div>
         </div>
         <!-- 여기가 컨텐트  -->
@@ -177,20 +175,20 @@
               <p>
               </p>
               <form class="form-group">
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                 </div>
-                <div class="col-xs-3">
-                  <select class="form-control original" ng-model="starthours" ng-init="starthours='00'">
+                <div class="col-xs-4">
+                  <select class="form-control original fullSelect" ng-model="starthours" ng-init="starthours='00'">
                     >
                     <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
-                  <select class="form-control original" ng-model="startminute" ng-init="startminute='00'">
+                <div class="col-xs-4">
+                  <select class="form-control original fullSelect" ng-model="startminute" ng-init="startminute='00'">
                     <option ng-repeat="n in [] | range:0:60">{{n}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                 </div>
               </form>
             </div>
@@ -201,19 +199,19 @@
               <p>
               </p>
               <form class="form-group">
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                 </div>
-                <div class="col-xs-3">
-                  <select class="form-control original" ng-model="endhours" ng-init="endhours='00'">
+                <div class="col-xs-4">
+                  <select class="form-control original fullSelect" ng-model="endhours" ng-init="endhours='00'">
                     <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
-                  <select class="form-control original" ng-model="endminute" ng-init="endminute='00'">
+                <div class="col-xs-4">
+                  <select class="form-control original fullSelect" ng-model="endminute" ng-init="endminute='00'">
                     <option ng-repeat="n in [] | range:0:60">{{n}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                 </div>
               </form>
             </div>
@@ -224,19 +222,19 @@
               <p>
               </p>
               <form class="form-group">
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                 </div>
-                <div class="col-xs-3">
-                  <select class="form-control original" ng-model="cutoffHours" ng-init="cutoffHours='00'">
+                <div class="col-xs-4">
+                  <select class="form-control original fullSelect" ng-model="cutoffHours" ng-init="cutoffHours='00'">
                     <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
-                  <select class="form-control original" ng-model="cutoffMinute" ng-init="cutoffMinute='00'">
+                <div class="col-xs-4">
+                  <select class="form-control original fullSelect" ng-model="cutoffMinute" ng-init="cutoffMinute='00'">
                     <option ng-repeat="n in [] | range:0:60">{{n}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                 </div>
               </form>
             </div>
@@ -287,12 +285,12 @@
                 <div class="col-xs-2">
                 </div>
                 <div class="col-xs-4">
-                  <select class="form-control original" ng-model="timeslot.starthours">
+                  <select class="form-control original fullSelect" ng-model="timeslot.starthours">
                     <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                   </select>
                 </div>
                 <div class="col-xs-4">
-                  <select class="form-control original" ng-model="timeslot.startminute">
+                  <select class="form-control original fullSelect" ng-model="timeslot.startminute">
                     <option ng-repeat="n in [] | range:0:60">{{n}}</option>
                   </select>
                 </div>
@@ -306,12 +304,12 @@
                 <div class="col-xs-2">
                 </div>
                 <div class="col-xs-4">
-                  <select class="form-control original" ng-model="timeslot.endhours">
+                  <select class="form-control original fullSelect" ng-model="timeslot.endhours">
                     <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                   </select>
                 </div>
                 <div class="col-xs-4">
-                  <select class="form-control original" ng-model="timeslot.endminute">
+                  <select class="form-control original fullSelect" ng-model="timeslot.endminute">
                     <option ng-repeat="n in [] | range:0:60">{{n}}</option>
                   </select>
                 </div>
@@ -325,12 +323,12 @@
                 <div class="col-xs-2">
                 </div>
                 <div class="col-xs-4">
-                  <select class="form-control original" ng-model="timeslot.startCutoffHours">
+                  <select class="form-control original fullSelect" ng-model="timeslot.startCutoffHours">
                     <option ng-repeat="n in [] | range:0:24">{{n}}</option>
                   </select>
                 </div>
                 <div class="col-xs-4">
-                  <select class="form-control original" ng-model="timeslot.endCutoffMinute">
+                  <select class="form-control original fullSelect" ng-model="timeslot.endCutoffMinute">
                     <option ng-repeat="n in [] | range:0:60">{{n}}</option>
                   </select>
                 </div>
