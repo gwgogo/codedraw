@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace = "kr.co.rentwheel.mapper.UserMapper">
+	<select id = "userLogin" resultType = "kr.co.rentwheel.dto.UserDto" parameterType = "String">
+		SELECT * FROM user WHERE u_id = #{u_id}
+	</select>
+	
+	<insert id = "userJoin" parameterType = "kr.co.rentwheel.dto.UserDto">
+		INSERT INTO user (
+		   u_id
+		  ,u_pw
+		  ,u_registDatetime
+		  ,u_company_id
+		) VALUES (
+		   #{u_id}
+		  ,#{u_pw}  
+		  ,NOW()
+		  ,#{u_company_id}
+		)
+	</insert>
+
+	<select id="getUserBalance" parameterType="String" resultType="int">
+		SELECT u_balance FROM user WHERE u_id=#{u_id}
+	</select>
+	
+	<select id="getUserAll" resultType="kr.co.rentwheel.dto.UserDto" >
+		SELECT * FROM user
+	</select>
+	
+	<select id="getUserByUserID" resultType="kr.co.rentwheel.dto.UserDto" parameterType="String">
+		SELECT * FROM user WHERE u_id = #{u_id}
+	</select>
+	
+	<update id="decreaseUserBalance" parameterType="Map">
+		UPDATE user SET
+         u_balance = u_balance - #{u_balance}
+		WHERE u_id = #{u_id}
+	</update>
+	
+	<update id="increaseUserBalance" parameterType="Map">
+		UPDATE user SET
+       	  u_balance = u_balance + #{u_balance}
+		WHERE u_id = #{u_id}
+	</update>
+	
+	
+	
+	<update id="increaseAdminBalance" parameterType="map">
+		UPDATE administrator SET
+       	  a_balance = a_balance + #{a_balance}
+	</update>
+	
+	<update id="decreaseAdminBalance" parameterType="Map">
+		UPDATE administrator SET
+         a_balance = a_balance - #{a_balance}
+		WHERE a_id = #{a_id}
+	</update>
+	
+	<select id="getAdminBalance" resultType="int">
+		SELECT a_balance FROM administrator
+	</select>
+</mapper> 
