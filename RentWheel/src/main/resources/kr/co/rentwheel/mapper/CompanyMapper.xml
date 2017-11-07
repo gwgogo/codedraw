@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.rentwheel.mapper.CompanyMapper">
+	<select id="getCompanyByCompanyID" parameterType="String" resultType = "kr.co.rentwheel.dto.CompanyDto">
+		select * from company where c_id = #{c_id}
+	</select>
+	
+	<insert id="companyJoin" parameterType="kr.co.rentwheel.dto.CompanyDto">
+		insert into company (
+		  c_id
+		  ,c_phone
+		  ,c_address
+		  ,c_email
+		  ,c_x_coord
+		  ,c_y_coord
+		  ,c_name
+		  ,c_represent_name
+		  ,c_acnt_num
+		  ,c_acnt_bank
+		  ,c_open_time
+		  ,c_close_time
+		  ,c_m_count
+		  ,c_area_id
+		) VALUES (
+		   #{c_id}
+		  ,#{c_phone}  
+		  ,#{c_address}
+		  ,#{c_email}  
+		  ,#{c_x_coord} 
+		  ,#{c_y_coord} 
+		  ,#{c_name} 
+		  ,#{c_represent_name}
+		  ,#{c_acnt_num}  
+		  ,#{c_acnt_bank} 
+		  ,#{c_open_time} 
+		  ,#{c_close_time}
+		  ,#{c_m_count}
+		  ,#{c_area_id}
+		)
+	</insert>
+
+	
+	
+	<select id="getCompanyAll" resultType="kr.co.rentwheel.dto.CompanyDto" >
+		SELECT c_id, c_name, c_address, c_x_coord, c_y_coord, c_open_time, c_close_time , c_m_count, c_email, c_phone
+		FROM company
+	</select>
+	
+	<select id="getCompanyByAreaID" resultType="kr.co.rentwheel.dto.CompanyDto" parameterType="int">
+		SELECT c_id, c_name, c_address, c_x_coord, c_y_coord, c_open_time, c_close_time , c_m_count
+		 FROM company WHERE c_area_id LIKE CONCAT(#{c_area_id},'%')
+	</select>
+	
+	<select id="getCompanyByRegionID" resultType="kr.co.rentwheel.dto.CompanyDto" parameterType="int">
+		SELECT c_id, c_name, c_address, c_x_coord, c_y_coord, c_open_time, c_close_time , c_m_count
+		FROM company WHERE c_area_id = #{c_area_id} 
+	</select>
+	
+	
+	
+</mapper>

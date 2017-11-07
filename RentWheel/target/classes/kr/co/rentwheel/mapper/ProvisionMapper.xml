@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+        
+<mapper namespace="kr.co.rentwheel.mapper.ProvisionMapper">
+	<select id="getProvision" resultType="String" parameterType="int">
+		SELECT p_msg FROM provision WHERE p_flag=#{p_flag}
+	</select>
+</mapper>

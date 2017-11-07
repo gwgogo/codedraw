@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.rentwheel.mapper.MobilityMapper">
+
+	<!-- 업체번호에 따른 모빌리티 리스트 -->
+	<select id="getMobilityByCompanyID" resultType="kr.co.rentwheel.dto.MobilityDto" parameterType="String">
+		<!--select * from mobility where m_company_id = #{c_id}  -->
+		SELECT m_id, m_name, m_price, m_img, m_spec, m_rating1, m_rating2, m_rating3, m_registDate,
+				c_name AS m_company_name, br_name AS m_brand_name, cg_name AS m_category_name
+			FROM mobility, company, brand, mobilitycategory 
+			WHERE m_company_id = #{c_id} AND mobility.m_company_id = company.c_id AND 
+				mobility.m_brand_id = brand.br_id AND mobility.m_category = mobilitycategory.cg_id
+	</select>
+
+	<!-- 모빌리티 전체 리스트 -->	
+	<select id="getMobilityAll" resultType="kr.co.rentwheel.dto.MobilityDto">
+		SELECT m_id, m_name, m_price, m_img, m_spec, m_rating1, m_rating2, m_rating3, m_registDate,
+				c_name AS m_company_name, br_name AS m_brand_name, cg_name AS m_category_name
+			FROM mobility, company, brand, mobilitycategory 
+			WHERE mobility.m_company_id = company.c_id and mobility.m_brand_id = brand.br_id and mobility.m_category = mobilitycategory.cg_id
+	</select>
+	
+	<!-- 모빌리티번호에 따른 특정 모빌리티 -->
+	<select id="getMobilityByMobilityID" resultType="kr.co.rentwheel.dto.MobilityDto" parameterType="int">
+			SELECT m_id, m_name, m_price, m_img, m_spec, m_rating1, m_rating2, m_rating3, m_registDate, m_company_id, m_grade,
+				   c_name AS m_company_name, br_name AS m_brand_name, cg_name AS m_category_name, c_open_time AS m_company_open_time,
+				   c_close_time AS m_company_close_time, h_company_date AS m_company_holiday, c_address AS m_company_address
+       		FROM mobility JOIN company ON mobility.m_company_id = company.c_id 
+       					  JOIN brand ON mobility.m_brand_id = brand.br_id 
+       					  JOIN mobilitycategory ON mobility.m_category = mobilitycategory.cg_id
+        				  JOIN holiday ON mobility.m_company_id = holiday.h_company_id 
+        				  WHERE m_id=#{m_id};
+	</select>
+	
+	<!-- 신규 모빌리티 리스트  -->
+	<select id="getNewMobility" resultType="kr.co.rentwheel.dto.MobilityDto" parameterType="String">
+		 <![CDATA[
+   			SELECT m_id, m_name, m_price, m_img, m_spec, m_rating1, m_rating2, m_rating3, 
+				c_name AS m_company_name, br_name AS m_brand_name, cg_name AS m_category_name
+			FROM mobility, company, brand, mobilitycategory 
+			WHERE mobility.m_company_id = company.c_id and mobility.m_brand_id = brand.br_id and mobility.m_category = mobilitycategory.cg_id and 
+			      m_registDate <= NOW() AND m_registDate >= date_add(NOW(), interval - 30 day)
+  		]]>
+	</select>
+	
+	<select id="getRecommendMobility" resultType="kr.co.rentwheel.dto.MobilityDto">
+		SELECT m_id, m_name, m_price, m_img, m_spec, m_rating1, m_rating2, m_rating3, 
+				c_name AS m_company_name, br_name AS m_brand_name, cg_name AS m_category_name
+			FROM mobility, company, brand, mobilitycategory 
+			WHERE mobility.m_company_id = company.c_id and mobility.m_brand_id = brand.br_id and mobility.m_category = mobilitycategory.cg_id and 
+			      (m_id=13 OR m_id=14 OR m_id=15 OR m_id=16)
+	</select>
+	
+	<select id="getPriceFilterMobility" resultType="kr.co.rentwheel.dto.MobilityDto" parameterType="Map">
+		<![CDATA[
+			SELECT m_id, m_name, m_price, m_img, m_spec, m_rating1, m_rating2, m_rating3, m_registDate, m_company_id, m_grade,
+				   c_name AS m_company_name, br_name AS m_brand_name, cg_name AS m_category_name, c_open_time AS m_company_open_time,
+				   c_close_time AS m_company_close_time, h_company_date AS m_company_holiday, c_address AS m_company_address
+       		FROM mobility JOIN company ON mobility.m_company_id = company.c_id 
+       					  JOIN brand ON mobility.m_brand_id = brand.br_id 
+       					  JOIN mobilitycategory ON mobility.m_category = mobilitycategory.cg_id
+        				  JOIN holiday ON mobility.m_company_id = holiday.h_company_id 
+        				  WHERE m_price >= #{min} AND m_price <= #{max} AND m_grade= #{grade}
+		]]>
+	</select>
+	
+	<select id="getMobilityName" resultType="String" parameterType="int">
+		SELECT m_name FROM mobility WHERE m_id=#{m_id}
+	</select>
+</mapper>

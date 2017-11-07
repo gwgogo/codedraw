@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.rentwheel.mapper.ReviewMapper">
+	
+	<select id="getReview" parameterType="String" resultType="kr.co.rentwheel.dto.ReviewDto">
+		SELECT * FROM review WHERE rv_mobility_name = #{rv_mobility_name}
+	</select>
+
+	<insert id="addReview" parameterType="kr.co.rentwheel.dto.ReviewDto">
+		INSERT INTO review (
+			rv_msg,
+			rv_score,
+			rv_registDatetime,
+			rv_user_name,
+			rv_mobility_name
+		) VALUES (
+			#{rv_msg},
+			#{rv_score},
+			NOW(),
+			#{rv_user_name},
+			#{rv_mobility_name}
+		)
+		
+	</insert>
+</mapper>
